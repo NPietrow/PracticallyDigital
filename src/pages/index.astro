@@ -1,15 +1,37 @@
 ---
-// Temporary home page. Replaced in Task 4 (BaseLayout) and Task 7 (real homepage).
+// Temporary home page on the base layout. Task 7 replaces it with the real homepage.
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<html lang="en-GB">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Practically Digital</title>
-	</head>
-	<body>
-		<h1>Practically Digital</h1>
-	</body>
-</html>
+<BaseLayout
+  description="Plain-English guides to data, AI, digital twins, IoT and cloud for UK industrial leaders."
+  path="/"
+>
+  <section class="wrap intro">
+    <p class="label">Data · AI · Digital twins · IoT · Cloud</p>
+    <h1>Digital technology, explained for the people who run industry</h1>
+    <p class="intro__lede">
+      Each guide covers what a technology is, which problems it solves, what it costs and when it
+      isn't worth doing.
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  .intro {
+    padding-block: var(--space-8) var(--space-6);
+  }
+
+  .intro h1 {
+    margin-top: var(--space-4);
+    max-width: 20ch;
+  }
+
+  .intro__lede {
+    margin-top: var(--space-5);
+    max-width: var(--measure);
+    font-size: var(--step-1);
+    line-height: var(--leading-snug);
+    color: var(--ink-soft);
+  }
+</style>
