@@ -1,0 +1,79 @@
+---
+// A list of articles under a heading: Insights, and each topic and problem page.
+// The filter chips sit above the list; an empty list shows EmptyState instead.
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from './BaseLayout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import EmptyState from '../components/EmptyState.astro';
+import FilterChips from '../components/FilterChips.astro';
+
+interface Props {
+  /** Small label above the heading, e.g. "Topic". */
+  label: string;
+  title: string;
+  lede: string;
+  /** Meta description for search results and social previews. */
+  description: string;
+  path: string;
+  articles: CollectionEntry<'articles'>[];
+  /** Topic or problem slug whose chip is marked current. */
+  current?: string;
+  empty: { heading: string; body: string; linkHref?: string; linkText?: string };
+}
+
+const { label, title, lede, description, path, articles, current, empty } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} path={path}>
+  <div class="wrap listing">
+    <header class="listing__head">
+      <p class="label">{label}</p>
+      <h1>{title}</h1>
+      <p class="listing__lede">{lede}</p>
+    </header>
+
+    <FilterChips current={current} />
+
+    {
+      articles.length > 0 ? (
+        <ul class="listing__cards">
+          {articles.map((article) => (
+            <li>
+              <ArticleCard article={article} />
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <EmptyState {...empty} />
+      )
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .listing {
+    display: grid;
+    gap: var(--space-7);
+    padding-block: var(--space-8) var(--space-9);
+  }
+
+  .listing__head h1 {
+    margin-top: var(--space-4);
+    max-width: 20ch;
+  }
+
+  .listing__lede {
+    margin-top: var(--space-5);
+    max-width: var(--measure);
+    font-size: var(--step-1);
+    line-height: var(--leading-snug);
+    color: var(--ink-soft);
+  }
+
+  .listing__cards {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-bottom: var(--rule);
+  }
+</style>

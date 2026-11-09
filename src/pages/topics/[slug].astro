@@ -1,0 +1,29 @@
+---
+// One page per topic, built even when no article covers it yet.
+import ListingLayout from '../../layouts/ListingLayout.astro';
+import { TOPICS, type Term } from '../../data/taxonomy';
+import { getPublishedArticles, byTopic, countGuides } from '../../lib/articles';
+
+export function getStaticPaths() {
+  return TOPICS.map((term) => ({ params: { slug: term.slug }, props: { term } }));
+}
+
+const { term } = Astro.props as { term: Term };
+const articles = byTopic(await getPublishedArticles(), term.slug);
+---
+
+<ListingLayout
+  label={`Topic / ${countGuides(articles.length)}`}
+  title={term.name}
+  lede={term.description}
+  description={term.description}
+  path={`/topics/${term.slug}/`}
+  articles={articles}
+  current={term.slug}
+  empty={{
+    heading: 'No guides on this topic yet',
+    body: 'Pick another topic above, or go back to the full list.',
+    linkHref: '/insights/',
+    linkText: 'Back to Insights',
+  }}
+/>

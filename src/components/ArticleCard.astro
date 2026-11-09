@@ -1,0 +1,89 @@
+---
+// One article in a listing: main topic and reading time, title, description and date.
+// The title link stretches over the whole card, so the card is one tap target.
+import type { CollectionEntry } from 'astro:content';
+import { getTopic } from '../data/taxonomy';
+import { readingTime } from '../lib/articles';
+import { longDate, isoDate } from '../lib/dates';
+
+interface Props {
+  article: CollectionEntry<'articles'>;
+  /** Heading level for the title: 2 on listing pages, 3 under a section heading. */
+  level?: 2 | 3;
+}
+
+const { article, level = 2 } = Astro.props;
+const { data } = article;
+const Heading = `h${level}` as const;
+const topicName = getTopic(data.topics[0])?.name ?? data.topics[0];
+const minutes = readingTime(article.body ?? '');
+---
+
+<article class="card" data-article-card>
+  <p class="label card__meta" data-card-meta>{topicName} / {minutes} min</p>
+  <div class="card__main">
+    <Heading class="card__title">
+      <a href={`/insights/${article.id}/`} data-card-title>{data.title}</a>
+    </Heading>
+    <p class="card__desc">{data.description}</p>
+    <p class="label card__date">
+      <time datetime={isoDate(data.published)}>{longDate(data.published)}</time>
+    </p>
+  </div>
+</article>
+
+<style>
+  .card {
+    position: relative;
+    display: grid;
+    gap: var(--space-2);
+    padding-block: var(--space-5);
+    border-top: var(--rule);
+  }
+
+  /* Wide screens: metadata in a narrow left column, like the article contents pane. */
+  @media (min-width: 56.25rem) {
+    .card {
+      grid-template-columns: 14rem 1fr;
+      gap: var(--space-5);
+    }
+
+    .card__meta {
+      padding-top: 0.4em;
+    }
+  }
+
+  .card__main {
+    display: grid;
+    gap: var(--space-2);
+    max-width: var(--measure);
+  }
+
+  .card__title {
+    font-size: var(--step-2);
+  }
+
+  .card__title a {
+    text-decoration-color: transparent;
+  }
+
+  /* Stretch the link over the card. */
+  .card__title a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .card:hover .card__title a {
+    text-decoration-color: currentColor;
+    text-decoration-thickness: 2px;
+  }
+
+  .card__desc {
+    color: var(--ink-soft);
+  }
+
+  .card__date {
+    margin-top: var(--space-1);
+  }
+</style>

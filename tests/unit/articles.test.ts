@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { selectArticles, byTopic, byProblem, readingTime } from '../../src/lib/articles';
+import { selectArticles, byTopic, byProblem, readingTime, countGuides } from '../../src/lib/articles';
 import type { ArticleData } from '../../src/lib/schema';
 
 type Entry = { id: string; data: ArticleData; body?: string };
@@ -106,5 +106,13 @@ describe('readingTime', () => {
   it('ignores HTML tags and their attributes', () => {
     const tag = `<img alt="${words(1000)}" src="x.png" />`;
     expect(readingTime(`${tag}\n\n${words(10)}`)).toBe(1);
+  });
+});
+
+describe('countGuides', () => {
+  it('uses the singular for one and the plural otherwise', () => {
+    expect(countGuides(0)).toBe('0 guides');
+    expect(countGuides(1)).toBe('1 guide');
+    expect(countGuides(3)).toBe('3 guides');
   });
 });

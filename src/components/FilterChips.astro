@@ -1,0 +1,74 @@
+---
+// The two rows of filter chips on listing pages. Each chip is a plain link to a
+// pre-rendered topic or problem page, so filtering needs no JavaScript.
+import { TOPICS, PROBLEMS } from '../data/taxonomy';
+
+interface Props {
+  /** Slug of the topic or problem page being shown, marked as current. */
+  current?: string;
+}
+
+const { current } = Astro.props;
+const groups = [
+  { id: 'chips-problem', label: 'By problem', base: '/problems/', terms: PROBLEMS, problem: true },
+  { id: 'chips-tech', label: 'By technology', base: '/topics/', terms: TOPICS, problem: false },
+];
+---
+
+<nav class="chips" aria-label="Filter articles">
+  {
+    groups.map((g) => (
+      <div class="chips__group">
+        <p class="label chips__label" id={g.id}>
+          {g.label}
+        </p>
+        <ul class="chips__list" aria-labelledby={g.id}>
+          {g.terms.map((t) => (
+            <li>
+              <a
+                class:list={['tag', { 'tag--problem': g.problem }]}
+                href={`${g.base}${t.slug}/`}
+                aria-current={t.slug === current ? 'page' : undefined}
+              >
+                {t.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))
+  }
+</nav>
+
+<style>
+  .chips {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .chips__group {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  @media (min-width: 56.25rem) {
+    .chips__group {
+      grid-template-columns: 14rem 1fr;
+      gap: var(--space-5);
+      align-items: start;
+    }
+
+    .chips__label {
+      padding-top: 0.9em;
+    }
+  }
+
+  .chips__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+</style>

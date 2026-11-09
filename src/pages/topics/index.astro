@@ -1,0 +1,120 @@
+---
+// The two ways into the guides: by technology (topics) and by problem.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { TOPICS, PROBLEMS } from '../../data/taxonomy';
+
+const sections = [
+  { id: 'by-technology', heading: 'By technology', list: 'topics', base: '/topics/', terms: TOPICS },
+  { id: 'by-problem', heading: 'By problem', list: 'problems', base: '/problems/', terms: PROBLEMS },
+];
+---
+
+<BaseLayout
+  title="Topics"
+  description="Browse the guides by technology or by the business problem they address."
+  path="/topics/"
+>
+  <div class="wrap topics">
+    <header class="topics__head">
+      <p class="label">Browse</p>
+      <h1>Topics</h1>
+      <p class="topics__lede">
+        Find guides by the technology involved or by the problem you want to fix.
+      </p>
+    </header>
+
+    {
+      sections.map((s) => (
+        <section class="topics__section" aria-labelledby={s.id}>
+          <h2 class="topics__heading" id={s.id}>
+            {s.heading}
+          </h2>
+          <ul class="terms" data-term-list={s.list}>
+            {s.terms.map((t) => (
+              <li class="term" data-term>
+                <h3 class="term__name">
+                  <a href={`${s.base}${t.slug}/`}>{t.name}</a>
+                </h3>
+                <p class="term__desc">{t.description}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .topics {
+    display: grid;
+    gap: var(--space-8);
+    padding-block: var(--space-8) var(--space-9);
+  }
+
+  .topics__head h1 {
+    margin-top: var(--space-4);
+  }
+
+  .topics__lede {
+    margin-top: var(--space-5);
+    max-width: var(--measure);
+    font-size: var(--step-1);
+    line-height: var(--leading-snug);
+    color: var(--ink-soft);
+  }
+
+  .topics__heading {
+    font-size: var(--step-2);
+    padding-bottom: var(--space-3);
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .terms {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+    gap: var(--space-4);
+    margin: var(--space-5) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Each term is one tap target: the name link stretches over its box. */
+  .term {
+    position: relative;
+    display: grid;
+    gap: var(--space-2);
+    align-content: start;
+    padding: var(--space-5);
+    background: var(--paper);
+    border: 1px solid var(--stone-line);
+    border-radius: var(--radius-2);
+    transition: border-color var(--dur) var(--ease);
+  }
+
+  .term:hover {
+    border-color: var(--ink);
+  }
+
+  .term__name {
+    font-size: var(--step-1);
+  }
+
+  .term__name a {
+    text-decoration-color: transparent;
+  }
+
+  .term__name a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .term:hover .term__name a {
+    text-decoration-color: currentColor;
+  }
+
+  .term__desc {
+    color: var(--ink-soft);
+  }
+</style>

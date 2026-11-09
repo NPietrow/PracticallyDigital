@@ -52,29 +52,5 @@ const problemTerms = problems.map(getProblem).filter((p) => p !== undefined);
     padding: 0;
     list-style: none;
   }
-
-  .tag {
-    display: inline-flex;
-    align-items: center;
-    min-height: var(--tap);
-    padding-inline: var(--space-3);
-    border: 1px solid var(--ink);
-    border-radius: var(--radius-2);
-    font-size: var(--step--1);
-    font-weight: 500;
-    text-decoration: none;
-    transition:
-      background-color var(--dur) var(--ease),
-      color var(--dur) var(--ease);
-  }
-
-  /* Problems are the reader's pain points: a dashed outline sets them apart from topics. */
-  .tag--problem {
-    border-style: dashed;
-  }
-
-  .tag:hover {
-    background: var(--ink);
-    color: var(--on-ink);
-  }
+  /* .tag itself lives in global.css: the listing filter chips use it too. */
 </style>

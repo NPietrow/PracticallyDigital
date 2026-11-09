@@ -1,6 +1,12 @@
 ---
-// Temporary home page on the base layout. Task 7 replaces it with the real homepage.
+// Temporary home page on the base layout. Task 7 replaces the intro and adds the
+// problem and topic sections; the "Latest insights" section stays.
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import EmptyState from '../components/EmptyState.astro';
+import { getPublishedArticles } from '../lib/articles';
+
+const latest = (await getPublishedArticles()).slice(0, 3);
 ---
 
 <BaseLayout
@@ -14,6 +20,32 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       Each guide covers what a technology is, which problems it solves, what it costs and when it
       isn't worth doing.
     </p>
+  </section>
+
+  <section class="wrap latest" aria-labelledby="latest-heading">
+    <div class="latest__head">
+      <h2 id="latest-heading">Latest insights</h2>
+      {latest.length > 0 && <a class="latest__all" href="/insights/">All insights</a>}
+    </div>
+    {
+      latest.length > 0 ? (
+        <ul class="latest__cards">
+          {latest.map((article) => (
+            <li>
+              <ArticleCard article={article} level={3} />
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <EmptyState
+          level={3}
+          heading="No guides published yet"
+          body="The first ones are being written. The topics page shows what they'll cover."
+          linkHref="/topics/"
+          linkText="See the topics"
+        />
+      )
+    }
   </section>
 </BaseLayout>
 
@@ -33,5 +65,36 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     font-size: var(--step-1);
     line-height: var(--leading-snug);
     color: var(--ink-soft);
+  }
+
+  .latest {
+    padding-block: var(--space-6) var(--space-9);
+  }
+
+  .latest__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-bottom: var(--space-5);
+  }
+
+  .latest__head h2 {
+    font-size: var(--step-2);
+  }
+
+  .latest__all {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    font-weight: 500;
+  }
+
+  .latest__cards {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-bottom: var(--rule);
   }
 </style>

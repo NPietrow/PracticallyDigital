@@ -40,6 +40,11 @@ export function readingTime(markdown: string): number {
   return Math.max(1, Math.round(words / WORDS_PER_MINUTE));
 }
 
+/** "1 guide", "3 guides": the count shown in listing labels. */
+export function countGuides(n: number): string {
+  return `${n} ${n === 1 ? 'guide' : 'guides'}`;
+}
+
 /** The only way pages should get articles: drafts are handled here, once. */
 export async function getPublishedArticles(): Promise<CollectionEntry<'articles'>[]> {
   const all = await getCollection('articles');
