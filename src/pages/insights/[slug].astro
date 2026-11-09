@@ -1,0 +1,20 @@
+---
+// One page per published article. Drafts get no page (so they 404) unless
+// PUBLIC_SHOW_DRAFTS is "true"; getPublishedArticles handles that.
+import { render } from 'astro:content';
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+import { getPublishedArticles, readingTime } from '../../lib/articles';
+
+export async function getStaticPaths() {
+  const articles = await getPublishedArticles();
+  return articles.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+const minutes = readingTime(entry.body ?? '');
+---
+
+<ArticleLayout entry={entry} headings={headings} minutes={minutes}>
+  <Content />
+</ArticleLayout>

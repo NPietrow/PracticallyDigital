@@ -4,8 +4,8 @@ description: Test fixture article about data quality, used by the automated test
 gist: Fixture gist for alpha. Bad data breaks every tool that sits on top of it.
 published: 2026-10-20
 reviewed: 2026-11-01
-topics: [data-foundations]
-problems: [untrusted-data]
+topics: [data-foundations, ai-and-analytics]
+problems: [untrusted-data, no-visibility]
 heroImage: ./images/alpha-hero.png
 heroAlt: Fixture hero image showing a plain grey rectangle
 ---

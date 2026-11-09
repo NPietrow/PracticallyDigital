@@ -1,0 +1,18 @@
+---
+// A figure for MDX articles. "inline" sits in the text column; "wide" breaks out
+// to the full content width for complex diagrams. Styles live in prose.css so
+// raw <figure data-size="wide"> in plain Markdown looks the same.
+interface Props {
+  src: string;
+  alt: string;
+  caption?: string;
+  size?: 'inline' | 'wide';
+}
+
+const { src, alt, caption, size = 'inline' } = Astro.props;
+---
+
+<figure data-size={size}>
+  <img src={src} alt={alt} loading="lazy" decoding="async" />
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>

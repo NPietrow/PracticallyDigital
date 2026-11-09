@@ -1,0 +1,165 @@
+/*
+  Article body typography. Global (not scoped) because the body is rendered
+  Markdown, which Astro's scoped styles can't reach. Everything is under .prose.
+*/
+
+.prose {
+  counter-reset: section;
+}
+
+/* Text sits in a comfortable reading column; wide figures and tables break out. */
+.prose > * {
+  max-width: var(--measure);
+}
+
+.prose > * + * {
+  margin-top: var(--space-5);
+}
+
+.prose > figure[data-size='wide'],
+.prose > .table-scroll {
+  max-width: none;
+}
+
+/* ---------- Headings: numbered to match the contents ---------- */
+
+.prose h2 {
+  counter-increment: section;
+  margin-top: var(--space-8);
+  padding-top: var(--space-5);
+  border-top: var(--rule);
+  scroll-margin-top: var(--space-6);
+}
+
+.prose h2::before {
+  content: counter(section, decimal-leading-zero);
+  display: block;
+  margin-bottom: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.prose h3 {
+  margin-top: var(--space-7);
+  scroll-margin-top: var(--space-6);
+}
+
+.prose h2 + *,
+.prose h3 + * {
+  margin-top: var(--space-4);
+}
+
+/* ---------- Lists, quotes, code ---------- */
+
+.prose ul,
+.prose ol {
+  padding-left: var(--space-5);
+}
+
+.prose li + li {
+  margin-top: var(--space-2);
+}
+
+.prose li::marker {
+  color: var(--muted);
+}
+
+.prose blockquote {
+  margin-inline: 0;
+  padding-left: var(--space-5);
+  border-left: 3px solid var(--ink-soft);
+  color: var(--ink-soft);
+}
+
+.prose :not(pre) > code {
+  padding: 0.1em 0.3em;
+  background: var(--paper);
+  border: var(--rule);
+  border-radius: var(--radius-1);
+}
+
+.prose pre {
+  max-width: none;
+  padding: var(--space-4);
+  overflow-x: auto;
+  border-radius: var(--radius-2);
+  font-size: var(--step--1);
+  line-height: var(--leading-body);
+}
+
+.prose hr {
+  border: 0;
+  border-top: var(--rule);
+}
+
+/* ---------- Figures ---------- */
+
+.prose figure {
+  margin-inline: 0;
+  margin-block: var(--space-6);
+}
+
+.prose figure img {
+  width: 100%;
+  background: var(--paper);
+  border: var(--rule);
+}
+
+.prose figcaption {
+  margin-top: var(--space-2);
+  font-size: var(--step--1);
+  color: var(--muted);
+}
+
+/* ---------- Tables: scroll sideways inside their own box ---------- */
+
+.table-scroll {
+  overflow-x: auto;
+  background: var(--paper);
+  border: var(--rule);
+  border-radius: var(--radius-2);
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--step--1);
+  line-height: var(--leading-snug);
+}
+
+.prose th,
+.prose td {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: var(--rule);
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose th {
+  font-weight: 600;
+  white-space: nowrap;
+  background: var(--stone);
+}
+
+.prose tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+/* ---------- Further reading: the final section ---------- */
+
+.prose h2:last-of-type ~ ul,
+.prose h2:last-of-type ~ ol {
+  padding-left: 0;
+  list-style: none;
+  font-size: var(--step--1);
+}
+
+.prose h2:last-of-type ~ ul > li,
+.prose h2:last-of-type ~ ol > li {
+  margin: 0;
+  padding-block: var(--space-3);
+  border-bottom: var(--rule);
+}

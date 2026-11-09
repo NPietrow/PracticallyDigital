@@ -1,0 +1,230 @@
+---
+// Numbered contents for an article. Two renderings of the same list:
+// a sticky pane beside the text on wide screens, and a closed <details>
+// dropdown above the text under 900px. Both are plain anchor links, so they
+// work without JavaScript; the script only highlights the current section.
+import type { TocItem } from '../lib/toc';
+
+interface Props {
+  items: TocItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<nav class="toc" aria-label="Contents">
+  <div class="toc__pane">
+    <p class="label toc__title">Contents</p>
+    <ol class="toc__list" data-toc-list>
+      {
+        items.map((item) => (
+          <li>
+            <a href={`#${item.slug}`}>
+              <span class="toc__num" data-toc-number>{item.number}</span>
+              <span class="toc__text">{item.text}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+
+  <details class="toc__drop" data-toc-dropdown>
+    <summary>Contents</summary>
+    <ol class="toc__list" data-toc-list>
+      {
+        items.map((item) => (
+          <li>
+            <a href={`#${item.slug}`}>
+              <span class="toc__num" data-toc-number>{item.number}</span>
+              <span class="toc__text">{item.text}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </details>
+</nav>
+
+<style>
+  /* Fill the column, so the sticky pane has the full article height to travel in. */
+  .toc {
+    height: 100%;
+  }
+
+  .toc__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .toc__list a {
+    display: grid;
+    grid-template-columns: 2.25rem minmax(0, 1fr);
+    align-items: baseline;
+    min-height: var(--tap);
+    padding: var(--space-2) var(--space-3) var(--space-2) calc(var(--space-3) - 3px);
+    border-left: 3px solid transparent;
+    font-size: var(--step--1);
+    line-height: var(--leading-snug);
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition:
+      border-color var(--dur) var(--ease),
+      background-color var(--dur) var(--ease);
+  }
+
+  .toc__list a:hover {
+    border-left-color: var(--stone-line);
+    color: var(--ink);
+  }
+
+  /* The current section: signal-yellow rule, ink text (spec: active contents item). */
+  .toc__list a[aria-current='true'] {
+    border-left-color: var(--signal);
+    background: var(--paper);
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .toc__num {
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    color: var(--muted);
+  }
+
+  /* Wide screens: the pane, sticky beside the text. */
+  .toc__pane {
+    position: sticky;
+    top: var(--space-5);
+    max-height: calc(100vh - 2 * var(--space-5));
+    overflow-y: auto;
+  }
+
+  .toc__title {
+    padding-bottom: var(--space-2);
+    margin-bottom: var(--space-2);
+    border-bottom: var(--rule);
+  }
+
+  .toc__drop {
+    display: none;
+  }
+
+  /* Under 900px: the dropdown above the text. */
+  @media (max-width: 56.24rem) {
+    .toc__pane {
+      display: none;
+    }
+
+    .toc__drop {
+      display: block;
+      background: var(--paper);
+      border: var(--rule);
+      border-radius: var(--radius-2);
+    }
+
+    .toc__drop summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: var(--tap);
+      padding-inline: var(--space-4);
+      font-family: var(--font-mono);
+      font-size: var(--step--2);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .toc__drop summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .toc__drop summary::after {
+      content: '+';
+      font-size: var(--step-1);
+      line-height: 1;
+    }
+
+    .toc__drop[open] summary::after {
+      content: '−';
+    }
+
+    .toc__drop[open] summary {
+      border-bottom: var(--rule);
+    }
+
+    .toc__drop .toc__list {
+      padding-block: var(--space-2);
+    }
+  }
+</style>
+
+<script>
+  // Highlights the contents item for the section being read.
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-toc-list] a'));
+  const ids = [...new Set(links.map((a) => decodeURIComponent(a.hash.slice(1))))];
+  const headings = ids
+    .map((id) => document.getElementById(id))
+    .filter((h): h is HTMLElement => h !== null);
+
+  // A heading becomes current once it has scrolled into the top quarter of the window.
+  const LINE = 0.25;
+
+  const setCurrent = (id: string | null) => {
+    for (const a of links) {
+      if (id !== null && a.hash === `#${id}`) a.setAttribute('aria-current', 'true');
+      else a.removeAttribute('aria-current');
+    }
+  };
+
+  // After a contents click, keep that item current until the reader scrolls
+  // again, even if the jump left the next heading inside the top quarter.
+  let pinned: string | null = null;
+
+  const update = () => {
+    if (pinned) return;
+    let current: string | null = null;
+    for (const h of headings) {
+      if (h.getBoundingClientRect().top <= window.innerHeight * LINE) current = h.id;
+      else break;
+    }
+    setCurrent(current);
+  };
+
+  if (headings.length > 0) {
+    const observer = new IntersectionObserver(update, {
+      rootMargin: `0px 0px -${(1 - LINE) * 100}% 0px`,
+    });
+    headings.forEach((h) => observer.observe(h));
+
+    for (const a of links) {
+      a.addEventListener('click', () => {
+        pinned = decodeURIComponent(a.hash.slice(1));
+        setCurrent(pinned);
+        a.closest('details')?.removeAttribute('open');
+      });
+    }
+
+    const unpin = () => {
+      if (pinned) {
+        pinned = null;
+        update();
+      }
+    };
+    window.addEventListener('wheel', unpin, { passive: true });
+    window.addEventListener('touchmove', unpin, { passive: true });
+    window.addEventListener('keydown', (e) => {
+      if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(e.key)) unpin();
+    });
+
+    if (location.hash) pinned = decodeURIComponent(location.hash.slice(1));
+    if (pinned && ids.includes(pinned)) setCurrent(pinned);
+    else {
+      pinned = null;
+      update();
+    }
+  }
+</script>

@@ -4,7 +4,9 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 import type { ArticleData } from './schema';
 import { showDrafts } from './env';
 
-type Entry = { id: string; data: ArticleData };
+// Only the fields selection needs, so both the unit-test entries (heroImage as a
+// string) and real collection entries (heroImage as optimised image data) fit.
+type Entry = { id: string; data: Pick<ArticleData, 'published' | 'draft' | 'topics' | 'problems'> };
 
 const WORDS_PER_MINUTE = 230;
 

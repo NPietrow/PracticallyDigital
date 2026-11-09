@@ -7,6 +7,8 @@ topics: [digital-twins]
 problems: [unplanned-downtime]
 ---
 
+import Figure from '../../../src/components/Figure.astro';
+
 export const fixtureLabel = 'MDX expression rendered';
 
 This fixture checks that MDX articles build. {fixtureLabel}.
@@ -14,3 +16,13 @@ This fixture checks that MDX articles build. {fixtureLabel}.
 ## Only section
 
 Paragraph text for the beta fixture.
+
+| Fixture | Table |
+|---|---|
+| MDX | row |
+
+<Figure
+  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600' viewBox='0 0 600 600'%3E%3Crect width='600' height='600' fill='%23D5D5CE'/%3E%3C/svg%3E"
+  alt="Fixture inline diagram, a plain grey square"
+  caption="Fixture inline figure."
+/>

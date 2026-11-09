@@ -12,23 +12,47 @@ const problem = z.enum(PROBLEM_SLUGS, {
   error: (issue) => `Unknown problem "${String(issue.input)}". Use one of: ${PROBLEM_SLUGS.join(', ')}.`,
 });
 
-export const articleSchema = z
-  .object({
-    title: z.string().min(10).max(90),
-    description: z.string().min(50).max(160),
-    gist: z.string().min(1).max(400),
-    author: z.string().default('Nikita Pietrow'),
-    published: z.coerce.date(),
-    reviewed: z.coerce.date().optional(),
-    topics: z.array(topic).min(1, 'List at least one topic.'),
-    problems: z.array(problem).default([]),
-    draft: z.boolean().default(false),
-    heroImage: z.string().optional(),
-    heroAlt: z.string().optional(),
-  })
-  .refine((data) => !data.heroImage || (data.heroAlt && data.heroAlt.trim().length > 0), {
-    message: 'heroAlt is required when heroImage is set (describe the image for screen readers).',
-    path: ['heroAlt'],
-  });
+// At most three of each, so an article only lands on the listing pages where it
+// really belongs. List the main topic first: it labels the article.
+const MAX_TERMS = 3;
+
+function termList<T extends z.ZodType<string>>(term: T, kind: 'topic' | 'problem') {
+  const label = kind === 'topic' ? 'Topic' : 'Problem';
+  return z
+    .array(term)
+    .max(MAX_TERMS, `List at most ${MAX_TERMS} ${kind}s; pick the ones the article is mainly about.`)
+    .superRefine((list, ctx) => {
+      const repeated = list.filter((value, i) => list.indexOf(value) !== i);
+      for (const value of new Set(repeated)) {
+        ctx.addIssue({ code: 'custom', message: `${label} "${value}" is listed more than once.` });
+      }
+    });
+}
+
+// heroImage's validator is passed in. The content collection passes Astro's
+// image() helper, which resolves the path next to the article, fails the build
+// if the file is missing and lets Astro optimise it. Unit tests use a string.
+export function buildArticleSchema<H extends z.ZodType>(heroImage: H) {
+  return z
+    .object({
+      title: z.string().min(10).max(90),
+      description: z.string().min(50).max(160),
+      gist: z.string().min(1).max(400),
+      author: z.string().default('Nikita Pietrow'),
+      published: z.coerce.date(),
+      reviewed: z.coerce.date().optional(),
+      topics: termList(topic, 'topic').min(1, 'List at least one topic.'),
+      problems: termList(problem, 'problem').default([]),
+      draft: z.boolean().default(false),
+      heroImage: heroImage.optional(),
+      heroAlt: z.string().optional(),
+    })
+    .refine((data) => !data.heroImage || (data.heroAlt && data.heroAlt.trim().length > 0), {
+      message: 'heroAlt is required when heroImage is set (describe the image for screen readers).',
+      path: ['heroAlt'],
+    });
+}
+
+export const articleSchema = buildArticleSchema(z.string());
 
 export type ArticleData = z.infer<typeof articleSchema>;

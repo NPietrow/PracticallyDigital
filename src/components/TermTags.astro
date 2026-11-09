@@ -1,0 +1,80 @@
+---
+// The article's topics and problems as links to their listing pages.
+import { getTopic, getProblem } from '../data/taxonomy';
+
+interface Props {
+  topics: string[];
+  problems: string[];
+}
+
+const { topics, problems } = Astro.props;
+const topicTerms = topics.map(getTopic).filter((t) => t !== undefined);
+const problemTerms = problems.map(getProblem).filter((p) => p !== undefined);
+---
+
+<div class="terms">
+  <ul class="terms__list" aria-label="Topics">
+    {
+      topicTerms.map((t) => (
+        <li>
+          <a class="tag" href={`/topics/${t.slug}/`}>
+            {t.name}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+  {
+    problemTerms.length > 0 && (
+      <ul class="terms__list" aria-label="Problems">
+        {problemTerms.map((p) => (
+          <li>
+            <a class="tag tag--problem" href={`/problems/${p.slug}/`}>
+              {p.name}
+            </a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</div>
+
+<style>
+  .terms,
+  .terms__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .terms__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    padding-inline: var(--space-3);
+    border: 1px solid var(--ink);
+    border-radius: var(--radius-2);
+    font-size: var(--step--1);
+    font-weight: 500;
+    text-decoration: none;
+    transition:
+      background-color var(--dur) var(--ease),
+      color var(--dur) var(--ease);
+  }
+
+  /* Problems are the reader's pain points: a dashed outline sets them apart from topics. */
+  .tag--problem {
+    border-style: dashed;
+  }
+
+  .tag:hover {
+    background: var(--ink);
+    color: var(--on-ink);
+  }
+</style>

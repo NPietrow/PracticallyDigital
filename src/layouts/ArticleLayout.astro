@@ -1,0 +1,183 @@
+---
+// One article: metadata, title, byline, tags, gist, hero, contents and body.
+import type { CollectionEntry } from 'astro:content';
+import type { MarkdownHeading } from 'astro';
+import { Image, getImage } from 'astro:assets';
+import '../styles/prose.css';
+
+import BaseLayout from './BaseLayout.astro';
+import Gist from '../components/Gist.astro';
+import Toc from '../components/Toc.astro';
+import TermTags from '../components/TermTags.astro';
+import ReadingProgress from '../components/ReadingProgress.astro';
+import DraftBanner from '../components/DraftBanner.astro';
+import { buildToc } from '../lib/toc';
+import { buildMeta } from '../lib/seo';
+import { getTopic } from '../data/taxonomy';
+
+interface Props {
+  entry: CollectionEntry<'articles'>;
+  headings: MarkdownHeading[];
+  minutes: number;
+}
+
+const { entry, headings, minutes } = Astro.props;
+const data = entry.data;
+const path = `/insights/${entry.id}/`;
+const toc = buildToc(headings);
+const topicName = getTopic(data.topics[0])?.name ?? data.topics[0];
+
+// Social previews want a plain JPEG at a sensible size, not the page's WebP.
+const socialImage = data.heroImage
+  ? (await getImage({ src: data.heroImage, width: 1200, format: 'jpg' })).src
+  : undefined;
+
+const meta = buildMeta({ title: data.title, description: data.description, path, image: socialImage });
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: data.title,
+  description: data.description,
+  datePublished: data.published.toISOString(),
+  ...(data.reviewed && { dateModified: data.reviewed.toISOString() }),
+  author: { '@type': 'Person', name: data.author },
+  image: meta.ogImage,
+  mainEntityOfPage: meta.canonical,
+};
+// "<" escaped so article text can never close the script tag early.
+const jsonLdText = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
+
+const isoDate = (d: Date) => d.toISOString().slice(0, 10);
+const longDate = (d: Date) =>
+  d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+---
+
+<BaseLayout
+  title={data.title}
+  description={data.description}
+  path={path}
+  image={socialImage}
+  type="article"
+  publishedTime={data.published}
+>
+  <script is:inline type="application/ld+json" slot="head" set:html={jsonLdText} />
+
+  <ReadingProgress />
+
+  {
+    data.draft && (
+      <div class="wrap">
+        <DraftBanner />
+      </div>
+    )
+  }
+
+  <article class="wrap article" data-article>
+
+    <header class="article__head">
+      <p class="label" data-article-meta>{topicName} / {minutes} min</p>
+      <h1>{data.title}</h1>
+      <p class="article__byline">
+        <span>By {data.author}</span>
+        <span>Published <time datetime={isoDate(data.published)}>{longDate(data.published)}</time></span>
+        {
+          data.reviewed && (
+            <span>
+              Last reviewed <time datetime={isoDate(data.reviewed)}>{longDate(data.reviewed)}</time>
+            </span>
+          )
+        }
+      </p>
+      <TermTags topics={data.topics} problems={data.problems} />
+      <Gist text={data.gist} />
+    </header>
+
+    <div class="article__toc">
+      <Toc items={toc} />
+    </div>
+
+    <div class="article__body">
+      {
+        data.heroImage && (
+          <Image
+            class="article__hero"
+            src={data.heroImage}
+            alt={data.heroAlt ?? ''}
+            widths={[640, 960, 1280, 1600]}
+            sizes="(min-width: 76rem) 57rem, (min-width: 56.25rem) calc(100vw - 21rem), 100vw"
+            loading="eager"
+            fetchpriority="high"
+          />
+        )
+      }
+      <div class="prose" data-prose>
+        <slot />
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .article {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'head'
+      'toc'
+      'body';
+    row-gap: var(--space-6);
+    padding-block: var(--space-7) 0;
+  }
+
+  .article__head {
+    grid-area: head;
+    display: grid;
+    gap: var(--space-4);
+    max-width: 52rem;
+  }
+
+  .article__head h1 {
+    margin-top: calc(var(--space-2) * -1);
+  }
+
+  .article__byline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-5);
+    font-size: var(--step--1);
+    color: var(--ink-soft);
+  }
+
+  .article__toc {
+    grid-area: toc;
+  }
+
+  .article__body {
+    grid-area: body;
+    min-width: 0;
+  }
+
+  .article__hero {
+    width: 100%;
+    height: auto;
+    margin-bottom: var(--space-6);
+    border: var(--rule);
+    border-radius: var(--radius-2);
+  }
+
+  /* 900px and up: contents pane on the left, beside the header and the body. */
+  @media (min-width: 56.25rem) {
+    .article {
+      grid-template-columns: 14rem minmax(0, 1fr);
+      grid-template-areas:
+        'toc head'
+        'toc body';
+      column-gap: var(--space-8);
+    }
+
+    .article__toc {
+      padding-top: var(--space-2);
+    }
+  }
+</style>
