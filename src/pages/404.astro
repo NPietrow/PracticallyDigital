@@ -1,0 +1,30 @@
+---
+// Shown for any unknown URL. Static hosts serve 404.html with a 404 status.
+import PageLayout from '../layouts/PageLayout.astro';
+---
+
+<PageLayout
+  label="Error 404"
+  title="Page not found"
+  lede="The page you were looking for isn't here. It may have moved, or the address may have a typo."
+  description="This page doesn't exist."
+  path="/404/"
+>
+  <nav aria-label="Where to go next">
+    <ul class="next">
+      <li><a class="page-link" href="/">Home</a></li>
+      <li><a class="page-link" href="/insights/">Insights</a></li>
+    </ul>
+  </nav>
+</PageLayout>
+
+<style>
+  .next {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+</style>

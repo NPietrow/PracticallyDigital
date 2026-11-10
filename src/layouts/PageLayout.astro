@@ -1,0 +1,79 @@
+---
+// A plain text page: label, heading, lede, then sections at reading width.
+// Used by Digital Lab, About and 404.
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  label: string;
+  title: string;
+  lede: string;
+  description: string;
+  path: string;
+}
+
+const { label, title, lede, description, path } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} path={path}>
+  <div class="wrap page">
+    <header class="page__head">
+      <p class="label">{label}</p>
+      <h1>{title}</h1>
+      <p class="page__lede">{lede}</p>
+    </header>
+    <div class="page__body">
+      <slot />
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .page {
+    padding-block: var(--space-8) var(--space-9);
+  }
+
+  .page__head h1 {
+    margin-top: var(--space-4);
+    max-width: 20ch;
+  }
+
+  .page__lede {
+    margin-top: var(--space-5);
+    max-width: var(--measure);
+    font-size: var(--step-1);
+    line-height: var(--leading-snug);
+    color: var(--ink-soft);
+  }
+
+  .page__body {
+    display: grid;
+    gap: var(--space-7);
+    max-width: var(--measure);
+    margin-top: var(--space-7);
+  }
+
+  /* Each top-level section: an h2 over an ink rule, then its text. */
+  .page__body > :global(section) {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .page__body > :global(section) > :global(h2) {
+    padding-bottom: var(--space-3);
+    border-bottom: 2px solid var(--ink);
+    font-size: var(--step-2);
+  }
+
+  .page__body :global(p) {
+    color: var(--ink-soft);
+  }
+
+  /* Standalone links (e.g. "Go to Insights") get a full tap target. */
+  .page__body :global(.page-link) {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    font-weight: 500;
+    color: var(--ink);
+  }
+</style>

@@ -1,0 +1,78 @@
+---
+// A grid of topics or problems, each a box with its name (a link) and description.
+// Used on the Topics index and the homepage.
+import type { Term } from '../data/taxonomy';
+
+interface Props {
+  terms: readonly Term[];
+  /** URL prefix, e.g. /topics/ */
+  base: string;
+  /** Identifies the list for tests: "topics" or "problems". */
+  list: string;
+}
+
+const { terms, base, list } = Astro.props;
+---
+
+<ul class="terms" data-term-list={list}>
+  {
+    terms.map((t) => (
+      <li class="term" data-term>
+        <h3 class="term__name">
+          <a href={`${base}${t.slug}/`}>{t.name}</a>
+        </h3>
+        <p class="term__desc">{t.description}</p>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .terms {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+    gap: var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Each term is one tap target: the name link stretches over its box. */
+  .term {
+    position: relative;
+    display: grid;
+    gap: var(--space-2);
+    align-content: start;
+    padding: var(--space-5);
+    background: var(--paper);
+    border: 1px solid var(--stone-line);
+    border-radius: var(--radius-2);
+    transition: border-color var(--dur) var(--ease);
+  }
+
+  .term:hover {
+    border-color: var(--ink);
+  }
+
+  .term__name {
+    font-size: var(--step-1);
+  }
+
+  .term__name a {
+    text-decoration-color: transparent;
+  }
+
+  .term__name a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .term:hover .term__name a {
+    text-decoration-color: currentColor;
+  }
+
+  .term__desc {
+    color: var(--ink-soft);
+  }
+</style>

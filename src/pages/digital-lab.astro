@@ -1,0 +1,93 @@
+---
+// Placeholder until the first demo exists. It sets out the labelling rule
+// every future demo follows (spec: Claude's calls).
+import PageLayout from '../layouts/PageLayout.astro';
+
+const LABELS = [
+  {
+    term: 'Live',
+    definition: 'Running on real systems with real data, so what you see is happening now.',
+  },
+  {
+    term: 'Simulated',
+    definition: 'The system runs for real, on generated or replayed data instead of a live feed.',
+  },
+  {
+    term: 'Conceptual',
+    definition: 'A diagram or walkthrough of how something would work. Nothing is running behind it.',
+  },
+];
+---
+
+<PageLayout
+  label="Coming later"
+  title="Digital Lab"
+  lede="This is where working examples will go: small demonstrations of the technologies the guides explain, including parts of how this site is built. None are ready yet."
+  description="Working demonstrations of the technologies the guides explain, labelled so you know what's real."
+  path="/digital-lab/"
+>
+  <section aria-labelledby="labels-heading">
+    <h2 id="labels-heading">How demos will be labelled</h2>
+    <p>Every demo will carry one of three labels, so you know what you're looking at.</p>
+    <dl class="labels">
+      {
+        LABELS.map((l) => (
+          <div class="labels__item">
+            <dt class="labels__term">{l.term}</dt>
+            <dd class="labels__def">{l.definition}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </section>
+
+  <section aria-label="Where to start">
+    <p>
+      Until the first demo is ready, the guides in Insights are the place to start.
+    </p>
+    <p><a class="page-link" href="/insights/">Go to Insights</a></p>
+  </section>
+</PageLayout>
+
+<style>
+  .labels {
+    display: grid;
+    gap: var(--space-3);
+    margin: 0;
+  }
+
+  .labels__item {
+    display: grid;
+    gap: var(--space-2);
+    padding: var(--space-4) var(--space-5);
+    background: var(--paper);
+    border: 1px solid var(--stone-line);
+    border-radius: var(--radius-2);
+  }
+
+  @media (min-width: 40rem) {
+    .labels__item {
+      grid-template-columns: 8rem 1fr;
+      gap: var(--space-5);
+      align-items: baseline;
+    }
+  }
+
+  /* The label as it will appear on a demo: mono, uppercase, in an ink tag. */
+  .labels__term {
+    justify-self: start;
+    padding: var(--space-1) var(--space-2);
+    background: var(--ink);
+    color: var(--on-ink);
+    border-radius: var(--radius-1);
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .labels__def {
+    margin: 0;
+    color: var(--ink-soft);
+  }
+</style>

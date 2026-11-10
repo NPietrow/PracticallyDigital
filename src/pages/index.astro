@@ -1,9 +1,11 @@
 ---
-// Temporary home page on the base layout. Task 7 replaces the intro and adds the
-// problem and topic sections; the "Latest insights" section stays.
+// Homepage: what the site is, then two ways in (by problem, by technology),
+// then the latest articles.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import EmptyState from '../components/EmptyState.astro';
+import TermGrid from '../components/TermGrid.astro';
+import { PROBLEMS, TOPICS } from '../data/taxonomy';
 import { getPublishedArticles } from '../lib/articles';
 
 const latest = (await getPublishedArticles()).slice(0, 3);
@@ -13,19 +15,40 @@ const latest = (await getPublishedArticles()).slice(0, 3);
   description="Plain-English guides to data, AI, digital twins, IoT and cloud for UK industrial leaders."
   path="/"
 >
-  <section class="wrap intro">
+  <section class="wrap hero" data-home-section="hero">
     <p class="label">Data · AI · Digital twins · IoT · Cloud</p>
     <h1>Digital technology, explained for the people who run industry</h1>
-    <p class="intro__lede">
-      Each guide covers what a technology is, which problems it solves, what it costs and when it
-      isn't worth doing.
+    <p class="hero__lede">
+      Plain-English guides for leaders and managers in UK manufacturing, water and other industrial
+      businesses. Each one covers what a technology is, which problems it solves, what it costs and
+      when it isn't worth doing.
+    </p>
+    <p class="hero__stance">
+      The guides start from data: each one says plainly that the technology fails on data you can't
+      trust.
     </p>
   </section>
 
-  <section class="wrap latest" aria-labelledby="latest-heading">
-    <div class="latest__head">
+  <section class="wrap home-section" data-home-section="problems" aria-labelledby="problems-heading">
+    <div class="home-section__head">
+      <h2 id="problems-heading">Start with a problem</h2>
+      <p>Pick the problem closest to yours and see which guides deal with it.</p>
+    </div>
+    <TermGrid terms={PROBLEMS} base="/problems/" list="problems" />
+  </section>
+
+  <section class="wrap home-section" data-home-section="topics" aria-labelledby="topics-heading">
+    <div class="home-section__head">
+      <h2 id="topics-heading">Explore a technology</h2>
+      <p>Already have a technology in mind? Start there.</p>
+    </div>
+    <TermGrid terms={TOPICS} base="/topics/" list="topics" />
+  </section>
+
+  <section class="wrap home-section" data-home-section="latest" aria-labelledby="latest-heading">
+    <div class="home-section__head home-section__head--row">
       <h2 id="latest-heading">Latest insights</h2>
-      {latest.length > 0 && <a class="latest__all" href="/insights/">All insights</a>}
+      {latest.length > 0 && <a class="home-section__all" href="/insights/">All insights</a>}
     </div>
     {
       latest.length > 0 ? (
@@ -50,16 +73,16 @@ const latest = (await getPublishedArticles()).slice(0, 3);
 </BaseLayout>
 
 <style>
-  .intro {
-    padding-block: var(--space-8) var(--space-6);
+  .hero {
+    padding-block: var(--space-8) var(--space-7);
   }
 
-  .intro h1 {
+  .hero h1 {
     margin-top: var(--space-4);
     max-width: 20ch;
   }
 
-  .intro__lede {
+  .hero__lede {
     margin-top: var(--space-5);
     max-width: var(--measure);
     font-size: var(--step-1);
@@ -67,24 +90,47 @@ const latest = (await getPublishedArticles()).slice(0, 3);
     color: var(--ink-soft);
   }
 
-  .latest {
-    padding-block: var(--space-6) var(--space-9);
+  .hero__stance {
+    margin-top: var(--space-4);
+    max-width: var(--measure);
+    font-size: var(--step-1);
+    line-height: var(--leading-snug);
+    font-weight: 500;
   }
 
-  .latest__head {
+  .home-section {
+    padding-block: var(--space-6) var(--space-7);
+  }
+
+  .home-section:last-child {
+    padding-bottom: var(--space-9);
+  }
+
+  .home-section__head {
+    display: grid;
+    gap: var(--space-2);
+    margin-bottom: var(--space-5);
+    padding-bottom: var(--space-3);
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .home-section__head h2 {
+    font-size: var(--step-2);
+  }
+
+  .home-section__head p {
+    color: var(--ink-soft);
+  }
+
+  .home-section__head--row {
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
     justify-content: space-between;
     gap: var(--space-3);
-    margin-bottom: var(--space-5);
   }
 
-  .latest__head h2 {
-    font-size: var(--step-2);
-  }
-
-  .latest__all {
+  .home-section__all {
     display: inline-flex;
     align-items: center;
     min-height: var(--tap);
@@ -96,5 +142,10 @@ const latest = (await getPublishedArticles()).slice(0, 3);
     padding: 0;
     list-style: none;
     border-bottom: var(--rule);
+  }
+
+  /* The section heading's rule already separates the first card. */
+  .latest__cards > li:first-child :global(.card) {
+    border-top: 0;
   }
 </style>

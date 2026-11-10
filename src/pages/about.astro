@@ -1,0 +1,86 @@
+---
+// Who writes the site, why it exists, the editorial rules and how to get in touch.
+// Author details come from src/data/author.ts; a public build fails while they
+// still hold placeholders.
+import PageLayout from '../layouts/PageLayout.astro';
+import { AUTHOR, checkAuthorForLaunch } from '../data/author';
+import { allowIndexing } from '../lib/env';
+
+checkAuthorForLaunch(AUTHOR, allowIndexing());
+
+const firstName = AUTHOR.name.split(' ')[0];
+
+const PRINCIPLES = [
+  'Every factual claim links to its source. Estimates are labelled as estimates.',
+  'No invented numbers, case studies or references.',
+  'Each guide has a section on costs, risks and limitations, including when not to bother.',
+  'Examples come from public sources, never from client or employer work.',
+  `Drafts are written with AI help. ${firstName} then checks every source, edits the text and adds his own experience before anything is published.`,
+];
+---
+
+<PageLayout
+  label="About"
+  title="Who's behind this site"
+  lede="An independent site explaining digital technology to the people who run industrial businesses."
+  description="Who writes Practically Digital, why it exists and the rules every guide follows."
+  path="/about/"
+>
+  <section aria-labelledby="author-heading">
+    <h2 id="author-heading">{AUTHOR.name}</h2>
+    <p class="label">{AUTHOR.role}</p>
+    <p>{AUTHOR.bio}</p>
+  </section>
+
+  <section aria-labelledby="why-heading">
+    <h2 id="why-heading">Why it exists</h2>
+    <p>
+      Much of what's written about AI, digital twins and the cloud comes from people selling them.
+      This site isn't tied to any vendor. It explains what each technology does, what it needs,
+      what it costs and where it falls short, so you can judge it for yourself and raise it with
+      your team.
+    </p>
+  </section>
+
+  <section aria-labelledby="editorial-heading" data-editorial>
+    <h2 id="editorial-heading">How the guides are written</h2>
+    <ul class="principles">
+      {PRINCIPLES.map((p) => <li>{p}</li>)}
+    </ul>
+  </section>
+
+  <section aria-labelledby="ask-heading" data-ask>
+    <h2 id="ask-heading">Ask a question</h2>
+    <p>
+      Got a question a guide didn't answer, or a topic you'd like covered? Email or message on
+      LinkedIn. There's no form, so nothing you send is stored on this site.
+    </p>
+    <ul class="ask">
+      <li><a class="page-link" href={`mailto:${AUTHOR.email}`}>Email {firstName}</a></li>
+      <li><a class="page-link" href={AUTHOR.linkedin} rel="me">Message on LinkedIn</a></li>
+    </ul>
+  </section>
+</PageLayout>
+
+<style>
+  .principles {
+    display: grid;
+    gap: var(--space-3);
+    margin: 0;
+    padding-left: 1.25em;
+    color: var(--ink-soft);
+  }
+
+  .principles li::marker {
+    color: var(--ink);
+  }
+
+  .ask {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+</style>
