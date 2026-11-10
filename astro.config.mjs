@@ -31,5 +31,10 @@ export default defineConfig({
   markdown: {
     processor: satteri({ hastPlugins: [tableScroll] }),
   },
-  integrations: [mdx(), sitemap(), searchIndex],
+  integrations: [
+    mdx(),
+    // The 404 and search pages have nothing for a search engine to list.
+    sitemap({ filter: (page) => !/\/(404|search)\/$/.test(new URL(page).pathname) }),
+    searchIndex,
+  ],
 });

@@ -11,7 +11,7 @@ import '../styles/global.css';
 import SeoHead from '../components/SeoHead.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
-import type { MetaInput } from '../lib/seo';
+import { SITE_NAME, SITE_URL, type MetaInput } from '../lib/seo';
 
 type Props = MetaInput;
 ---
@@ -23,6 +23,8 @@ type Props = MetaInput;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#1b1f23" />
     <meta name="generator" content={Astro.generator} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate" type="application/rss+xml" title={SITE_NAME} href={`${SITE_URL}/rss.xml`} />
     <SeoHead {...Astro.props} />
     <slot name="head" />
   </head>
