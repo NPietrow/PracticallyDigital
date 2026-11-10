@@ -1,0 +1,89 @@
+---
+// Pagefind's default search UI. The index and the UI files are written to
+// /pagefind/ after each build (src/lib/search-index.ts), so search works on a
+// built site (npm run build, then npm run preview), not in `astro dev`.
+---
+
+<link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
+
+<div class="search" id="search" data-search></div>
+
+<noscript>
+  <div class="search__noscript" data-search-noscript>
+    <p>
+      Search needs JavaScript, which is turned off in your browser. You can still browse every
+      guide on the Insights page.
+    </p>
+    <p><a href="/insights/">Go to Insights</a></p>
+  </div>
+</noscript>
+
+<script is:inline src="/pagefind/pagefind-ui.js"></script>
+<script is:inline>
+  // PagefindUI is defined by the script above.
+  window.addEventListener('DOMContentLoaded', () => {
+    new PagefindUI({
+      element: '#search',
+      showImages: false,
+      showSubResults: false,
+      resetStyles: false,
+      translations: { placeholder: 'Search the guides' },
+    });
+  });
+</script>
+
+<style>
+  /*
+    Pagefind's UI reads these CSS variables. They are set on .pagefind-ui, so we
+    match that element with a more specific selector to override its defaults.
+  */
+  .search :global(.pagefind-ui) {
+    --pagefind-ui-scale: 1;
+    --pagefind-ui-primary: var(--ink);
+    --pagefind-ui-text: var(--ink);
+    --pagefind-ui-background: var(--paper);
+    /* --muted keeps the input outline above 3:1 against paper (WCAG non-text contrast). */
+    --pagefind-ui-border: var(--muted);
+    --pagefind-ui-tag: var(--stone);
+    --pagefind-ui-border-width: 1px;
+    --pagefind-ui-border-radius: var(--radius-2);
+    --pagefind-ui-font: var(--font-sans);
+  }
+
+  /* Form fields don't inherit the page font, and Pagefind sets the input in bold. */
+  .search :global(.pagefind-ui__search-input) {
+    font-family: var(--font-sans);
+    font-weight: 400;
+  }
+
+  .search :global(.pagefind-ui__result-link) {
+    color: var(--ink);
+  }
+
+  .search :global(.pagefind-ui__result-excerpt),
+  .search :global(.pagefind-ui__message) {
+    color: var(--ink-soft);
+  }
+
+  /* Pagefind wraps matched words in <mark>; the signal yellow highlight is safe behind ink text. */
+  .search :global(mark) {
+    background: var(--signal);
+    color: var(--ink);
+  }
+
+  .search__noscript {
+    display: grid;
+    gap: var(--space-3);
+    padding: var(--space-5);
+    background: var(--paper);
+    border: 1px dashed var(--stone-line);
+    border-radius: var(--radius-2);
+  }
+
+  .search__noscript a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    font-weight: 500;
+  }
+</style>

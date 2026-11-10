@@ -71,12 +71,13 @@ const jsonLdText = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
     )
   }
 
-  <article class="wrap article" data-article>
+  <!-- Search indexes this article only (see ADR-0003); navigation and metadata are skipped. -->
+  <article class="wrap article" data-article data-pagefind-body>
 
     <header class="article__head">
-      <p class="label" data-article-meta>{topicName} / {minutes} min</p>
+      <p class="label" data-article-meta data-pagefind-ignore>{topicName} / {minutes} min</p>
       <h1>{data.title}</h1>
-      <p class="article__byline">
+      <p class="article__byline" data-pagefind-ignore>
         <span>By {data.author}</span>
         <span>Published <time datetime={isoDate(data.published)}>{longDate(data.published)}</time></span>
         {
@@ -87,11 +88,13 @@ const jsonLdText = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
           )
         }
       </p>
-      <TermTags topics={data.topics} problems={data.problems} />
+      <div data-pagefind-ignore>
+        <TermTags topics={data.topics} problems={data.problems} />
+      </div>
       <Gist text={data.gist} />
     </header>
 
-    <div class="article__toc">
+    <div class="article__toc" data-pagefind-ignore>
       <Toc items={toc} />
     </div>
 

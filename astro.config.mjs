@@ -1,9 +1,23 @@
 // @ts-check
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import { satteri } from '@astrojs/markdown-satteri';
 import { tableScroll } from './src/lib/table-scroll.ts';
+import { buildSearchIndex } from './src/lib/search-index.ts';
+
+// After every build, index the article pages for search (see ADR-0003).
+/** @type {import('astro').AstroIntegration} */
+const searchIndex = {
+  name: 'practically-digital:search-index',
+  hooks: {
+    'astro:build:done': async ({ dir, logger }) => {
+      const { pageCount } = await buildSearchIndex(fileURLToPath(dir));
+      logger.info(`Search index built: ${pageCount} article(s)`);
+    },
+  },
+};
 
 // https://astro.build/config
 export default defineConfig({
@@ -17,5 +31,5 @@ export default defineConfig({
   markdown: {
     processor: satteri({ hastPlugins: [tableScroll] }),
   },
-  integrations: [mdx(), sitemap()],
+  integrations: [mdx(), sitemap(), searchIndex],
 });

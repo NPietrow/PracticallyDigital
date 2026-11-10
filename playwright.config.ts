@@ -1,7 +1,9 @@
 import { defineConfig, devices } from '@playwright/test';
 
-const PORT = 4321; // fixture articles
-const EMPTY_PORT = 4322; // zero articles
+// Not 4321/4322: those are `astro dev`'s default ports, and a running dev
+// server there would be silently reused for the tests (reuseExistingServer).
+const PORT = 4410; // fixture articles
+const EMPTY_PORT = 4411; // zero articles
 
 // Tests tagged @empty run only against the zero-article build; every other
 // test runs only against the fixture build.
