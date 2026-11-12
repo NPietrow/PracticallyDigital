@@ -1,0 +1,61 @@
+---
+// What a listing shows when it has no articles, e.g. a topic nobody has written about yet.
+interface Props {
+  heading: string;
+  body: string;
+  linkHref?: string;
+  linkText?: string;
+  /** Heading level: 2 on listing pages, 3 under a section heading. */
+  level?: 2 | 3;
+}
+
+const { heading, body, linkHref, linkText, level = 2 } = Astro.props;
+const Heading = `h${level}` as const;
+---
+
+<div class="empty" data-empty-state>
+  <Heading class:list={['empty__heading', { 'empty__heading--sub': level === 3 }]}>{heading}</Heading>
+  <p class="empty__body">{body}</p>
+  {
+    linkHref && linkText && (
+      <p>
+        <a class="empty__link" href={linkHref}>
+          {linkText}
+        </a>
+      </p>
+    )
+  }
+</div>
+
+<style>
+  .empty {
+    display: grid;
+    gap: var(--space-3);
+    justify-items: start;
+    padding: var(--space-6) var(--space-5);
+    background: var(--paper);
+    border: 1px dashed var(--stone-line);
+    border-radius: var(--radius-2);
+  }
+
+  .empty__heading {
+    font-size: var(--step-2);
+  }
+
+  /* Under a section heading, stay a step below it. */
+  .empty__heading--sub {
+    font-size: var(--step-1);
+  }
+
+  .empty__body {
+    max-width: var(--measure);
+    color: var(--ink-soft);
+  }
+
+  .empty__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    font-weight: 500;
+  }
+</style>

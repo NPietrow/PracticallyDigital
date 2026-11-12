@@ -1,0 +1,32 @@
+---
+// Full-text search over article bodies, using Pagefind (ADR-0003).
+// With no published articles the index is empty and Pagefind's UI would never
+// finish loading, so the page shows an empty state instead of the search box.
+import PageLayout from '../layouts/PageLayout.astro';
+import SearchBox from '../components/SearchBox.astro';
+import EmptyState from '../components/EmptyState.astro';
+import { getPublishedArticles } from '../lib/articles';
+
+const hasArticles = (await getPublishedArticles()).length > 0;
+---
+
+<PageLayout
+  label="Full text"
+  title="Search the guides"
+  lede="Search covers the full text of every published guide."
+  description="Search the full text of every Practically Digital guide."
+  path="/search/"
+>
+  {
+    hasArticles ? (
+      <SearchBox />
+    ) : (
+      <EmptyState
+        heading="Nothing to search yet"
+        body="Search will work once the first guides are published. The topics page shows what they'll cover."
+        linkHref="/topics/"
+        linkText="See the topics"
+      />
+    )
+  }
+</PageLayout>

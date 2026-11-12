@@ -1,0 +1,49 @@
+---
+// A thin signal-yellow bar under the header that fills as you read the article.
+// Decorative only (hidden from screen readers). Without JavaScript it stays empty.
+---
+
+<div class="progress" data-reading-progress aria-hidden="true">
+  <div class="progress__bar"></div>
+</div>
+
+<style>
+  .progress {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    height: 4px;
+  }
+
+  .progress__bar {
+    height: 100%;
+    background: var(--signal);
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+</style>
+
+<script>
+  const bar = document.querySelector<HTMLElement>('[data-reading-progress] .progress__bar');
+  const article = document.querySelector<HTMLElement>('[data-article]');
+
+  if (bar && article) {
+    let queued = false;
+    const update = () => {
+      queued = false;
+      const rect = article.getBoundingClientRect();
+      const travel = rect.height - window.innerHeight;
+      const progress = travel > 0 ? Math.min(1, Math.max(0, -rect.top / travel)) : 1;
+      bar.style.transform = `scaleX(${progress})`;
+    };
+    const schedule = () => {
+      if (!queued) {
+        queued = true;
+        requestAnimationFrame(update);
+      }
+    };
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    update();
+  }
+</script>

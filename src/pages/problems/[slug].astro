@@ -1,0 +1,29 @@
+---
+// One page per problem, built even when no article covers it yet.
+import ListingLayout from '../../layouts/ListingLayout.astro';
+import { PROBLEMS, type Term } from '../../data/taxonomy';
+import { getPublishedArticles, byProblem, countGuides } from '../../lib/articles';
+
+export function getStaticPaths() {
+  return PROBLEMS.map((term) => ({ params: { slug: term.slug }, props: { term } }));
+}
+
+const { term } = Astro.props as { term: Term };
+const articles = byProblem(await getPublishedArticles(), term.slug);
+---
+
+<ListingLayout
+  label={`Problem / ${countGuides(articles.length)}`}
+  title={term.name}
+  lede={term.description}
+  description={term.description}
+  path={`/problems/${term.slug}/`}
+  articles={articles}
+  current={term.slug}
+  empty={{
+    heading: 'No guides on this problem yet',
+    body: 'Pick another problem above, or go back to the full list.',
+    linkHref: '/insights/',
+    linkText: 'Back to Insights',
+  }}
+/>

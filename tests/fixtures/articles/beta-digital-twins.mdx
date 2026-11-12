@@ -1,0 +1,36 @@
+---
+title: Fixture beta on digital twins for test runs
+description: Test fixture article about digital twins, written in MDX, used by the automated tests only.
+gist: Fixture gist for beta. A twin is only as good as the data feeding it.
+published: 2026-10-05
+topics: [digital-twins]
+problems: [unplanned-downtime]
+---
+
+import Figure from '../../../src/components/Figure.astro';
+import diagram from './images/beta-diagram.png';
+
+export const fixtureLabel = 'MDX expression rendered';
+
+This fixture checks that MDX articles build. {fixtureLabel}.
+
+## Only section
+
+Paragraph text for the beta fixture.
+
+| Fixture | Table |
+|---|---|
+| MDX | row |
+
+<Figure
+  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600' viewBox='0 0 600 600'%3E%3Crect width='600' height='600' fill='%23D5D5CE'/%3E%3C/svg%3E"
+  alt="Fixture inline diagram, a plain grey square"
+  caption="Fixture inline figure."
+/>
+
+<Figure
+  src={diagram}
+  alt="Fixture wide diagram stored beside the article"
+  caption="Fixture wide figure from a local file."
+  size="wide"
+/>

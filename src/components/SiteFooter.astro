@@ -1,0 +1,109 @@
+---
+// Ink footer that bookends the ink header.
+const year = new Date().getFullYear();
+
+const LINKS = [
+  { href: '/insights/', label: 'Insights' },
+  { href: '/topics/', label: 'Topics' },
+  { href: '/digital-lab/', label: 'Digital Lab' },
+  { href: '/about/', label: 'About' },
+  { href: '/search/', label: 'Search' },
+];
+---
+
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <div class="site-footer__about">
+      <p class="site-footer__mark" aria-hidden="true">
+        practically<span class="site-footer__slash">/</span>digital
+      </p>
+      <p class="site-footer__line">
+        Plain-English guides to data, AI, digital twins, IoT and cloud for people who run
+        industrial businesses in the UK.
+      </p>
+    </div>
+    <nav aria-label="Footer">
+      <ul class="site-footer__links">
+        {
+          LINKS.map((item) => (
+            <li>
+              <a href={item.href}>{item.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+  <div class="wrap">
+    <p class="site-footer__legal label">© {year} Nikita Pietrow</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: var(--space-9);
+    padding-block: var(--space-7) var(--space-5);
+    background: var(--ink);
+    color: var(--on-ink);
+  }
+
+  .site-footer__inner {
+    display: grid;
+    gap: var(--space-6);
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  @media (min-width: 48rem) {
+    .site-footer__inner {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: start;
+    }
+  }
+
+  .site-footer__mark {
+    font-size: var(--step-1);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .site-footer__slash {
+    color: var(--signal);
+    margin-inline: 0.06em;
+  }
+
+  .site-footer__line {
+    margin-top: var(--space-2);
+    max-width: 34rem;
+    color: var(--on-ink-muted);
+    font-size: var(--step--1);
+  }
+
+  .site-footer__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .site-footer__links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    font-size: var(--step--1);
+    color: var(--on-ink);
+    text-decoration-color: var(--on-ink-muted);
+  }
+
+  .site-footer__links a:hover {
+    text-decoration-color: var(--signal);
+  }
+
+  .site-footer__legal {
+    margin-top: var(--space-6);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--ink-soft);
+    color: var(--on-ink-muted);
+  }
+</style>

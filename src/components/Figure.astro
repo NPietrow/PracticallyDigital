@@ -1,0 +1,40 @@
+---
+// A figure with a caption, for MDX articles. "inline" sits in the text column;
+// "wide" breaks out to the full content width for complex diagrams. Styles live
+// in prose.css.
+//
+// Keep images in an images/ folder beside the article and import them:
+//   import pumpDiagram from './images/pump-diagram.png';
+//   <Figure src={pumpDiagram} alt="..." caption="..." size="wide" />
+// Astro then resizes the image, converts it to WebP and sets width and height
+// so the page doesn't jump as it loads. A plain string src (a data: URI or a
+// file in public/) is used as it is, without optimisation.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  src: ImageMetadata | string;
+  alt: string;
+  caption?: string;
+  size?: 'inline' | 'wide';
+}
+
+const { src, alt, caption, size = 'inline' } = Astro.props;
+// Wide figures can fill the content box (up to 76rem); inline ones the text column.
+const sizes =
+  size === 'wide' ? '(min-width: 80rem) 76rem, 100vw' : '(min-width: 46rem) 42rem, 100vw';
+// Same widths as the hero image, never larger than the original file.
+const widths =
+  typeof src === 'string' ? [] : [640, 960, 1280, 1600].filter((w) => w < src.width).concat(Math.min(src.width, 1600));
+---
+
+<figure data-size={size}>
+  {
+    typeof src === 'string' ? (
+      <img src={src} alt={alt} loading="lazy" decoding="async" />
+    ) : (
+      <Image src={src} alt={alt} widths={widths} sizes={sizes} loading="lazy" decoding="async" />
+    )
+  }
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>

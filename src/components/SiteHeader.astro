@@ -1,0 +1,126 @@
+---
+// Ink top bar: wordmark and the main navigation. No JavaScript: on phones the
+// links sit on their own row under the wordmark instead of behind a menu button.
+
+const NAV = [
+  { href: '/insights/', label: 'Insights' },
+  { href: '/topics/', label: 'Topics' },
+  { href: '/digital-lab/', label: 'Digital Lab' },
+  { href: '/about/', label: 'About' },
+  { href: '/search/', label: 'Search' },
+];
+
+const current = Astro.url.pathname;
+// Topic and problem pages count as part of their section.
+const isCurrent = (href: string) =>
+  current.startsWith(href) || (href === '/topics/' && current.startsWith('/problems/'));
+---
+
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <a class="wordmark" href="/" aria-label="Practically Digital, home">
+      practically<span class="wordmark__slash" aria-hidden="true">/</span>digital
+    </a>
+    <nav aria-label="Main">
+      <ul class="nav-list">
+        {
+          NAV.map((item) => (
+            <li>
+              <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    background: var(--ink);
+    color: var(--on-ink);
+  }
+
+  .site-header__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: var(--space-6);
+    min-height: 4rem;
+  }
+
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    font-size: 1.1875rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+    color: var(--on-ink);
+  }
+
+  .wordmark__slash {
+    color: var(--signal);
+    margin-inline: 0.06em;
+  }
+
+  .nav-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .nav-list a {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    font-size: var(--step--1);
+    font-weight: 500;
+    color: var(--on-ink);
+    text-decoration: none;
+  }
+
+  /* A signal-yellow rule draws in under the link on hover and stays for the current page. */
+  .nav-list a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.55rem;
+    height: 2px;
+    background: var(--signal);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur) var(--ease);
+  }
+
+  .nav-list a:hover::after,
+  .nav-list a[aria-current='page']::after {
+    transform: scaleX(1);
+  }
+
+  /* Phones: wordmark on one row, the five links spread across the next. */
+  @media (max-width: 40rem) {
+    .site-header__inner {
+      padding-block: var(--space-2) var(--space-1);
+    }
+
+    nav {
+      width: 100%;
+      border-top: 1px solid var(--ink-soft);
+    }
+
+    .nav-list {
+      justify-content: space-between;
+      gap: 0 var(--space-3);
+    }
+  }
+</style>

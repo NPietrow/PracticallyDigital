@@ -17,3 +17,9 @@ dist/
 Thumbs.db
 .vscode/*
 !.vscode/extensions.json
+
+# Test output
+dist-test/
+dist-empty/
+test-results/
+playwright-report/

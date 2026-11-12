@@ -1,0 +1,22 @@
+---
+// Every published article, newest first, with chips linking to the topic and problem pages.
+import ListingLayout from '../../layouts/ListingLayout.astro';
+import { getPublishedArticles, countGuides } from '../../lib/articles';
+
+const articles = await getPublishedArticles();
+---
+
+<ListingLayout
+  label={countGuides(articles.length)}
+  title="Insights"
+  lede="Every guide on the site, newest first. Narrow the list by the problem you're facing or the technology you're weighing up."
+  description="Plain-English guides to digital technology for UK industry, newest first, filterable by problem and technology."
+  path="/insights/"
+  articles={articles}
+  empty={{
+    heading: 'No guides published yet',
+    body: "The first ones are being written. The topics page shows what they'll cover.",
+    linkHref: '/topics/',
+    linkText: 'See the topics',
+  }}
+/>
