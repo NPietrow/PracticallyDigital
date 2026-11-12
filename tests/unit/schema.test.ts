@@ -93,6 +93,23 @@ describe('articleSchema', () => {
     expect(articleSchema.safeParse({ ...valid, description: 'x'.repeat(49) }).success).toBe(false);
     expect(articleSchema.safeParse({ ...valid, description: 'x'.repeat(161) }).success).toBe(false);
   });
+
+  // A misspelt key must fail the build, not be dropped: "drafts: true" would
+  // otherwise publish a draft, and "problem:" would drop the article from every
+  // problem page.
+  for (const [key, value] of [
+    ['drafts', true],
+    ['Draft', true],
+    ['problem', ['untrusted-data']],
+    ['topic', ['digital-twins']],
+  ] as const) {
+    it(`rejects the unknown key "${key}" and names it`, () => {
+      const result = articleSchema.safeParse({ ...valid, [key]: value });
+      expect(result.success).toBe(false);
+      const messages = result.error!.issues.map((i) => i.message).join('\n');
+      expect(messages).toContain(`"${key}"`);
+    });
+  }
 });
 
 describe('buildArticleSchema', () => {

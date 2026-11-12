@@ -4,7 +4,7 @@ import { expectNoA11yViolations } from './helpers/axe';
 // Fixture dates: alpha 20 Oct 2026, beta 5 Oct 2026, delta 1 Mar 2026; gamma is a draft.
 const ALPHA = 'Fixture alpha on data quality for test runs';
 const BETA = 'Fixture beta on digital twins for test runs';
-const DELTA = 'Fixture delta, the oldest article for test runs';
+const DELTA = 'Fixture delta, the oldest, with a long title and the word Prozessdatenmanagementsysteme';
 const GAMMA = 'Fixture gamma, a draft that must never ship';
 
 const cards = (page: Page) => page.locator('[data-article-card]');

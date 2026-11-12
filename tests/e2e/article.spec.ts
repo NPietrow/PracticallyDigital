@@ -150,6 +150,20 @@ test('on phones the contents is a closed dropdown and nothing scrolls sideways',
   expect(scrollWidth).toBeLessThanOrEqual(375);
 });
 
+// Review Focus 4: delta's title is 87 characters with a 29-letter word in it.
+test('a long title with a long word wraps on phones without sideways scroll', async ({
+  page,
+}, testInfo) => {
+  test.skip(!isMobile(testInfo.project.name), 'phone layout');
+  await page.goto('/insights/delta-old/');
+  const h1 = page.getByRole('heading', { level: 1 });
+  await expect(h1).toContainText('Prozessdatenmanagementsysteme');
+  const box = await h1.boundingBox();
+  expect(box!.x + box!.width).toBeLessThanOrEqual(375);
+  const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
+  expect(scrollWidth).toBeLessThanOrEqual(375);
+});
+
 test('MDX article renders, with an inline Figure and no review date', async ({ page }) => {
   await page.goto(BETA);
   await expect(page.getByText('MDX expression rendered')).toBeVisible();
@@ -158,6 +172,25 @@ test('MDX article renders, with an inline Figure and no review date', async ({ p
   await expect(figure.locator('figcaption')).toHaveText('Fixture inline figure.');
   await expect(page.locator('[data-prose] .table-scroll[tabindex="0"] table')).toHaveCount(1);
   await expect(page.getByText('Last reviewed')).toHaveCount(0);
+});
+
+// Real articles keep their diagrams in an images/ folder beside the file.
+test('Figure optimises an image stored beside the article', async ({ page }) => {
+  await page.goto(BETA);
+  const img = page.getByAltText('Fixture wide diagram stored beside the article');
+  await expect(img).toHaveAttribute('src', /\/_astro\/.+\.webp$/);
+  // width and height let the browser reserve space, so the page doesn't jump.
+  await expect(img).toHaveAttribute('width', '1200');
+  await expect(img).toHaveAttribute('height', '600');
+  // Smaller copies for phones, never upscaled beyond the 1200px original.
+  await expect(img).toHaveAttribute('srcset', /640w.*960w.*1200w/);
+  await expect(img).not.toHaveAttribute('srcset', /1600w/);
+  await expect(page.locator('[data-prose] figure[data-size="wide"] figcaption')).toHaveText(
+    'Fixture wide figure from a local file.',
+  );
+  // The browser actually loaded it.
+  await img.scrollIntoViewIfNeeded();
+  expect(await img.evaluate((el: HTMLImageElement) => el.naturalWidth)).toBeGreaterThan(0);
 });
 
 test('draft article is not built', async ({ page }) => {

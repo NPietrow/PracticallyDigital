@@ -32,9 +32,12 @@ function termList<T extends z.ZodType<string>>(term: T, kind: 'topic' | 'problem
 // heroImage's validator is passed in. The content collection passes Astro's
 // image() helper, which resolves the path next to the article, fails the build
 // if the file is missing and lets Astro optimise it. Unit tests use a string.
+//
+// strictObject: an unknown key fails the build and is named in the error. Zod's
+// plain object would silently drop it, so "drafts: true" would publish a draft.
 export function buildArticleSchema<H extends z.ZodType>(heroImage: H) {
   return z
-    .object({
+    .strictObject({
       title: z.string().min(10).max(90),
       description: z.string().min(50).max(160),
       gist: z.string().min(1).max(400),
