@@ -52,3 +52,11 @@ npx playwright install chromium
 - [Architecture overview](docs/architecture/overview.md): how the site is built, what each folder holds, the build switches and the tests
 - [Design spec](docs/superpowers/specs/2026-11-09-practically-digital-design.md): what the site is for and the decisions behind it
 - [Architecture decision records](docs/adr/): Astro, plain CSS and IBM Plex, Pagefind search
+
+## Licence
+
+The code is under the [MIT licence](LICENSE). You can reuse it as long as you keep the copyright notice.
+
+The articles, the text on the site's pages, and the Practically Digital name and logo are not covered. They're © Nikita Pietrow, all rights reserved. You're welcome to link to the guides and quote short extracts with credit and a link. For anything else, such as using a guide in training material, get in touch through the site's About page. [LICENSE](LICENSE) lists exactly which files this covers.
+
+IBM Plex fonts are used under the SIL Open Font Licence.
