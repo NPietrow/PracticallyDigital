@@ -8,7 +8,7 @@ The site foundation is built and tested locally. Hosting, CI and the first artic
 
 ## Run it on your machine
 
-You need [Node.js](https://nodejs.org) 22.23.4 or later (`.nvmrc` names the version used here).
+You need [Node.js](https://nodejs.org) 26 or later. `.nvmrc` names the version, and CI reads it from there.
 
 ```bash
 npm install
