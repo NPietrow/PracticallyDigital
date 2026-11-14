@@ -53,6 +53,8 @@ export default defineConfig({
         PD_CONTENT_DIR: 'tests/fixtures/articles',
         PD_OUT_DIR: './dist-test',
         PUBLIC_SHOW_DRAFTS: 'false',
+        PUBLIC_ALLOW_INDEXING: 'false',
+        PUBLIC_CF_WEB_ANALYTICS_TOKEN: '',
       },
     },
     {
@@ -67,6 +69,8 @@ export default defineConfig({
         PD_CONTENT_DIR: 'tests/fixtures/empty',
         PD_OUT_DIR: './dist-empty',
         PUBLIC_SHOW_DRAFTS: 'false',
+        PUBLIC_ALLOW_INDEXING: 'false',
+        PUBLIC_CF_WEB_ANALYTICS_TOKEN: '',
       },
     },
   ],
