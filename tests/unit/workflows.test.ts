@@ -183,3 +183,73 @@ describe('setup action and Node version', () => {
     }
   });
 });
+
+describe('deploy.yml (production)', () => {
+  const deploy = () => loadWorkflow('deploy.yml');
+  const job = () => deploy().jobs['deploy-production'];
+  const ANALYTICS_VAR = '${{ vars.PUBLIC_CF_WEB_ANALYTICS_TOKEN }}';
+
+  it('production deploys only from main or a manual run', () => {
+    expect(Object.keys(deploy().on).sort()).toEqual(['push', 'workflow_dispatch']);
+    expect(deploy().on.push).toEqual({ branches: ['main'] });
+  });
+
+  it('production deploys never overlap or cancel each other', () => {
+    expect(deploy().concurrency).toEqual({ group: 'production', 'cancel-in-progress': false });
+  });
+
+  it('workflows default to read-only contents', () => {
+    expect(deploy().permissions).toEqual({ contents: 'read' });
+    expect(job().permissions).toBeUndefined();
+  });
+
+  it('production runs unit tests and the build before the deploy step', () => {
+    const steps = job().steps;
+    const at = (pred: (s: any) => boolean) => steps.findIndex(pred);
+    const test = at((s) => s.run === 'npm test');
+    const build = at((s) => s.run === 'npm run build');
+    const swa = at((s) => String(s.uses ?? '').startsWith(SWA_ACTION));
+    expect(test).toBeGreaterThan(0);
+    expect(build).toBeGreaterThan(test);
+    expect(swa).toBeGreaterThan(build);
+    expect(steps[swa].id).toBe('deploy');
+    expect(steps[swa].with).toMatchObject({
+      action: 'upload',
+      app_location: 'dist',
+      output_location: '',
+      skip_app_build: true,
+      azure_static_web_apps_api_token: '${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}',
+    });
+    // Nothing runs between the build and the deploy that could change dist/.
+    expect(swa).toBe(build + 1);
+  });
+
+  it('a smoke test checks the live site after every deploy', () => {
+    const steps = job().steps;
+    const swa = steps.findIndex((s: any) => String(s.uses ?? '').startsWith(SWA_ACTION));
+    const smoke = steps.findIndex((s: any) => s.run === 'npm run test:deployed');
+    expect(smoke).toBeGreaterThan(swa);
+    expect(steps[smoke].env).toEqual({
+      PD_DEPLOYED_URL: '${{ steps.deploy.outputs.static_web_app_url }}',
+      PD_EXPECT_ANALYTICS: "${{ vars.PUBLIC_CF_WEB_ANALYTICS_TOKEN != '' && 'true' || 'false' }}",
+    });
+  });
+
+  it('production pins drafts and indexing off', () => {
+    const steps = buildSteps(deploy());
+    expect(steps).toHaveLength(1);
+    expect(steps[0].step.env).toEqual({
+      PUBLIC_SHOW_DRAFTS: 'false',
+      PUBLIC_ALLOW_INDEXING: 'false',
+      PUBLIC_CF_WEB_ANALYTICS_TOKEN: ANALYTICS_VAR,
+    });
+  });
+
+  it('only the production build reads the analytics variable', () => {
+    for (const { file, text } of rawWorkflows()) {
+      const uses = text.split('vars.PUBLIC_CF_WEB_ANALYTICS_TOKEN').length - 1;
+      // deploy.yml: once for the build, once to tell the smoke test what to expect.
+      expect(uses, file).toBe(file.endsWith('deploy.yml') ? 2 : 0);
+    }
+  });
+});
