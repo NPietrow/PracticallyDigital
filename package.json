@@ -12,7 +12,9 @@
     "astro": "astro",
     "test": "vitest run",
     "test:e2e": "playwright test",
-    "og": "node scripts/make-og-image.mjs"
+    "og": "node scripts/make-og-image.mjs",
+    "test:deployed": "playwright test --config playwright.deployed.config.ts",
+    "test:lighthouse": "lhci autorun --config=lighthouserc.cjs"
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "^0.4.7",
@@ -28,10 +30,14 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
     "@axe-core/playwright": "^4.14.0",
+    "@lhci/cli": "^0.16.1",
     "@playwright/test": "^1.65.0",
     "sharp": "^0.35.5",
     "typescript": "^6.0.3",
     "vitest": "^5.1.0"
   },
-  "private": true
+  "private": true,
+  "overrides": {
+    "basic-ftp": "^6.2.6"
+  }
 }

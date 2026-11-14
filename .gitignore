@@ -23,3 +23,7 @@ dist-test/
 dist-empty/
 test-results/
 playwright-report/
+
+# Lighthouse CI reports
+lighthouse-report/
+.lighthouseci/
