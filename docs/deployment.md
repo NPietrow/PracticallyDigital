@@ -34,13 +34,13 @@ The ruleset on `main` ([runbook 06](runbooks/06-branch-protection.md)) requires 
 
 ### On merge
 
-**`deploy-production`** runs the unit tests and builds the site again from `main`, this time with the analytics variable, deploys it, and runs the deployed-site checks against the live site. Production deploys queue rather than overlap. If two merges land close together, the second waits for the first to finish.
+**`deploy-production`** runs the unit tests and builds the site again from `main`, this time with the analytics variable, deploys it, and runs the deployed-site checks against the live site. Production deploys queue rather than overlap. If two merges land close together, the second waits for the first to finish. GitHub keeps only one waiting run per concurrency group, so if a third merge arrives while the second is still waiting, the second is cancelled and the third takes its place ([concurrency](https://docs.github.com/en/actions/using-jobs/using-concurrency)). A cancelled Deploy run in that situation is expected: the newest `main` still deploys.
 
 ## Previews
 
 - **Public.** "Anyone can access the staged versions of your application via their URL" ([Microsoft](https://learn.microsoft.com/en-us/azure/static-web-apps/review-publish-pull-requests), checked 14 November 2026). Never put anything in a PR that shouldn't be seen. They're `noindex`, like the main site until launch.
-- **Three at a time.** The Free plan allows 3 preview environments per app ([quotas](https://learn.microsoft.com/en-us/azure/static-web-apps/quotas)). Microsoft doesn't say what happens when a fourth PR asks for one. We expect the deploy step in `accessibility` to fail. If it does, close or merge an older PR (which frees its slot), then re-run the failed job.
-- **Deleted on close.** Closing or merging a PR deletes its preview (`close-preview`, and Microsoft's own clean-up).
+- **Three at a time.** The Free plan allows 3 preview environments per app ([quotas](https://learn.microsoft.com/en-us/azure/static-web-apps/quotas)). Microsoft doesn't say what happens when a fourth PR asks for one. We expect the deploy step in `accessibility` to fail; the Lighthouse step is then skipped, so the deploy's own error is the one shown. If it does, close or merge an older PR (which frees its slot), then re-run the failed job.
+- **Deleted on close.** Closing or merging a PR deletes its preview: `close-preview` does it, and Microsoft says: "Once the pull request is closed, the pre-production environment is automatically deleted" ([review pull requests](https://learn.microsoft.com/en-us/azure/static-web-apps/review-publish-pull-requests)). If a preview is ever left behind (it still appears after its PR closed), delete it by hand: Azure portal → the Static Web App → **Environments** → select it → **Delete**.
 - **None for Dependabot or fork PRs.** Those runs get no secrets, so `accessibility` and `close-preview` are skipped. `build` and `gitleaks` still run, and GitHub counts a skipped required check as passing: a skipped job "will report its status as 'Success'" ([GitHub](https://docs.github.com/en/actions/using-jobs/using-conditions-to-control-job-execution)).
 
 ## When a check fails
@@ -71,7 +71,7 @@ A failing build or unit test on `main` deploys nothing: those steps run before t
 
 ## Redeploying by hand
 
-**Actions → Deploy → Run workflow**, branch `main`. Use this after changing the analytics variable ([runbook 08](runbooks/08-web-analytics.md)) or after rotating the deployment token.
+**Actions → Deploy → Run workflow**, branch `main`. Picking any other branch runs nothing: the job only deploys from `main`. Use this after changing the analytics variable ([runbook 08](runbooks/08-web-analytics.md)) or after rotating the deployment token.
 
 ## Quotas to watch
 

@@ -67,3 +67,31 @@ describe('gitleaks pre-commit hook', () => {
     expect(entry).toMatch(/^100755 /);
   });
 });
+
+describe('gitleaks config', () => {
+  // The two fake analytics tokens the unit tests use look like API keys to
+  // gitleaks's generic-api-key rule. They're public test values, so they're
+  // allowlisted by exact value; everything else is still scanned.
+  const FIXTURE_TOKENS = ['0123456789abcdef0123456789abcdef', '0123456789abcdef0123456789ABCDEF'];
+  const config = () => readFileSync('.gitleaks.toml', 'utf8');
+  const allowRegexes = () =>
+    [...config().matchAll(/'''([^']+)'''/g)].map((m) => new RegExp(m[1]));
+
+  it('keeps every default gitleaks rule', () => {
+    expect(config()).toMatch(/^\[extend\]\s*\nuseDefault = true$/m);
+  });
+
+  it('allowlists the two fixture tokens and nothing that only resembles them', () => {
+    const regexes = allowRegexes();
+    expect(regexes.length).toBeGreaterThan(0);
+    for (const token of FIXTURE_TOKENS) expect(regexes.some((r) => r.test(token)), token).toBe(true);
+    for (const other of ['0123456789abcdef0123456789abcdeg', '0123456789abcdef0123456789abcde', `x${FIXTURE_TOKENS[0]}`]) {
+      expect(regexes.some((r) => r.test(other)), other).toBe(false);
+    }
+  });
+
+  it('the fixture tokens are still the ones the tests use', () => {
+    const tests = readFileSync('tests/unit/env.test.ts', 'utf8') + readFileSync('tests/unit/cloudflare-analytics.test.ts', 'utf8');
+    for (const token of FIXTURE_TOKENS) expect(tests).toContain(`'${token}'`);
+  });
+});

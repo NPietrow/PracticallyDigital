@@ -36,7 +36,7 @@ If any screen doesn't match what's written here, stop and tell Claude rather tha
 
 ### Attach `practicallydigital.co.uk` to the Static Web App
 
-4. **Ask Azure for a validation code.** In the Azure portal, open the `practicallydigital` Static Web App **→ Custom domains → + Add** (if it offers a choice, pick **Custom domain on other DNS**). Enter `practicallydigital.co.uk` and select **Next**. Under **Hostname record type** choose **TXT**, then **Generate code**. Copy the code, then **Close**.
+4. **Ask Azure for a validation code.** In the Azure portal, open the `practically-digital` Static Web App **→ Custom domains → + Add** (if it offers a choice, pick **Custom domain on other DNS**). Enter `practicallydigital.co.uk` and select **Next**. Under **Hostname record type** choose **TXT**, then **Generate code**. Copy the code, then **Close**.
    *What it does:* Azure needs proof that you control the domain before it serves the site and issues a certificate for it. A TXT record holding its code is that proof.
    **Expect:** the domain listed under Custom domains as **Validating**.
 

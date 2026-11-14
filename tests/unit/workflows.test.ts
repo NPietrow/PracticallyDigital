@@ -136,11 +136,26 @@ describe('ci.yml (pull requests)', () => {
     expect(scan.env).toMatchObject({ GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}', GITLEAKS_ENABLE_COMMENTS: false });
   });
 
+  it('CI scans with the same pinned gitleaks version the docs install', () => {
+    const scan = ci().jobs.gitleaks.steps.find((s: any) => String(s.uses ?? '').startsWith('gitleaks/gitleaks-action@'));
+    expect(scan.env.GITLEAKS_VERSION).toBe('8.30.1');
+  });
+
+  it('Lighthouse runs only when the preview deploy succeeded, so a failed deploy reports its own error', () => {
+    const steps = ci().jobs.accessibility.steps;
+    const lh = steps.find((s: any) => s.run === 'npm run test:lighthouse');
+    expect(lh.if).toContain("steps.deploy.outcome == 'success'");
+  });
+
   it('closing a PR removes its preview', () => {
     const job = ci().jobs['close-preview'];
     expect(job.if).toContain("github.event.action == 'closed'");
     const swa = job.steps.find((s: any) => String(s.uses ?? '').startsWith(SWA_ACTION));
     expect(swa.with.action).toBe('close');
+  });
+
+  it('closing a PR waits for, or cancels, its preview deploy, so the deploy cannot recreate a deleted preview', () => {
+    expect(ci().jobs['close-preview'].concurrency).toEqual(ci().jobs.accessibility.concurrency);
   });
 
   it('PR builds never load the analytics token', () => {
@@ -192,6 +207,10 @@ describe('deploy.yml (production)', () => {
   it('production deploys only from main or a manual run', () => {
     expect(Object.keys(deploy().on).sort()).toEqual(['push', 'workflow_dispatch']);
     expect(deploy().on.push).toEqual({ branches: ['main'] });
+  });
+
+  it('a manual run deploys only from main, never from another branch', () => {
+    expect(job().if).toBe("github.ref == 'refs/heads/main'");
   });
 
   it('production deploys never overlap or cancel each other', () => {

@@ -8,6 +8,15 @@ const swaConfig = JSON.parse(readFileSync('public/staticwebapp.config.json', 'ut
 const expectAnalytics = process.env.PD_EXPECT_ANALYTICS === 'true';
 const expectIndexing = process.env.PD_EXPECT_INDEXING === 'true';
 
+// These checks load every page twice per deploy. Answer Cloudflare's beacon
+// with an empty script so they never show up as visits in Web Analytics. The
+// <script> tag itself is still in the page, so the beacon test still works.
+test.beforeEach(async ({ page }) => {
+  await page.route(/^https:\/\/([a-z0-9-]+\.)?cloudflareinsights\.com\//, (route) =>
+    route.fulfill({ status: 200, contentType: 'application/javascript', body: '' }),
+  );
+});
+
 test('every page in the sitemap loads and passes axe', async ({ page, request }) => {
   const sitemap = await request.get('/sitemap-0.xml');
   expect(sitemap.status()).toBe(200);
@@ -17,6 +26,9 @@ test('every page in the sitemap loads and passes axe', async ({ page, request })
     (m) => new URL(m[1]).pathname,
   );
   expect(paths.length).toBeGreaterThanOrEqual(10);
+  // One test covers every page, and each article adds one, so the time allowed
+  // grows with the sitemap (5 s a page on top of the usual 30 s).
+  test.setTimeout(30_000 + paths.length * 5_000);
 
   for (const path of paths) {
     await test.step(path, async () => {

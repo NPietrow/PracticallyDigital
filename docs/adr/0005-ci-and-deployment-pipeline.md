@@ -27,7 +27,7 @@ Production rebuilds from `main` rather than reusing a PR artifact. The merge res
 
 ### How the workflow proves it may deploy
 
-**The SWA deployment token (chosen, per the spec).** One secret, `AZURE_STATIC_WEB_APPS_API_TOKEN`, stored in GitHub, used by two steps. If it leaks, it can be reset in the portal in a minute ([secret-leaked.md](../runbooks/secret-leaked.md)).
+**The SWA deployment token (chosen, per the spec).** One secret, `AZURE_STATIC_WEB_APPS_API_TOKEN`, stored in GitHub, used by three steps: the preview deploy, the preview clean-up and the production deploy. If it leaks, it can be reset in the portal in a minute ([secret-leaked.md](../runbooks/secret-leaked.md)).
 
 **OpenID Connect (OIDC).** GitHub proves the workflow's identity to Azure directly, with no stored secret. It needs an app registration and role assignments in Microsoft Entra ID, which is a chunk of identity configuration to learn and maintain for one static site. Kept for later, possibly as Digital Lab material.
 
@@ -51,13 +51,13 @@ CI reads the Node version from `.nvmrc` (26), and `package.json` requires `>=26`
 
 ## Decision
 
-Two workflows: `ci.yml` for pull requests (`build`, `gitleaks`, `accessibility`, `close-preview`) and `deploy.yml` for `main`. Build once per PR and deploy the tested artifact; deploy with the SWA token; pin every action to a SHA; preview only same-repository, non-Dependabot PRs; enforce the Lighthouse thresholds above. Top-level permissions are read-only; only `accessibility` can write, and only to PR comments, so the SWA action can post the preview link.
+Two workflows: `ci.yml` for pull requests (`build`, `gitleaks`, `accessibility`, `close-preview`) and `deploy.yml` for `main`. Build once per PR and deploy the tested artifact; deploy with the SWA token; pin every action to a SHA; preview only same-repository, non-Dependabot PRs; enforce the Lighthouse thresholds above. Top-level permissions are read-only; only `accessibility` can write, and only to PR comments, so the SWA action can post the preview link. `close-preview` shares the preview's concurrency group, so closing a PR cancels a deploy still in progress before deleting the preview. Manual production runs are limited to `main`, and CI runs the same gitleaks version (8.30.1) that runbook 05 installs.
 
 ## Consequences
 
 - A PR shows three required checks. Dependabot and fork PRs show `accessibility` as skipped, which counts as passing.
-- The deploy token is used by exactly two steps, both the SWA action, and a test checks that.
-- Every action update arrives as a Dependabot PR with a new SHA. That's more PRs, each of which runs the full checks.
+- The deploy token is used by exactly three steps, all of them the SWA action, and a test checks that.
+- Every action update arrives as a Dependabot PR with a new SHA. Those PRs run `build` and `gitleaks` but skip the preview, so an update to the SWA action itself is first exercised by the production deploy after merging. If that deploy fails, revert the Dependabot PR.
 - The `stable` image behind the SWA action can change without a PR. If a deploy suddenly breaks with no change on our side, that's the first suspect.
 - A fourth simultaneous PR may fail to get a preview (Free allows 3). [deployment.md](../deployment.md) says what to do.
 

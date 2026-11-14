@@ -67,6 +67,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITLEAKS_ENABLE_COMMENTS: false
+          # The same version runbook 05 installs locally (the action would
+          # otherwise download whatever is newest).
+          GITLEAKS_VERSION: 8.30.1
 
   accessibility:
     name: accessibility
@@ -105,7 +108,9 @@ jobs:
       - run: npm run test:deployed
         env:
           PD_DEPLOYED_URL: ${{ steps.deploy.outputs.static_web_app_url }}
-      - if: ${{ !cancelled() }}
+      # Still runs when test:deployed fails, so both reports exist; skipped when
+      # the deploy itself failed, so that failure is the one you see.
+      - if: ${{ !cancelled() && steps.deploy.outcome == 'success' }}
         run: npm run test:lighthouse
         env:
           PD_DEPLOYED_URL: ${{ steps.deploy.outputs.static_web_app_url }}
@@ -125,6 +130,11 @@ jobs:
       github.event.pull_request.head.repo.full_name == github.repository &&
       github.event.pull_request.user.login != 'dependabot[bot]'
     runs-on: ubuntu-latest
+    # Same group as the preview deploy: closing the PR cancels a deploy still in
+    # progress before deleting the preview, so the deploy can't recreate it.
+    concurrency:
+      group: preview-${{ github.event.pull_request.number }}
+      cancel-in-progress: true
     timeout-minutes: 10
     steps:
       - uses: Azure/static-web-apps-deploy@1a947af9992250f3bc2e68ad0754c0b0c11566c9 # v1

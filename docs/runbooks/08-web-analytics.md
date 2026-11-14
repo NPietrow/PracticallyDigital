@@ -33,6 +33,8 @@ If any screen doesn't match what's written here, stop and tell Claude rather tha
 6. **Check the dashboard.** Visit a couple of pages on the live site, then open **Web Analytics** in Cloudflare.
    **Expect:** your visits appear after a short while. If nothing has shown after an hour, tell Claude. An ad blocker in your browser can stop the beacon, so try another browser before worrying.
 
+Visits from the deploy checks don't count: they answer Cloudflare's beacon themselves, so nothing reaches Cloudflare. If you ever see visits from an `azurestaticapps.net` address, they're from a preview or someone testing; filter by hostname `practicallydigital.co.uk` to see real readers.
+
 ## Done when
 
 - `PUBLIC_CF_WEB_ANALYTICS_TOKEN` is a repository variable.

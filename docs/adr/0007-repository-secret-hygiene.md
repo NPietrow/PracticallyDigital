@@ -47,6 +47,7 @@ Secret Protection and push protection are switched on in the repository settings
 
 - **gitleaks is in maintenance mode.** Its README says "Gitleaks is feature complete" and "Future releases will be security patches only", and the author is moving to a new project, Betterleaks ([gitleaks README](https://github.com/gitleaks/gitleaks)). It still works and still gets security fixes. If its rules stop keeping up with new token formats, revisit this ADR.
 - **gitleaks-action isn't MIT-licensed.** From v2 it ships under its own end-user licence. A licence key is needed for organisation accounts but not for personal ones ([gitleaks-action README](https://github.com/gitleaks/gitleaks-action)). This repository belongs to a personal account, so no key is needed. If it ever moves to an organisation, the CI job will need one (free) or a switch to the gitleaks CLI directly.
+- `.gitleaks.toml` keeps every default rule and allowlists only the two fake analytics tokens the unit tests use, by exact value. Any other exception should be added the same way: one value, with a comment saying why.
 - The hook has to be turned on in each new clone, and only scans what's staged. A secret typed into a file you never commit is never seen, which is fine.
 - The hook needs Unix line endings, so `.gitattributes` forces LF for `.githooks/*`. A Windows line ending on the `#!/bin/sh` line stops it running.
 - Dependabot PRs get no Actions secrets, so they skip the preview deploy. `build` and `gitleaks` still run, and the skipped `accessibility` check counts as passing (ADR-0005).
