@@ -43,11 +43,12 @@ Drafts are filtered out in one place, `getPublishedArticles()` in `src/lib/artic
 
 ### JavaScript in the browser
 
-The site works with JavaScript turned off. Only three things use it:
+The site works with JavaScript turned off. Only four things use it:
 
 - the contents pane that highlights the section you're reading
 - the reading-progress bar on articles
 - the search box (Pagefind's interface)
+- the Cloudflare Web Analytics beacon, which counts page views without cookies. It's only on pages built with an analytics token, which in practice means the live site ([ADR-0006](../adr/0006-dns-redirects-and-analytics-on-cloudflare.md)).
 
 With JavaScript off, contents links still jump to their sections and the search page says that search needs JavaScript.
 
@@ -74,12 +75,13 @@ With JavaScript off, contents links still jump to their sections and the search 
 
 ## Build switches (environment variables)
 
-Four environment variables change what a build produces. The two `PUBLIC_` flags are only on when set to the exact text `true`. Anything else, including `TRUE`, `1` or a typo, counts as off, so a mistake can't publish drafts or open the site to search engines.
+Five environment variables change what a build produces. The two `PUBLIC_` flags are only on when set to the exact text `true`. Anything else, including `TRUE`, `1` or a typo, counts as off, so a mistake can't publish drafts or open the site to search engines.
 
 | Variable | Default | What it does |
 |---|---|---|
 | `PUBLIC_SHOW_DRAFTS` | off | When `true`, articles marked `draft: true` are built too, with a "Draft" banner. For reviewing drafts only, never for the live site. |
 | `PUBLIC_ALLOW_INDEXING` | off | When off, every page carries `noindex, nofollow` and `robots.txt` blocks all crawlers. When `true`, both are lifted and `robots.txt` points to the sitemap. A build with indexing on fails while the About page still has placeholder author details. |
+| `PUBLIC_CF_WEB_ANALYTICS_TOKEN` | blank | The Cloudflare Web Analytics site token. When set, every page loads Cloudflare's beacon; when blank, there's no beacon. A value that isn't 16 to 64 letters and digits fails the build. Only the production deploy sets it, from a GitHub repository variable. It's public, not a secret. |
 | `PD_CONTENT_DIR` | `src/content/articles` | Where articles are read from. The tests point it at `tests/fixtures/articles`. |
 | `PD_OUT_DIR` | `dist` | Where the built site is written. The tests use `dist-test` and `dist-empty`, so they don't overwrite each other or `dist`. |
 
