@@ -1,0 +1,13 @@
+#!/bin/sh
+# Blocks a commit that contains something that looks like a secret.
+# Turned on per clone with: git config core.hooksPath .githooks
+# (docs/runbooks/05-gitleaks-hook.md). The CI gitleaks job is the backstop.
+
+if ! command -v gitleaks >/dev/null 2>&1; then
+  echo "gitleaks is not installed, so this commit was stopped before it could be checked for secrets." >&2
+  echo "Install it with: winget install Gitleaks.Gitleaks" >&2
+  echo "then restart VS Code and GitHub Desktop and commit again (runbook 05)." >&2
+  exit 1
+fi
+
+exec gitleaks git --pre-commit --staged --redact --verbose
