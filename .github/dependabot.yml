@@ -16,6 +16,12 @@ updates:
       # gets its own PR, since those are the ones that can break things.
       minor-and-patch:
         update-types: [minor, patch]
+    ignore:
+      # @astrojs/check (run by npm run build) supports TypeScript 5 and 6 only,
+      # so a TypeScript major fails npm ci. Remove this once it supports 7
+      # (first seen in PR #5, 15 November 2026).
+      - dependency-name: typescript
+        update-types: ['version-update:semver-major']
 
   - package-ecosystem: github-actions
     directory: /
