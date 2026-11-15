@@ -11,6 +11,8 @@ If any screen doesn't match what's written here, stop and tell Claude rather tha
 ## Steps
 
 1. **Add the site in Cloudflare.** In the Cloudflare dashboard, open **Web Analytics → Add a site**. Under **Set up hostname**, enter `practicallydigital.co.uk`, then **Done**. If it asks how to install, choose the **manual JS snippet**, not automatic. Automatic setup only works for proxied sites ([Web Analytics FAQ](https://developers.cloudflare.com/web-analytics/faq/)).
+
+   If Cloudflare offers **only** automatic setup (it did on 15 November 2026, because `practicallydigital.co.uk` is a zone in the same account), accept it, then look in the site's **Manage site** or settings page for the JS snippet and take the token from there. Automatic injection does nothing for this site, since traffic doesn't pass through Cloudflare, so the beacon still comes from our build.
    **Expect:** the site listed, with a **Manage site** option that shows a JavaScript snippet.
 
 2. **Copy the token.** In **Manage site**, find the snippet. It contains `data-cf-beacon='{"token": "…"}'`. Copy only the value inside the second pair of quotes: a run of letters and digits. Don't add the snippet to any file. The site's own component writes it.

@@ -88,3 +88,42 @@ Figures from Microsoft's [quotas page](https://learn.microsoft.com/en-us/azure/s
 ## The deployment token
 
 The workflows deploy with one secret, `AZURE_STATIC_WEB_APPS_API_TOKEN`. To rotate it (if it leaks, or as routine), follow [secret-leaked.md](runbooks/secret-leaked.md), steps 1 to 3.
+
+## Verification record
+
+Plan 2's checks against the spec's [Verification](superpowers/specs/2026-11-09-practically-digital-design.md#verification) list, done 14 to 15 November 2026.
+
+| Check | Result | Evidence |
+|---|---|---|
+| A pull request produces a preview URL | Passed | [PR #4](https://github.com/NPietrow/PracticallyDigital/pull/4): the SWA action commented the preview URL, and `accessibility` ran against it |
+| Merging deploys to production | Passed | PR #4 merged 15 November 2026 (`eca8a2f`); the Deploy run went green and its smoke test passed 16 of 16 checks |
+| gitleaks catches a planted fake secret | Passed | A fake `ghp_` token in `scratch-leak.txt` was blocked by the pre-commit hook in GitHub Desktop, then discarded (15 November 2026). In CI, gitleaks 8.30.1 scanned PR #4's commits and found nothing |
+| axe and Lighthouse pass in CI against the preview | Passed | PR #4 `accessibility`: 16 of 16 deployed-site checks, including axe on all 17 sitemap pages at desktop and phone widths. Lighthouse medians below |
+| Real 404 status and redirects on SWA | Passed | On the preview and on `practicallydigital.co.uk`: unknown pages return 404 with the site's 404 page, `/about` returns 301 to `/about/`, and `/rss.xml` is served as is. These are the two rules that `astro preview` can't test locally |
+| Custom domain and redirects | Passed | `https://practicallydigital.co.uk` serves the site with an Azure-issued certificate. `www.practicallydigital.co.uk`, `practicallydigital.uk` and `www.practicallydigital.uk` all redirect with 301 to the same path, keeping the query string |
+| Cloudflare Web Analytics | Passed | The beacon is in the live pages, and the Deploy run with `PD_EXPECT_ANALYTICS: true` was green. The deployed-site suite run against the live domain passed 16 of 16 |
+| DNSSEC | Passed | Both domains have DS records published, and Cloudflare's resolver validates their answers (`AD=true`) |
+| Dependabot or fork PRs skip the preview without failing on secrets | Passed | Dependabot's [PR #5](https://github.com/NPietrow/PracticallyDigital/pull/5) ran `build` and `gitleaks`, and `accessibility` showed "skipped". `build` failed for a real reason: TypeScript 7 isn't supported by `@astrojs/check`. So the PR was closed, and TypeScript majors are now held back ([PR #6](https://github.com/NPietrow/PracticallyDigital/pull/6)) |
+| Branch protection | Passed | `protect-main` is active with the three required checks and no bypass. A direct push to `main` was rejected ("Changes must be made through a pull request"), and this record's own PR had to pass all three checks before it could merge |
+| Azure cost check | Passed | Nikita, 15 November 2026: **All resources** lists only `practically-digital` (Static Web App, Free), Cost analysis shows £0.00, and `budget-practically-digital` (£1 a month, three alerts) and the anomaly alert both exist |
+
+### Lighthouse on the PR #4 preview
+
+Median of three runs, mobile preset, 15 November 2026:
+
+| Page | Performance | Accessibility | Best practices | SEO |
+|---|---|---|---|---|
+| `/` | 100 | 100 | 100 | 100 |
+| `/insights/` | 99 | 100 | 100 | 100 |
+| `/topics/` | 100 | 100 | 100 | 100 |
+| `/digital-lab/` | 100 | 100 | 100 | 100 |
+| `/about/` | 100 | 100 | 100 | 100 |
+| `/search/` | 100 | 100 | 100 | 100 |
+
+One of the three home-page runs scored 91 for performance, just above the 90 threshold, while the other two scored 100. That spread is runner noise of the kind [ADR-0005](adr/0005-ci-and-deployment-pipeline.md) expected, and it's why Lighthouse CI asserts on the median. SEO scores exclude the "blocked from indexing" audit, which is skipped until launch.
+
+### Noticed along the way
+
+- PR previews are served from `eastus2` (`…-4.eastus2.5.azurestaticapps.net`), although no region was chosen when the app was created. That doesn't affect the site.
+- Cloudflare offered only automatic setup for Web Analytics, because the domain is a zone in the same account. The token was taken from the site's settings instead (runbook 08 now says so).
+- Cloudflare warns that the redirect rules "may not apply" and that records should be proxied. Both warnings are expected for this setup (ADR-0006), and the redirects were tested working.

@@ -4,7 +4,7 @@ An independent educational site that explains practical digital technology (data
 
 It's a static site built with [Astro](https://astro.build), with articles written in Markdown. Planned address: `practicallydigital.co.uk`.
 
-The site is built, tested and deployed automatically: every pull request gets a preview, and merging to `main` deploys to Azure Static Web Apps. It stays hidden from search engines until the first articles launch (see [what plan 2 added, and what plan 3 adds](docs/architecture/overview.md#what-plan-2-added-and-what-plan-3-adds)).
+The site is live at <https://practicallydigital.co.uk>, built, tested and deployed automatically: every pull request gets a preview, and merging to `main` deploys to Azure Static Web Apps. It stays hidden from search engines (`noindex`) until the first articles launch (see [what plan 2 added, and what plan 3 adds](docs/architecture/overview.md#what-plan-2-added-and-what-plan-3-adds)).
 
 ## Contributing
 
