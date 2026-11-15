@@ -29,6 +29,15 @@ describe('Dependabot', () => {
     });
   });
 
+  // @astrojs/check (behind npm run build) supports TypeScript 5 and 6 only, so
+  // a TypeScript major can't install until it catches up. Minors and patches
+  // still come through.
+  it('holds back TypeScript major versions until the type checker supports them', () => {
+    expect(forEcosystem('npm').ignore).toEqual([
+      { 'dependency-name': 'typescript', 'update-types': ['version-update:semver-major'] },
+    ]);
+  });
+
   it('groups every GitHub Actions update into one PR', () => {
     expect(forEcosystem('github-actions').groups).toEqual({ actions: { patterns: ['*'] } });
   });
