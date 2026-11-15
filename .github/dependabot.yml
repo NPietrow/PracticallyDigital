@@ -1,0 +1,29 @@
+# Dependabot opens PRs to update dependencies (ADR-0007).
+# Weekly on Monday. The cooldown makes it wait until a release is 7 days old
+# before suggesting it, so a bad or hijacked release has time to be caught and
+# pulled first. Security updates ignore the cooldown and arrive straight away.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    cooldown:
+      default-days: 7
+    groups:
+      # Minor and patch updates arrive together in one PR; each major version
+      # gets its own PR, since those are the ones that can break things.
+      minor-and-patch:
+        update-types: [minor, patch]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    cooldown:
+      default-days: 7
+    groups:
+      actions:
+        patterns: ['*']

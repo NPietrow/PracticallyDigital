@@ -1,0 +1,17 @@
+---
+// Cloudflare Web Analytics beacon: cookieless page-view counting
+// (ADR-0006). BaseLayout renders this only when a valid token was set at
+// build time, which in practice means the production build.
+interface Props {
+  token: string;
+}
+
+const { token } = Astro.props;
+---
+
+<script
+  is:inline
+  type="module"
+  defer
+  src="https://static.cloudflareinsights.com/beacon.min.js"
+  data-cf-beacon={JSON.stringify({ token })}></script>

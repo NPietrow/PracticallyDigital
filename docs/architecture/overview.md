@@ -2,7 +2,7 @@
 
 Practically Digital is a static website. Every page is built ahead of time into plain HTML, CSS and image files, and a web host serves those files as they are. No server runs code when someone visits, and there's no database. Articles are Markdown files in this repository, so the repository is the content management system.
 
-This describes the site as built by plan 1 (site foundation).
+This describes the site as built by plan 1 (site foundation) and how plan 2 (deploy and operate) tests, deploys and hosts it. The pipeline itself is described in [deployment.md](../deployment.md).
 
 ## From article to web page
 
@@ -23,7 +23,7 @@ flowchart LR
   end
 
   O["dist/<br/>static HTML, CSS, images,<br/>search index"]
-  H["Web host<br/>(plan 2: Azure Static Web Apps)"]
+  H["Azure Static Web Apps (Free)<br/>deployed by GitHub Actions<br/>practicallydigital.co.uk via Cloudflare DNS"]
 
   A --> V
   T --> V
@@ -43,11 +43,12 @@ Drafts are filtered out in one place, `getPublishedArticles()` in `src/lib/artic
 
 ### JavaScript in the browser
 
-The site works with JavaScript turned off. Only three things use it:
+The site works with JavaScript turned off. Only four things use it:
 
 - the contents pane that highlights the section you're reading
 - the reading-progress bar on articles
 - the search box (Pagefind's interface)
+- the Cloudflare Web Analytics beacon, which counts page views without cookies. It's only on pages built with an analytics token, which in practice means the live site ([ADR-0006](../adr/0006-dns-redirects-and-analytics-on-cloudflare.md)).
 
 With JavaScript off, contents links still jump to their sections and the search page says that search needs JavaScript.
 
@@ -63,23 +64,28 @@ With JavaScript off, contents links still jump to their sections and the search 
 | `src/layouts/` | Page shells. `BaseLayout` holds the `<head>`, header and footer; the others build on it for articles, listings and plain pages. |
 | `src/components/` | Reusable pieces such as the article card, contents pane, figure and search box. |
 | `src/styles/` | Plain CSS. `tokens.css` holds the "Stone and signal" colours, type scale and spacing; `prose.css` styles article text ([ADR-0002](../adr/0002-plain-css-and-ibm-plex.md)). |
-| `public/` | Files copied to the site unchanged: the favicon and the default social preview image. |
+| `public/` | Files copied to the site unchanged: the favicon, the default social preview image, and `staticwebapp.config.json`, which tells Azure how to answer unknown addresses (a real 404), add trailing slashes and send security headers. |
 | `scripts/` | One-off tools. `make-og-image.mjs` redraws `public/og-default.png` (`npm run og`). |
 | `tests/unit/` | Vitest tests for the logic in `src/lib/` and `src/data/`. |
 | `tests/e2e/` | Playwright tests that load real pages in Chromium, including automated accessibility checks with axe. |
+| `tests/deployed/` | Playwright checks run against a deployed site (a PR preview or production): every sitemap page with axe, the 404 status, redirects, headers, `noindex` and the analytics beacon. |
 | `tests/fixtures/` | Test content: four fixture articles (one is a draft) and an empty folder for the zero-article build. Never published. |
 | `docs/adr/` | Architecture decision records: the options considered for each decision and why one was chosen. |
+| `docs/runbooks/` | Step-by-step instructions for everything done by hand in Azure, Cloudflare and GitHub settings. |
+| `.github/` | The two workflows (`ci.yml`, `deploy.yml`), the shared setup step (`actions/setup/`) and the Dependabot settings. |
+| `.githooks/` | The gitleaks pre-commit hook, turned on per clone with `git config core.hooksPath .githooks`. |
 | `docs/superpowers/` | The approved design spec and the implementation plans. |
 | `astro.config.mjs` | Site URL, Markdown setup and integrations (MDX, sitemap, search index). |
 
 ## Build switches (environment variables)
 
-Four environment variables change what a build produces. The two `PUBLIC_` flags are only on when set to the exact text `true`. Anything else, including `TRUE`, `1` or a typo, counts as off, so a mistake can't publish drafts or open the site to search engines.
+Five environment variables change what a build produces. The two `PUBLIC_` flags are only on when set to the exact text `true`. Anything else, including `TRUE`, `1` or a typo, counts as off, so a mistake can't publish drafts or open the site to search engines.
 
 | Variable | Default | What it does |
 |---|---|---|
 | `PUBLIC_SHOW_DRAFTS` | off | When `true`, articles marked `draft: true` are built too, with a "Draft" banner. For reviewing drafts only, never for the live site. |
 | `PUBLIC_ALLOW_INDEXING` | off | When off, every page carries `noindex, nofollow` and `robots.txt` blocks all crawlers. When `true`, both are lifted and `robots.txt` points to the sitemap. A build with indexing on fails while the About page still has placeholder author details. |
+| `PUBLIC_CF_WEB_ANALYTICS_TOKEN` | blank | The Cloudflare Web Analytics site token. When set, every page loads Cloudflare's beacon; when blank, there's no beacon. A value that isn't 16 to 64 letters and digits fails the build. Only the production deploy sets it, from a GitHub repository variable. It's public, not a secret. |
 | `PD_CONTENT_DIR` | `src/content/articles` | Where articles are read from. The tests point it at `tests/fixtures/articles`. |
 | `PD_OUT_DIR` | `dist` | Where the built site is written. The tests use `dist-test` and `dist-empty`, so they don't overwrite each other or `dist`. |
 
@@ -97,6 +103,8 @@ The variable stays set until you close that terminal. `Remove-Item Env:PD_CONTEN
 |---|---|---|
 | `npm test` | Vitest unit tests: schema, taxonomy, article selection, reading time, contents, SEO tags, robots.txt, dates, author launch guard, search indexer | a few seconds |
 | `npm run test:e2e` | Playwright builds the site twice (once with the fixture articles, once with none), serves both, and runs the browser tests in three projects | about a minute |
+| `npm run test:deployed` | The `tests/deployed/` checks against the site at `PD_DEPLOYED_URL`. CI runs them on every preview and after every production deploy | under a minute |
+| `npm run test:lighthouse` | Lighthouse CI on six pages at `PD_DEPLOYED_URL`, three runs each, failing below the thresholds in [ADR-0005](../adr/0005-ci-and-deployment-pipeline.md) | a few minutes |
 
 The three Playwright projects are:
 
@@ -128,15 +136,17 @@ npx lighthouse@13.6.0 http://localhost:4420/ --view
 
 `dist-test` exists after `npm run test:e2e` has run. When you've finished, stop the preview with Ctrl+C and run `Remove-Item Env:PD_OUT_DIR` in that terminal. Otherwise a later `npm run build` there writes to `dist-test` instead of `dist`.
 
-## What plans 2 and 3 add
+## What plan 2 added, and what plan 3 adds
 
 ### Plan 2: deploy and operate
 
-- GitHub Actions runs the tests on every pull request and deploys `main` to Azure Static Web Apps (Free plan). Every pull request gets its own preview URL.
-- Branch protection on `main`, so nothing goes live without your approval.
-- Secret scanning and push protection, a gitleaks pre-commit hook, and Dependabot.
-- Cost guardrails, Cloudflare Web Analytics (cookieless), and runbooks for the domain and DNS.
-- ADRs for the hosting choices, plus deployment docs.
+- **Hosting** on Azure Static Web Apps, Free plan, which stops serving rather than billing if it goes over quota ([ADR-0004](../adr/0004-hosting-on-azure-static-web-apps.md)).
+- **Two GitHub Actions workflows.** Every pull request is tested, scanned for secrets, deployed to its own public preview and checked there with axe and Lighthouse. Merging to `main` deploys to production and smoke-tests it ([ADR-0005](../adr/0005-ci-and-deployment-pipeline.md), [deployment.md](../deployment.md)).
+- **Branch protection** on `main`: changes only through a PR whose three checks have passed.
+- **Secret hygiene:** secret scanning and push protection, the gitleaks hook, Dependabot, and a leaked-secret procedure ([ADR-0007](../adr/0007-repository-secret-hygiene.md)).
+- **The domain and analytics:** Cloudflare DNS, redirects for `www` and `.uk`, and cookieless Cloudflare Web Analytics on production pages only ([ADR-0006](../adr/0006-dns-redirects-and-analytics-on-cloudflare.md)).
+- **Cost guardrails:** a £1 budget with alerts, an anomaly alert and a monthly check. They warn but don't cap.
+- **[Runbooks](../runbooks/README.md)** for every manual step.
 
 ### Plan 3: content workflow and launch
 
@@ -150,4 +160,8 @@ npx lighthouse@13.6.0 http://localhost:4420/ --view
 - [ADR-0001: Static site with Astro](../adr/0001-static-site-with-astro.md)
 - [ADR-0002: Plain CSS and self-hosted IBM Plex](../adr/0002-plain-css-and-ibm-plex.md)
 - [ADR-0003: Search with Pagefind](../adr/0003-search-with-pagefind.md)
+- [ADR-0004: Hosting on Azure Static Web Apps (Free)](../adr/0004-hosting-on-azure-static-web-apps.md)
+- [ADR-0005: CI and deployment pipeline](../adr/0005-ci-and-deployment-pipeline.md)
+- [ADR-0006: DNS, redirects and analytics on Cloudflare](../adr/0006-dns-redirects-and-analytics-on-cloudflare.md)
+- [ADR-0007: Repository secret hygiene and dependency updates](../adr/0007-repository-secret-hygiene.md)
 - [Design spec](../superpowers/specs/2026-11-09-practically-digital-design.md)

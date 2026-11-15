@@ -11,7 +11,7 @@ The approved design is [docs/superpowers/specs/2026-11-09-practically-digital-de
 
 ## Hard rules
 
-- **Git and GitHub:** Nikita does all of it himself, in GitHub Desktop and the VS Code terminal. Never run state-changing git or `gh` commands (init, add, commit, branch, checkout, merge, push, pull, PR creation, repo settings). Read-only commands (`git status`, `git log`, `git diff`, `gh issue view`) are fine. When git work is needed, stop and give numbered steps: what to do, what each step does, and what he should see afterwards.
+- **Git and GitHub (changed 14 November 2026 at Nikita's request):** Claude runs commits, pushes to working branches, PR creation and PR merges, explaining in a line or two what each command does. Changes reach `main` only through a PR: no direct pushes to `main`, no force-pushes, no history rewrites. Repository *settings* (rulesets, secrets, security options) stay with Nikita, done from runbooks.
 - **Azure:** never deploy or change anything in Azure. Write step-by-step runbooks for Nikita to follow in the portal.
 - **Cost:** £0/month hosting target. No paid resources without explicit approval. Explain worst-case cost exposure before recommending anything billable.
 - **Public repo:** never commit secrets. Keys go in GitHub Actions secrets or a git-ignored `.env`.

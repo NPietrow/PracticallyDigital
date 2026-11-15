@@ -14,7 +14,9 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
-  reporter: process.env.CI ? 'github' : 'list',
+  // On CI the html report is uploaded when a run fails, so failures can be read
+  // without re-running anything.
+  reporter: process.env.CI ? [['github'], ['html', { open: 'never' }]] : 'list',
   use: {
     baseURL: `http://localhost:${PORT}`,
     trace: 'on-first-retry',
@@ -53,6 +55,8 @@ export default defineConfig({
         PD_CONTENT_DIR: 'tests/fixtures/articles',
         PD_OUT_DIR: './dist-test',
         PUBLIC_SHOW_DRAFTS: 'false',
+        PUBLIC_ALLOW_INDEXING: 'false',
+        PUBLIC_CF_WEB_ANALYTICS_TOKEN: '',
       },
     },
     {
@@ -67,6 +71,8 @@ export default defineConfig({
         PD_CONTENT_DIR: 'tests/fixtures/empty',
         PD_OUT_DIR: './dist-empty',
         PUBLIC_SHOW_DRAFTS: 'false',
+        PUBLIC_ALLOW_INDEXING: 'false',
+        PUBLIC_CF_WEB_ANALYTICS_TOKEN: '',
       },
     },
   ],

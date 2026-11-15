@@ -1,0 +1,14 @@
+# gitleaks settings, read by the pre-commit hook and the CI gitleaks job.
+# Every default rule stays on; this file only adds exceptions.
+
+[extend]
+useDefault = true
+
+# The unit tests use two fake Cloudflare Web Analytics tokens. They're public
+# test values (and analytics tokens are public anyway, ADR-0006), but they look
+# like API keys to the generic-api-key rule. Allowlisted by exact value only.
+[[allowlists]]
+description = "Fake analytics tokens used by the unit tests"
+regexes = [
+  '''^0123456789abcdef0123456789(?i:abcdef)$''',
+]

@@ -45,3 +45,8 @@ test('no horizontal scroll at phone width', async ({ page }, testInfo) => {
   const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
   expect(scrollWidth).toBeLessThanOrEqual(375);
 });
+
+test('no analytics beacon in test builds', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('script[src*="cloudflareinsights"]')).toHaveCount(0);
+});
