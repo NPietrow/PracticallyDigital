@@ -85,6 +85,8 @@ Every article follows the brief's seven questions, under a fixed shape:
 7. Is it right for you? (when to adopt, when not to, quick wins)
 8. Further reading (curated, credible, public)
 
+*Amended 15 November 2026 (Nikita): headings and section count are free; every article ends with "Tools and resources" then "Further reading". The structure above is the template's suggestion. See [ADR-0008](../../adr/0008-content-workflow-and-checks.md).*
+
 Metadata: title, description, author (Nikita), published and last-reviewed dates, reading time, **topics** (technology) and **problems** (reader pain points), hero/OG image.
 
 ## Decided: visual design, "Stone and signal"

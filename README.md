@@ -46,6 +46,7 @@ npm run preview
 | `npm run test:deployed` | Checks a deployed site at `PD_DEPLOYED_URL` (404s, redirects, headers, axe) |
 | `npm run test:lighthouse` | Lighthouse scores for a deployed site at `PD_DEPLOYED_URL` |
 | `npm run og` | Redraws the default social preview image, `public/og-default.png` |
+| `npm run check:links -- <file>` | Checks every link in an article: run `npm run build` first. See [docs/content/README.md](docs/content/README.md) |
 
 The first time you run the browser tests on a new machine, install Chromium for Playwright:
 
@@ -57,9 +58,10 @@ npx playwright install chromium
 
 - [Architecture overview](docs/architecture/overview.md): how the site is built, what each folder holds, the build switches and the tests
 - [Design spec](docs/superpowers/specs/2026-11-09-practically-digital-design.md): what the site is for and the decisions behind it
-- [Architecture decision records](docs/adr/): Astro, plain CSS and IBM Plex, Pagefind search, hosting, the CI pipeline, DNS and analytics, secret hygiene
+- [Architecture decision records](docs/adr/): Astro, plain CSS and IBM Plex, Pagefind search, hosting, the CI pipeline, DNS and analytics, secret hygiene, the content workflow
 - [Deployment](docs/deployment.md): what runs on a pull request and on merge, previews, failures and rollback
 - [Runbooks](docs/runbooks/README.md): the manual steps in Azure, Cloudflare and GitHub
+- [Content workflow](docs/content/README.md): how articles are requested, researched, drafted, fact-checked, edited and published
 
 ## Licence
 

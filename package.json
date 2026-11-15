@@ -14,7 +14,8 @@
     "test:e2e": "playwright test",
     "og": "node scripts/make-og-image.mjs",
     "test:deployed": "playwright test --config playwright.deployed.config.ts",
-    "test:lighthouse": "lhci autorun --config=lighthouserc.cjs"
+    "test:lighthouse": "lhci autorun --config=lighthouserc.cjs",
+    "check:links": "node scripts/check-links.ts"
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "^0.4.7",

@@ -65,14 +65,16 @@ With JavaScript off, contents links still jump to their sections and the search 
 | `src/components/` | Reusable pieces such as the article card, contents pane, figure and search box. |
 | `src/styles/` | Plain CSS. `tokens.css` holds the "Stone and signal" colours, type scale and spacing; `prose.css` styles article text ([ADR-0002](../adr/0002-plain-css-and-ibm-plex.md)). |
 | `public/` | Files copied to the site unchanged: the favicon, the default social preview image, and `staticwebapp.config.json`, which tells Azure how to answer unknown addresses (a real 404), add trailing slashes and send security headers. |
-| `scripts/` | One-off tools. `make-og-image.mjs` redraws `public/og-default.png` (`npm run og`). |
+| `scripts/` | One-off tools. `make-og-image.mjs` redraws `public/og-default.png` (`npm run og`); `check-links.ts` checks every link in an article (`npm run check:links -- <file>`). |
 | `tests/unit/` | Vitest tests for the logic in `src/lib/` and `src/data/`. |
 | `tests/e2e/` | Playwright tests that load real pages in Chromium, including automated accessibility checks with axe. |
 | `tests/deployed/` | Playwright checks run against a deployed site (a PR preview or production): every sitemap page with axe, the 404 status, redirects, headers, `noindex` and the analytics beacon. |
 | `tests/fixtures/` | Test content: four fixture articles (one is a draft) and an empty folder for the zero-article build. Never published. |
+| `docs/content/` | The content workflow ([README](../content/README.md)): article template, review checklist, and each article's research brief and fact-check report in `articles/<slug>/`. |
 | `docs/adr/` | Architecture decision records: the options considered for each decision and why one was chosen. |
 | `docs/runbooks/` | Step-by-step instructions for everything done by hand in Azure, Cloudflare and GitHub settings. |
-| `.github/` | The two workflows (`ci.yml`, `deploy.yml`), the shared setup step (`actions/setup/`) and the Dependabot settings. |
+| `.github/` | The two workflows (`ci.yml`, `deploy.yml`), the shared setup step (`actions/setup/`), the Dependabot settings and the Article request issue form (`ISSUE_TEMPLATE/`). |
+| `.claude/skills/` | Project skills for Claude Code. `write-article/` runs the content workflow: `/write-article <issue>`. |
 | `.githooks/` | The gitleaks pre-commit hook, turned on per clone with `git config core.hooksPath .githooks`. |
 | `docs/superpowers/` | The approved design spec and the implementation plans. |
 | `astro.config.mjs` | Site URL, Markdown setup and integrations (MDX, sitemap, search index). |
@@ -101,7 +103,7 @@ The variable stays set until you close that terminal. `Remove-Item Env:PD_CONTEN
 
 | Command | What runs | How long |
 |---|---|---|
-| `npm test` | Vitest unit tests: schema, taxonomy, article selection, reading time, contents, SEO tags, robots.txt, dates, author launch guard, search indexer | a few seconds |
+| `npm test` | Vitest unit tests: schema, taxonomy, article selection, reading time, contents, SEO tags, robots.txt, dates, author launch guard, search indexer, link checker rules, and the article linter on every article in `src/content/articles/` (see [docs/content/README.md](../content/README.md#what-the-checks-catch)) | a few seconds |
 | `npm run test:e2e` | Playwright builds the site twice (once with the fixture articles, once with none), serves both, and runs the browser tests in three projects | about a minute |
 | `npm run test:deployed` | The `tests/deployed/` checks against the site at `PD_DEPLOYED_URL`. CI runs them on every preview and after every production deploy | under a minute |
 | `npm run test:lighthouse` | Lighthouse CI on six pages at `PD_DEPLOYED_URL`, three runs each, failing below the thresholds in [ADR-0005](../adr/0005-ci-and-deployment-pipeline.md) | a few minutes |
@@ -150,7 +152,7 @@ npx lighthouse@13.6.0 http://localhost:4420/ --view
 
 ### Plan 3: content workflow and launch
 
-- An article-request issue template and a `/write-article` skill for Claude Code, covering research, a humanizer pass and fact-checking.
+- An article-request issue form and a `/write-article` skill for Claude Code, covering research, a brief Nikita approves, a humanizer pass and fact-checking, plus an article linter in `npm test` and a link checker ([ADR-0008](../adr/0008-content-workflow-and-checks.md), [docs/content/](../content/README.md)).
 - The first two articles: Data foundations and Digital twins.
 - The real About page details, which unblocks the indexing guard.
 - A launch checklist, ending with `PUBLIC_ALLOW_INDEXING=true` on the live build.
@@ -164,4 +166,5 @@ npx lighthouse@13.6.0 http://localhost:4420/ --view
 - [ADR-0005: CI and deployment pipeline](../adr/0005-ci-and-deployment-pipeline.md)
 - [ADR-0006: DNS, redirects and analytics on Cloudflare](../adr/0006-dns-redirects-and-analytics-on-cloudflare.md)
 - [ADR-0007: Repository secret hygiene and dependency updates](../adr/0007-repository-secret-hygiene.md)
+- [ADR-0008: Content workflow and its checks](../adr/0008-content-workflow-and-checks.md)
 - [Design spec](../superpowers/specs/2026-11-09-practically-digital-design.md)
