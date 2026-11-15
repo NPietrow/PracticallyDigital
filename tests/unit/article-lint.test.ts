@@ -164,9 +164,11 @@ describe('lintArticle', () => {
       expect(issues[0].line).toBe(line);
     });
 
-    it("a number followed by 'bn' or 'm'", () => {
-      expect(figureIssues('Shipments reached 2.5m units.').issues).toHaveLength(1);
+    // A bare "m" is left out: it is usually minutes or metres, and "£2m" is
+    // caught by the currency rule.
+    it("a number followed by 'bn', or money in millions", () => {
       expect(figureIssues('The sector is worth 3bn a year.').issues).toHaveLength(1);
+      expect(figureIssues('The programme cost £2.5m.').issues).toHaveLength(1);
     });
 
     it('in a list item', () => {
@@ -294,6 +296,32 @@ describe('lintArticle', () => {
       '/>',
     ].join('\n');
     expect(lint(article(body))).toEqual([]);
+  });
+
+  describe('review fixes', () => {
+    it('a link whose text is "source" is a citation, not a marker', () => {
+      const body = 'Read the [source](https://example.org/x) or the [citation needed](https://example.org/y) page.';
+      expect(lint(article(body))).toEqual([]);
+    });
+
+    it('URLs in inline code are not links', () => {
+      expect(lint(article('Node-RED listens on `http://localhost:1880` by default.'))).toEqual([]);
+    });
+
+    it('minutes, metres and names ending in m are not money', () => {
+      const body = 'The job takes 10m on a 5 m conveyor. 3M makes tape. M2M links need care.';
+      expect(lint(article(body))).toEqual([]);
+    });
+
+    it('a link with a title still sources a figure', () => {
+      const body = 'Downtime fell by 30% ([report](https://example.org/r "The 2024 report")).';
+      expect(lint(article(body))).toEqual([]);
+    });
+
+    it('a data foundations link inside a comment does not count', () => {
+      const body = `${BODY}\n\n{/*\n  Link to /insights/data-foundations/ here.\n*/}`;
+      expect(only(lint(article(body), ['digital-twins']), 'data-foundations-link')).toHaveLength(1);
+    });
   });
 
   it('END_SECTIONS is the agreed pair', () => {

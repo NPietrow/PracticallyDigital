@@ -57,15 +57,17 @@ const FIGURES = [
   /\d(\.\d+)?\s?%/,
   /\d(\.\d+)?\s?per\s?cent\b/i,
   /[£$€]\s?\d/,
-  /\d(\.\d+)?\s?(million|billion|bn|m)\b/i,
+  // No bare "m": it is usually minutes or metres, and "£2m" is a currency amount anyway.
+  /\d(\.\d+)?\s?(million|billion|bn)\b/i,
 ];
-const MD_LINK = /\]\([^)\s]+\)|<https?:\/\/[^>]+>/;
+const MD_LINK = /\]\([^)\s]+(\s+("[^"]*"|'[^']*'))?\)|<https?:\/\/[^>]+>/;
 const HTTPS_LINK = /\]\(https:\/\/|<https:\/\//;
 const ESTIMATE = /\bestimated?\b/i;
 const MARKERS = [
   /\b(TODO|TBC|FIXME|PLACEHOLDER)\b/,
-  /\[citation needed\]/i,
-  /\[source\]/i,
+  // A link whose text is "source", [source](https://…), is a real citation.
+  /\[citation needed\](?!\()/i,
+  /\[source\](?!\()/i,
   /\(source\?\)/i,
   /XX\s?%/i,
 ];
@@ -191,13 +193,12 @@ export function lintArticle(source: string, opts: { topics: string[] }): LintIss
     const visible = withoutInlineCode(line);
     const marker = MARKERS.map((re) => re.exec(visible)).find((m) => m);
     if (marker) add('leftover-marker', n, `Leftover marker "${marker[0]}".`);
-    for (const url of line.matchAll(URLS)) {
+    for (const url of visible.matchAll(URLS)) {
       const problem = linkProblem(url[0]);
       if (problem) add('link', n, problem);
     }
 
     if (i <= fm.end) return;
-    if (DATA_FOUNDATIONS_LINK.test(visible)) bodyHasDataFoundationsLink = true;
 
     if (jsxClose) {
       if (line.includes(jsxClose)) jsxClose = null;
@@ -209,6 +210,9 @@ export function lintArticle(source: string, opts: { topics: string[] }): LintIss
       else if (JSX_TAG.test(line) && !line.includes('>')) jsxClose = '>';
       return;
     }
+
+    // Only text outside code, comments and JSX tags counts as linking to the guide.
+    if (DATA_FOUNDATIONS_LINK.test(visible)) bodyHasDataFoundationsLink = true;
 
     if (line.trim() === '') {
       endUnit();

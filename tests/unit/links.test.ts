@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { classifyStatus, extractLinks } from '../../src/lib/links';
+import { checkExternal, classifyStatus, extractLinks, type LinkResult } from '../../src/lib/links';
 
 const SOURCE = [
   '---', // 1
@@ -70,5 +70,43 @@ describe('classifyStatus', () => {
     expect(classifyStatus({ status: 500 })).toBe('check');
     expect(classifyStatus({ error: 'timeout' })).toBe('check');
     expect(classifyStatus({ error: 'something odd' })).toBe('check');
+  });
+});
+
+describe('checkExternal', () => {
+  // A stand-in for the network: answers by method, and records what was asked.
+  function server(answers: Record<'HEAD' | 'GET', LinkResult>) {
+    const asked: string[] = [];
+    const request = async (_url: string, method: 'HEAD' | 'GET') => {
+      asked.push(method);
+      return answers[method];
+    };
+    return { asked, request };
+  }
+
+  it('stops at HEAD when HEAD succeeds', async () => {
+    const s = server({ HEAD: { status: 200 }, GET: { status: 500 } });
+    expect(await checkExternal('https://example.org', s.request)).toEqual({ status: 200 });
+    expect(s.asked).toEqual(['HEAD']);
+  });
+
+  // Some servers and CDNs answer HEAD wrongly (404, 403, 405) but serve the page to GET.
+  it('retries with GET whenever HEAD does not succeed, and trusts the GET answer', async () => {
+    for (const head of [{ status: 404 }, { status: 403 }, { status: 405 }, { error: 'ECONNRESET' }]) {
+      const s = server({ HEAD: head, GET: { status: 200 } });
+      expect(await checkExternal('https://example.org', s.request)).toEqual({ status: 200 });
+      expect(s.asked).toEqual(['HEAD', 'GET']);
+    }
+  });
+
+  it('reports a real 404 when GET agrees', async () => {
+    const s = server({ HEAD: { status: 404 }, GET: { status: 404 } });
+    expect(classifyStatus(await checkExternal('https://example.org', s.request))).toBe('broken');
+  });
+
+  it('does not retry a host that does not exist', async () => {
+    const s = server({ HEAD: { error: 'ENOTFOUND' }, GET: { status: 200 } });
+    expect(await checkExternal('https://example.org', s.request)).toEqual({ error: 'ENOTFOUND' });
+    expect(s.asked).toEqual(['HEAD']);
   });
 });

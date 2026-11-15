@@ -78,7 +78,7 @@ The linter fails `npm test` (and so the `build` check on the pull request) when 
 
 - doesn't end with Tools and resources then Further reading, or has either twice;
 - has no bullet list under Tools and resources, or fewer than three `https` links under Further reading;
-- has a percentage, money amount or "million"/"bn"/"m" figure with no link in the same paragraph and no "estimate" label;
+- has a percentage, money amount or "million"/"billion"/"bn" figure with no link in the same paragraph and no "estimate" label. Sources must be inline links, `[text](https://…)`, and each table row with a figure needs its own link;
 - still has a marker such as TODO, TBC or [citation needed];
 - links to `http://`, localhost or an Azure preview address;
 - uses an American spelling (color, center, optimize and a few others) in its own prose. Names, link text, quotations and the two closing sections are exempt;

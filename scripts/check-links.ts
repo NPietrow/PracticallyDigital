@@ -1,13 +1,13 @@
 // Checks every link in the given article files.
 //   npm run build
 //   npm run check:links -- src/content/articles/<slug>.mdx
-// External links get a HEAD request (GET if the server refuses HEAD), internal
+// External links get a HEAD request (then GET if HEAD doesn't succeed), internal
 // links are looked up in dist/, and relative files next to the article must exist.
 // Prints one line per link and exits 1 if any link is broken. "check" lines
 // are links a person should open in a browser; they don't fail the run.
 import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
-import { classifyStatus, extractLinks, type Link, type LinkResult, type LinkVerdict } from '../src/lib/links.ts';
+import { checkExternal, classifyStatus, extractLinks, type Link, type LinkResult, type LinkVerdict } from '../src/lib/links.ts';
 
 const USER_AGENT = 'practically-digital-linkcheck';
 const TIMEOUT_MS = 10_000;
@@ -33,12 +33,6 @@ async function request(url: string, method: 'HEAD' | 'GET'): Promise<LinkResult>
   }
 }
 
-async function checkExternal(url: string): Promise<LinkResult> {
-  const head = await request(url, 'HEAD');
-  if ('status' in head && (head.status === 405 || head.status === 501)) return request(url, 'GET');
-  return head;
-}
-
 function checkInternal(url: string): LinkResult {
   const path = url.split(/[?#]/)[0];
   const target = /\.[a-z0-9]+$/i.test(path) ? join(DIST, path) : join(DIST, path, 'index.html');
@@ -48,7 +42,7 @@ function checkInternal(url: string): LinkResult {
 async function checkLink(file: string, link: Link): Promise<Row> {
   const { url } = link;
   let result: LinkResult;
-  if (/^https?:\/\//.test(url)) result = await checkExternal(url);
+  if (/^https?:\/\//.test(url)) result = await checkExternal(url, request);
   else if (url.startsWith('/')) result = checkInternal(url);
   else result = existsSync(resolve(dirname(file), url.split(/[?#]/)[0])) ? { status: 200 } : { status: 404 };
   const detail = 'status' in result ? String(result.status) : result.error;

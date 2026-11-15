@@ -49,3 +49,18 @@ export function classifyStatus(result: LinkResult): LinkVerdict {
   if (status === 404 || status === 410) return 'broken';
   return 'check';
 }
+
+export type Requester = (url: string, method: 'HEAD' | 'GET') => Promise<LinkResult>;
+
+/**
+ * HEAD first, because it doesn't download the page. Some servers and CDNs
+ * answer HEAD wrongly (404, 403, 405) while serving the page to GET, so any
+ * HEAD that doesn't succeed is retried with GET, and GET's answer stands.
+ * A host that doesn't exist isn't retried.
+ */
+export async function checkExternal(url: string, request: Requester): Promise<LinkResult> {
+  const head = await request(url, 'HEAD');
+  if ('status' in head && head.status >= 200 && head.status < 400) return head;
+  if ('error' in head && DEAD.test(head.error)) return head;
+  return request(url, 'GET');
+}
