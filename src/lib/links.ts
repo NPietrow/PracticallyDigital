@@ -1,0 +1,66 @@
+// Link extraction and status rules for the link checker (scripts/check-links.ts).
+// Kept free of Astro and Vite imports so Node can run the script directly.
+
+export type Link = { url: string; text: string; line: number };
+export type LinkResult = { status: number } | { error: string };
+export type LinkVerdict = 'ok' | 'broken' | 'check';
+
+const FENCE = /^\s*(`{3,}|~{3,})/;
+// [text](url "optional title"), allowing one level of brackets inside the URL.
+const INLINE = /\[([^\]]*)\]\(((?:[^()\s]|\([^()\s]*\))+)(?:\s+"[^"]*")?\)/g;
+const AUTOLINK = /<(https?:\/\/[^>\s]+)>/g;
+const ATTRIBUTE = /\b(?:href|src)="([^"]+)"/g;
+
+/** Every link in an article: Markdown links, autolinks and JSX href/src. Code blocks are skipped. */
+export function extractLinks(source: string): Link[] {
+  const links: Link[] = [];
+  let fence: string | null = null;
+  source.split(/\r?\n/).forEach((raw, i) => {
+    const line = i + 1;
+    if (fence) {
+      if (raw.trim().startsWith(fence)) fence = null;
+      return;
+    }
+    const opening = FENCE.exec(raw);
+    if (opening) {
+      fence = opening[1];
+      return;
+    }
+    const text = raw.replace(/`[^`]*`/g, ' ');
+    for (const m of text.matchAll(INLINE)) links.push({ url: m[2], text: m[1], line });
+    for (const m of text.matchAll(AUTOLINK)) links.push({ url: m[1], text: m[1], line });
+    for (const m of text.matchAll(ATTRIBUTE)) links.push({ url: m[1], text: '', line });
+  });
+  return links;
+}
+
+// The host doesn't exist or refused the connection: the link is dead.
+const DEAD = /ENOTFOUND|ECONNREFUSED|EHOSTUNREACH|ENETUNREACH|ERR_INVALID_URL/;
+
+/**
+ * ok: 2xx or 3xx. broken: 404, 410, or no such host. check: anything a person
+ * should open in a browser, because publishers often block bots (401, 403,
+ * 429), servers have bad days (5xx) and some are just slow (timeouts).
+ */
+export function classifyStatus(result: LinkResult): LinkVerdict {
+  if ('error' in result) return DEAD.test(result.error) ? 'broken' : 'check';
+  const { status } = result;
+  if (status >= 200 && status < 400) return 'ok';
+  if (status === 404 || status === 410) return 'broken';
+  return 'check';
+}
+
+export type Requester = (url: string, method: 'HEAD' | 'GET') => Promise<LinkResult>;
+
+/**
+ * HEAD first, because it doesn't download the page. Some servers and CDNs
+ * answer HEAD wrongly (404, 403, 405) while serving the page to GET, so any
+ * HEAD that doesn't succeed is retried with GET, and GET's answer stands.
+ * A host that doesn't exist isn't retried.
+ */
+export async function checkExternal(url: string, request: Requester): Promise<LinkResult> {
+  const head = await request(url, 'HEAD');
+  if ('status' in head && head.status >= 200 && head.status < 400) return head;
+  if ('error' in head && DEAD.test(head.error)) return head;
+  return request(url, 'GET');
+}

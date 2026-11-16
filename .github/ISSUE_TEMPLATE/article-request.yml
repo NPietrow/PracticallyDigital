@@ -1,0 +1,78 @@
+# The "Article request" issue form. Claude's /write-article skill reads the
+# answers with `gh issue view`. The topic and problem options must match the
+# names in src/data/taxonomy.ts (tests/unit/content-kit.test.ts checks this).
+# No labels here: labels are a repository setting, so they stay with Nikita.
+name: Article request
+description: Ask for a new article. Claude researches it and drafts a brief for approval.
+title: 'Article: '
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Fill in what you know. Claude does the research and comes back with a brief and outline before writing anything.
+        How it works: [docs/content/README.md](../blob/main/docs/content/README.md).
+  - type: input
+    id: working-title
+    attributes:
+      label: Working title
+      description: Doesn't need to be final.
+      placeholder: Data foundations for industrial leaders
+    validations:
+      required: true
+  - type: dropdown
+    id: topic
+    attributes:
+      label: Main topic
+      description: The technology the article is mainly about.
+      options:
+        - Data foundations
+        - AI and analytics
+        - Digital twins
+        - IoT and connectivity
+        - Cloud and infrastructure
+        - Digital strategy (Industry 4.0)
+    validations:
+      required: true
+  - type: dropdown
+    id: problems
+    attributes:
+      label: Reader problems
+      description: The pain points it helps with. Pick up to three.
+      multiple: true
+      options:
+        - Untrusted or siloed data
+        - Unplanned downtime
+        - No visibility of operations
+        - Quality and scrap
+        - Energy and cost
+        - Skills and adoption
+  - type: textarea
+    id: angle
+    attributes:
+      label: Angle
+      description: What this article says that others don't. The one point a reader should leave with.
+    validations:
+      required: true
+  - type: textarea
+    id: reader-problem
+    attributes:
+      label: The reader's problem, in their words
+      description: How an operations director or plant manager would describe it.
+      placeholder: '"We have dashboards, but nobody believes the numbers."'
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Your notes and experience
+      description: What you've seen work and fail. Nothing from client, employer or NDA work.
+  - type: textarea
+    id: sources
+    attributes:
+      label: Sources you already trust
+      description: Links to reports, standards or guides to start from.
+  - type: textarea
+    id: out-of-scope
+    attributes:
+      label: Out of scope
+      description: What this article should leave out, or leave for another article.
