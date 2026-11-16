@@ -22,9 +22,10 @@ If the arguments end in `revise`, skip to **Revise mode**.
 
 Use **deep-research** (the `anthropic-skills:deep-research` skill). Research questions:
 
-- the current state of the topic, in plain terms, for UK manufacturing and utilities leaders;
+- the current state of the topic, in plain terms, for UK manufacturing and industry leaders;
 - what's already published for this audience (government, Catapults, standards bodies, trade bodies, vendors), so the article builds on it rather than repeating it;
-- public UK manufacturing and utilities examples, with sources;
+- public UK manufacturing and other industry examples, with stats where possible, with sources;
+- what has and hasn't worked in the past for this audience, and why;
 - credible further reading, and useful free tools, standards, templates or self-assessments.
 
 Search queries name the topic only, never Nikita, the project or anything personal.

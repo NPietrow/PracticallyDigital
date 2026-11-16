@@ -7,7 +7,7 @@ description: One sentence for search results and link previews, saying who it is
 # matters to this reader, and a one-line verdict. It renders in the
 # highlighted "The gist" box above the article, not as a heading, so don't
 # repeat it in the body. Up to 400 characters, and nothing the body doesn't support.
-gist: What it is, in one sentence. Why it matters to someone running a plant. The verdict, in a line.
+gist: What it is, in one-three sentences. Why it matters to someone running a plant. The verdict, in a line.
 author: Nikita Pietrow # optional; this is the default
 published: 2026-11-20 # the day it merges
 reviewed: 2026-11-20 # optional; the last full fact-check, shown as "last reviewed"
