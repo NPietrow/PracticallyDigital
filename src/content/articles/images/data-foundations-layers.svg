@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="440" viewBox="0 0 1200 440" role="img" aria-labelledby="t d" font-family="IBM Plex Sans, Segoe UI, Arial, sans-serif">
+  <title id="t">From sensor to decision: the layers of a data architecture</title>
+  <desc id="d">Five layers from left to right: sources, ingestion, storage, transformation and visualisation, each with factory examples. A governance band runs underneath all five.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1b1f23"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="440" fill="#ecece7"/>
+  <text x="20" y="40" font-size="14" fill="#62675f">Data flows left to right, from the plant to the people making decisions</text>
+
+  <g font-size="14" fill="#3c413b">
+    <rect x="20" y="64" width="208" height="230" fill="#ffffff" stroke="#d5d5ce"/>
+    <rect x="20" y="64" width="208" height="6" fill="#f2b705"/>
+    <text x="36" y="104" font-size="18" font-weight="600" fill="#1b1f23">Sources</text>
+    <text x="36" y="140">Sensors and PLCs</text>
+    <text x="36" y="164">SCADA and MES</text>
+    <text x="36" y="188">ERP and quality systems</text>
+    <text x="36" y="212">Spreadsheets and paper</text>
+    <text x="36" y="236">People's knowledge</text>
+
+    <rect x="258" y="64" width="208" height="230" fill="#ffffff" stroke="#d5d5ce"/>
+    <rect x="258" y="64" width="208" height="6" fill="#f2b705"/>
+    <text x="274" y="104" font-size="18" font-weight="600" fill="#1b1f23">Ingestion</text>
+    <text x="274" y="140">OPC UA and MQTT</text>
+    <text x="274" y="164">Gateways</text>
+    <text x="274" y="188">Scheduled exports</text>
+    <text x="274" y="212">Manual entry</text>
+
+    <rect x="496" y="64" width="208" height="230" fill="#ffffff" stroke="#d5d5ce"/>
+    <rect x="496" y="64" width="208" height="6" fill="#f2b705"/>
+    <text x="512" y="104" font-size="18" font-weight="600" fill="#1b1f23">Storage</text>
+    <text x="512" y="140">Historian for</text>
+    <text x="512" y="164">time-series data</text>
+    <text x="512" y="188">Relational databases</text>
+    <text x="512" y="212">File stores</text>
+
+    <rect x="734" y="64" width="208" height="230" fill="#ffffff" stroke="#d5d5ce"/>
+    <rect x="734" y="64" width="208" height="6" fill="#f2b705"/>
+    <text x="750" y="104" font-size="18" font-weight="600" fill="#1b1f23">Transformation</text>
+    <text x="750" y="140">Clean and check</text>
+    <text x="750" y="164">Add context: order,</text>
+    <text x="750" y="188">batch, product, asset</text>
+    <text x="750" y="212">Join sources together</text>
+
+    <rect x="972" y="64" width="208" height="230" fill="#ffffff" stroke="#d5d5ce"/>
+    <rect x="972" y="64" width="208" height="6" fill="#f2b705"/>
+    <text x="988" y="104" font-size="18" font-weight="600" fill="#1b1f23">Visualisation</text>
+    <text x="988" y="140">Shift dashboards</text>
+    <text x="988" y="164">OEE reports</text>
+    <text x="988" y="188">Maintenance and</text>
+    <text x="988" y="212">quality analysis</text>
+    <text x="988" y="236">The decision itself</text>
+  </g>
+
+  <g stroke="#1b1f23" stroke-width="2" marker-end="url(#arrow)">
+    <line x1="230" y1="180" x2="254" y2="180"/>
+    <line x1="468" y1="180" x2="492" y2="180"/>
+    <line x1="706" y1="180" x2="730" y2="180"/>
+    <line x1="944" y1="180" x2="968" y2="180"/>
+  </g>
+
+  <rect x="20" y="318" width="1160" height="96" fill="#1b1f23"/>
+  <text x="44" y="356" font-size="18" font-weight="600" fill="#ecece7">Governance runs underneath every layer</text>
+  <text x="44" y="388" font-size="15" fill="#b4b8ae">Named owners, agreed definitions, quality rules, access rights, and the security boundary between office IT and plant systems</text>
+</svg>

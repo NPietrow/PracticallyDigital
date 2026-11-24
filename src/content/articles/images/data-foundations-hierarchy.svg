@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="560" viewBox="0 0 1000 560" role="img" aria-labelledby="t d" font-family="IBM Plex Sans, Segoe UI, Arial, sans-serif">
+  <title id="t">From noise to wisdom</title>
+  <desc id="d">A pyramid with five levels, from the bottom: noise, data, information, knowledge and wisdom, each with an invented factory example. Noise is a bare number. Data adds units, machine, time and source. Information shows load rising for six shifts. Knowledge says rising load on this machine usually means a worn tool. Wisdom decides to change the tool at the next planned stop. A yellow bar marks the bottom three levels as the work of data foundations.</desc>
+  <rect width="1000" height="560" fill="#ecece7"/>
+
+  <polygon points="82,408 498,408 550,500 30,500" fill="#d5d5ce" stroke="#ecece7" stroke-width="3"/>
+  <polygon points="134,316 446,316 498,408 82,408" fill="#ffffff" stroke="#ecece7" stroke-width="3"/>
+  <polygon points="186,224 394,224 446,316 134,316" fill="#ffffff" stroke="#ecece7" stroke-width="3"/>
+  <polygon points="238,132 342,132 394,224 186,224" fill="#3c413b" stroke="#ecece7" stroke-width="3"/>
+  <polygon points="290,40 342,132 238,132" fill="#1b1f23" stroke="#ecece7" stroke-width="3"/>
+
+  <g font-size="17" font-weight="600" text-anchor="middle">
+    <text x="290" y="460" fill="#3c413b">Noise</text>
+    <text x="290" y="368" fill="#1b1f23">Data</text>
+    <text x="290" y="276" fill="#1b1f23">Information</text>
+    <text x="290" y="184" fill="#ecece7">Knowledge</text>
+    <text x="290" y="120" font-size="15" fill="#ecece7">Wisdom</text>
+  </g>
+
+  <rect x="572" y="224" width="6" height="276" fill="#f2b705"/>
+
+  <g font-size="15" fill="#3c413b">
+    <text x="600" y="80">Change the tool at the next planned stop,</text>
+    <text x="600" y="102">before it breaks</text>
+    <text x="600" y="172">Rising load on this machine usually</text>
+    <text x="600" y="194">means the tool is wearing</text>
+    <text x="600" y="264">Load on machine 3 has risen</text>
+    <text x="600" y="286">for six shifts in a row</text>
+    <text x="600" y="356">Spindle load 41.7%, machine 3,</text>
+    <text x="600" y="378">Tuesday 10:42, from the historian</text>
+    <text x="600" y="448">41.7</text>
+    <text x="600" y="470">A number with no units, time or source</text>
+  </g>
+
+  <text x="30" y="540" font-size="14" fill="#62675f">The yellow bar marks the levels data foundations work on: context, ownership and quality. An invented example.</text>
+</svg>
