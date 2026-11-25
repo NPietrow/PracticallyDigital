@@ -298,6 +298,22 @@ describe('lintArticle', () => {
     expect(lint(article(body))).toEqual([]);
   });
 
+  it('review comments for Nikita or Claude are leftover markers', () => {
+    const body = [
+      '{/* NIKITA: check this passage against your experience. */}',
+      '',
+      'Opening paragraph.',
+      '',
+      '{/* CLAUDE: redraw the figure',
+      '   with more detail. */}',
+      '',
+      'Claude Code and Nikita are named here in prose, which is fine.',
+    ].join('\n');
+    const source = article(body);
+    const issues = only(lint(source), 'leftover-marker');
+    expect(issues.map((i) => i.line)).toEqual([lineOf(source, 'NIKITA:'), lineOf(source, 'CLAUDE:')]);
+  });
+
   describe('review fixes', () => {
     it('a link whose text is "source" is a citation, not a marker', () => {
       const body = 'Read the [source](https://example.org/x) or the [citation needed](https://example.org/y) page.';

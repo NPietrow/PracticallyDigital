@@ -13,6 +13,7 @@ Nikita ticks this in the article's pull request before merging. Merging publishe
 - [ ] British English
 - [ ] Covers costs, limitations and when not to bother
 - [ ] Tools and resources is vendor-neutral, and paid items are labelled
+- [ ] Links go to the publisher's page for a document, not the file, wherever one exists
 - [ ] Every fact-check flag resolved, or the claim removed
 - [ ] Humanizer run after the last edit
 - [ ] `reviewed` date set

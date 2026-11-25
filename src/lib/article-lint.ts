@@ -70,6 +70,8 @@ const MARKERS = [
   /\[source\](?!\()/i,
   /\(source\?\)/i,
   /XX\s?%/i,
+  // Review comments between Nikita and Claude ({/* NIKITA: … */}) must go before merge.
+  /\b(NIKITA|CLAUDE):/,
 ];
 const URLS = /\bhttps?:\/\/[^\s)\]>"'`]+/g;
 const DATA_FOUNDATIONS_LINK = /\/(insights|topics)\/data-foundations\//;
