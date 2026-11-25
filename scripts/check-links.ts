@@ -3,11 +3,12 @@
 //   npm run check:links -- src/content/articles/<slug>.mdx
 // External links get a HEAD request (then GET if HEAD doesn't succeed), internal
 // links are looked up in dist/, and relative files next to the article must exist.
-// Prints one line per link and exits 1 if any link is broken. "check" lines
+// Prints one line per link, with the reason in plain words and a note on any
+// link that goes straight to a file, and exits 1 if any link is broken. "check" lines
 // are links a person should open in a browser; they don't fail the run.
 import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
-import { checkExternal, classifyStatus, extractLinks, type Link, type LinkResult, type LinkVerdict } from '../src/lib/links.ts';
+import { checkExternal, classifyStatus, describeResult, extractLinks, isFileLink, type Link, type LinkResult, type LinkVerdict } from '../src/lib/links.ts';
 
 const USER_AGENT = 'practically-digital-linkcheck';
 const TIMEOUT_MS = 10_000;
@@ -45,7 +46,7 @@ async function checkLink(file: string, link: Link): Promise<Row> {
   if (/^https?:\/\//.test(url)) result = await checkExternal(url, request);
   else if (url.startsWith('/')) result = checkInternal(url);
   else result = existsSync(resolve(dirname(file), url.split(/[?#]/)[0])) ? { status: 200 } : { status: 404 };
-  const detail = 'status' in result ? String(result.status) : result.error;
+  const detail = describeResult(result);
   return { verdict: classifyStatus(result), detail, file, link };
 }
 
@@ -80,10 +81,15 @@ async function main() {
 
   rows.sort((a, b) => a.file.localeCompare(b.file) || a.link.line - b.link.line);
   for (const r of rows) {
-    console.log(`${r.verdict.padEnd(6)} ${r.detail.padEnd(12)} ${r.file}:${r.link.line}  ${r.link.url}`);
+    const note = isFileLink(r.link.url) ? "  (file link: prefer the publisher's page)" : "";
+    console.log(`${r.verdict.padEnd(6)} ${r.detail.padEnd(18)} ${r.file}:${r.link.line}  ${r.link.url}${note}`);
   }
   const count = (v: LinkVerdict) => rows.filter((r) => r.verdict === v).length;
   console.log(`\n${rows.length} links: ${count('ok')} ok, ${count('check')} to check by hand, ${count('broken')} broken.`);
+  const fileLinks = rows.filter((r) => isFileLink(r.link.url)).length;
+  if (fileLinks > 0) {
+    console.log(`${fileLinks} link(s) go straight to a file. Link to the publisher's page for the document where there is one (docs/content/README.md).`);
+  }
   if (count('broken') > 0) process.exit(1);
 }
 

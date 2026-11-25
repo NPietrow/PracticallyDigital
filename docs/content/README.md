@@ -45,6 +45,7 @@ flowchart TD
 | The skill | `.claude/skills/write-article/SKILL.md` |
 | Linter | `src/lib/article-lint.ts`, run by `npm test` on every article |
 | Link checker | `npm run check:links -- <file>` (after `npm run build`) |
+| Spell check | `npm run check:spelling`: British English, report only; accepted names and terms in `docs/content/spelling-words.txt` |
 
 The brief and fact-check report are public, like everything in the repository, so they quote at most one short sentence from any source and paraphrase the rest.
 
@@ -96,10 +97,13 @@ The linter fails `npm test` (and so the `build` check on the pull request) when 
 
 - doesn't end with Tools and resources then Further reading, or has either twice;
 - has no bullet list under Tools and resources, or fewer than three `https` links under Further reading;
-- has a percentage, money amount or "million"/"billion"/"bn" figure with no link in the same paragraph and no "estimate" label. Sources must be inline links, `[text](https://…)`, and each table row with a figure needs its own link;
+- has a percentage, money amount or "million"/"billion"/"bn" figure with no link in the same paragraph and no "estimate" label. Sources must be inline links, `[text](https://…)`, and each table row with a figure needs its own link unless a "Source: [link]" line sits straight under the table;
 - still has a marker such as TODO, TBC or [citation needed], or a `NIKITA:` or `CLAUDE:` review comment;
 - links to `http://`, localhost or an Azure preview address;
 - uses an American spelling (color, center, optimize and a few others) in its own prose. Names, link text, quotations and the two closing sections are exempt;
-- is a technology guide with no link to the data foundations guide.
+- is a technology guide with no link to the data foundations guide;
+- has a `BarChart`, `PullQuote` or `Stat` with no `href` to its source (a `Stat` can take its source from its `StatRow`).
 
-Drafts (`draft: true`) are skipped. The link checker reports each link as `ok`, `broken` (404, 410, or no such site) or `check`. "Check" means the site blocked the robot, was slow or had an error, so open it in a browser. Only `broken` fails.
+Drafts (`draft: true`) are skipped. The link checker reports each link as `ok`, `broken` (404, 410, or no such site) or `check`. "Check" means the site blocked the robot, was slow or had an error, so open it in a browser; each line says why in plain words ("403 blocked", "429 rate-limited", "timeout"). Only `broken` fails. It also notes links that go straight to a file, so you can swap them for the publisher's page.
+
+The spell check (`npm run check:spelling`) uses a British English dictionary and lists unknown words. It never fails the build: fix the typos, and add real names and terms to the word list.

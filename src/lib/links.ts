@@ -64,3 +64,42 @@ export async function checkExternal(url: string, request: Requester): Promise<Li
   if ('error' in head && DEAD.test(head.error)) return head;
   return request(url, 'GET');
 }
+
+// Document files the content rules prefer to reach through the publisher's
+// page (its landing page): the file's address changes when a new version is
+// uploaded, and on a phone a file link starts a download.
+const FILE_EXTENSION = /\.(pdf|xlsx?|csv|ods|zip|docx?|odt|pptx?|odp)$/i;
+
+/** True when a URL points straight at a document file, not at a page about it. */
+export function isFileLink(url: string): boolean {
+  if (!/^https?:\/\//.test(url)) return false;
+  let parsed: URL;
+  try {
+    parsed = new URL(url);
+  } catch {
+    return false;
+  }
+  if (FILE_EXTENSION.test(parsed.pathname) || /\/download\/?$/i.test(parsed.pathname)) return true;
+  // Some sites serve files through a handler, e.g. ONS's /file?uri=/.../tables.xlsx
+  return [...parsed.searchParams.values()].some((v) => FILE_EXTENSION.test(v.split(/[?#]/)[0]));
+}
+
+const STATUS_WORDS: Record<number, string> = {
+  401: 'sign-in',
+  403: 'blocked',
+  404: 'not found',
+  410: 'gone',
+  429: 'rate-limited',
+};
+
+/** The status in plain words, so the reader knows what they're opening by hand. */
+export function describeResult(result: LinkResult): string {
+  if ('error' in result) {
+    if (/ENOTFOUND/.test(result.error)) return 'no such site';
+    if (/ECONNREFUSED/.test(result.error)) return 'refused';
+    return result.error;
+  }
+  const { status } = result;
+  const words = STATUS_WORDS[status] ?? (status >= 500 ? 'server error' : '');
+  return words ? `${status} ${words}` : String(status);
+}

@@ -31,7 +31,8 @@ export type LintRule =
   | 'leftover-marker'
   | 'link'
   | 'spelling'
-  | 'data-foundations-link';
+  | 'data-foundations-link'
+  | 'component-source';
 
 export type LintIssue = { rule: LintRule; line: number; message: string };
 
@@ -63,6 +64,7 @@ const FIGURES = [
 const MD_LINK = /\]\([^)\s]+(\s+("[^"]*"|'[^']*'))?\)|<https?:\/\/[^>]+>/;
 const HTTPS_LINK = /\]\(https:\/\/|<https:\/\//;
 const ESTIMATE = /\bestimated?\b/i;
+const TABLE_SOURCE = /^\s*[*_]*\s*Sources?:/i;
 const MARKERS = [
   /\b(TODO|TBC|FIXME|PLACEHOLDER)\b/,
   // A link whose text is "source", [source](https://…), is a real citation.
@@ -249,9 +251,23 @@ export function lintArticle(source: string, opts: { topics: string[] }): LintIss
   });
   endUnit();
 
+  // A "Source: [link]" line straight under a table sources every row of it.
+  const sourcedRows = new Set<Unit>();
+  for (let i = 0; i < units.length; i++) {
+    if (units[i].kind !== 'table') continue;
+    let end = i;
+    while (units[end + 1]?.kind === 'table' && units[end + 1].lines[0].n === units[end].lines[0].n + 1) end++;
+    const next = units[end + 1];
+    const nextText = next ? next.lines.map((l) => withoutInlineCode(l.text)).join(' ') : '';
+    if (next?.kind === 'paragraph' && TABLE_SOURCE.test(nextText) && MD_LINK.test(nextText)) {
+      for (let k = i; k <= end; k++) sourcedRows.add(units[k]);
+    }
+    i = end;
+  }
+
   // Figures need a source (a link) or an "estimate" label in the same paragraph or list item.
   for (const u of units) {
-    if (u.section?.name === READING) continue;
+    if (u.section?.name === READING || sourcedRows.has(u)) continue;
     const text = u.lines.map((l) => withoutInlineCode(l.text)).join(' ');
     if (!FIGURES.some((re) => re.test(text)) || MD_LINK.test(text) || ESTIMATE.test(text)) continue;
     const at = u.lines.find((l) => FIGURES.some((re) => re.test(withoutInlineCode(l.text)))) ?? u.lines[0];
@@ -290,7 +306,54 @@ export function lintArticle(source: string, opts: { topics: string[] }): LintIss
     );
   }
 
+  for (const problem of componentSourceProblems(lines)) add('component-source', problem.line, problem.message);
+
   return issues.sort((a, b) => a.line - b.line);
+}
+
+// The linter reads JSX as markup, not prose, so a figure inside a component
+// would escape the figure rule. Instead, every BarChart and PullQuote needs an
+// href, and every Stat needs one unless its StatRow has one.
+function componentSourceProblems(lines: string[]): { line: number; message: string }[] {
+  // Blank out fenced code so examples in code blocks are ignored, keeping line numbers.
+  let fence: string | null = null;
+  const text = lines
+    .map((line) => {
+      const opening = FENCE.exec(line);
+      if (fence) {
+        if (line.trim().startsWith(fence)) fence = null;
+        return '';
+      }
+      if (opening) {
+        fence = opening[1];
+        return '';
+      }
+      return line;
+    })
+    .join('\n');
+  const lineAt = (index: number) => text.slice(0, index).split('\n').length;
+  const hasHref = (tag: string) => /\bhref=/.test(tag);
+  const problems: { line: number; message: string }[] = [];
+
+  for (const m of text.matchAll(/<BarChart\b[\s\S]*?\/>/g)) {
+    if (!hasHref(m[0])) problems.push({ line: lineAt(m.index), message: 'BarChart needs an href linking to its source.' });
+  }
+  for (const m of text.matchAll(/<PullQuote\b[^>]*>/g)) {
+    if (!hasHref(m[0])) problems.push({ line: lineAt(m.index), message: 'PullQuote needs an href linking to its source.' });
+  }
+  for (const row of text.matchAll(/<StatRow\b([^>]*)>([\s\S]*?)<\/StatRow>/g)) {
+    if (hasHref(row[1])) continue;
+    const innerStart = row.index + row[0].indexOf(row[2]);
+    for (const stat of row[2].matchAll(/<Stat\b[^>]*\/>/g)) {
+      if (!hasHref(stat[0])) {
+        problems.push({
+          line: lineAt(innerStart + stat.index),
+          message: 'Stat needs an href linking to its source, unless its StatRow has one.',
+        });
+      }
+    }
+  }
+  return problems;
 }
 
 function endSectionsProblem(h2s: Section[], lastLine: number): { line: number; message: string } | null {

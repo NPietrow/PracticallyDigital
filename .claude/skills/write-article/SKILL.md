@@ -58,7 +58,8 @@ Copy `docs/content/article-template.md` to `src/content/articles/<slug>.mdx` and
 - Draw each diagram as a hand-written SVG in `src/content/articles/images/<slug>-<name>.svg`, using the colours in `src/styles/tokens.css`, with real text (not outlines) and a `<title>`. Show it with the `Figure` component, with alt text that says what the diagram shows.
 - If a `my-writing-style` voice profile exists, use it.
 - Follow "Sources, figures and visuals" in `docs/content/README.md`. In short: link to a document's landing page, not the file.
-- Break up text-heavy sections with the article components (`StatRow`, `PullQuote`, `Callout`, `BarChart`) and diagrams. Propose any new visual element to Nikita as a mockup before adding it.
+- Aim for about 3,000 words. The pilot draft ran to 4,500 and needed cutting.
+- Make the first draft visual, not only the final one: headline figures in a `StatRow`, one or two `PullQuote`s, caveats and legal duties in a `Callout`, a `BarChart` for one ranked series, and diagrams. Every figure in a component needs an `href` to its source (the linter checks). Propose any new kind of visual element to Nikita as a mockup before adding it.
 - Mark passages drafted from Nikita's notes, or resting on our own judgement, with `{/* NIKITA: … */}` comments for his close review.
 - No `draft: true` on the branch: the PR preview builds with drafts off, so a draft wouldn't appear on its own preview. Merging is publishing.
 
@@ -70,9 +71,10 @@ Run **humanizer:humanizer** over the whole draft, the gist and description inclu
 
 1. `npm test`: the article linter runs on every article (`tests/unit/content.test.ts`).
 2. `npm run build`.
-3. `npm run check:links -- src/content/articles/<slug>.mdx`.
+3. `npm run check:links -- src/content/articles/<slug>.mdx`. It also notes any link that goes straight to a file; swap those for the publisher's page where there is one.
+4. `npm run check:spelling`: British English spell check. It reports, it doesn't fail the build. Fix real typos; add genuine names and terms to `docs/content/spelling-words.txt`.
 
-Fix until all three are clean. `check` lines from the link checker aren't failures: open each one yourself if you can, and list the rest for Nikita.
+Fix until the first three are clean and the spell check shows nothing but accepted words. `check` lines from the link checker aren't failures: open each one yourself if you can, and list the rest for Nikita.
 
 ## 7. Fact-check, by a fresh subagent
 
@@ -97,7 +99,7 @@ Fix or remove every flagged claim. Never re-source a claim to a page that doesn'
 ## 9. Commit, push and open the PR
 
 1. Commit the article, its images and `fact-check.md` (`feat: draft <slug> article`).
-2. `git push -u origin article/<slug>` (sends the branch to GitHub; `-u` remembers where it goes).
+2. Push the branch: `git -c credential.helper= -c "credential.helper=!gh auth git-credential" push -u origin article/<slug>`. On Nikita's machine a plain `git push` waits for a Credential Manager sign-in; this uses the GitHub CLI's login instead. `-u` remembers where the branch goes.
 3. `gh pr create` with the title `Article: <title>` and a description holding:
    - a summary of the article and its angle;
    - the preview note: the preview URL appears in a bot comment once the deploy finishes, at `/insights/<slug>/`;
@@ -110,13 +112,22 @@ Fix or remove every flagged claim. Never re-source a claim to a page that doesn'
 
 Tell Nikita the PR is ready for his reading and edit. He reads the sources, edits the draft and adds his own angle, either directly or by asking for edits. Don't merge: merging is publishing, and needs his go-ahead after the checklist is ticked.
 
+## 11. Publish (on Nikita's go-ahead)
+
+1. Set `published` in the front matter to today's date, commit and push.
+2. Wait for the required checks (`build`, `gitleaks`, `accessibility`) on that commit.
+3. `gh pr merge <number> --merge --match-head-commit <sha>` (a merge commit; the sha check stops a merge if anything was pushed since).
+4. `git switch main && git pull`, then confirm the Deploy run succeeded and the article answers at `/insights/<slug>/`.
+
 ## Revise mode
 
 Run after Nikita's edits (`/write-article <issue-number> revise`), on the article's branch.
 
-1. Read Nikita's changes and any `{/* CLAUDE: … */}` comments he left, and act on them. Fix spelling and grammar in his text, and change his wording only where it overstates a source; list every change for him. Remove the review comments once each is dealt with (the linter fails while any are left).
+1. Read Nikita's changes and any `{/* CLAUDE: … */}` comments he left, and act on them. Fix spelling and grammar in his text yourself. Remove the review comments once each is dealt with (the linter fails while any are left).
 2. Re-run the checks in step 6.
-3. Fact-check only the claims added or changed since the last report, with a fresh subagent as in step 7, and append its findings to `fact-check.md` under a dated heading.
-4. Run humanizer over the changed text, Nikita's included. Show him every change it makes to his own words, as before and after, so he can reject any of them. Keep only the ones he accepts.
-5. Set `reviewed` to today's date if the fact-check covered the whole article.
-6. Commit (`docs: revise <slug> after review`) and push.
+3. Fact-check only the claims added or changed since the last report, with a fresh subagent as in step 7, and append its findings to `fact-check.md` under a dated heading. Fix flags in your own text directly.
+4. Run humanizer over the changed text, Nikita's included.
+5. Put every proposed change to Nikita's own words in one numbered list, before and after, with the reason: group A for accuracy (from the fact-check), group B for style (from humanizer). He accepts, rejects or rewords each by number. Apply only what he accepts, and record his decisions under the fact-check report, including any claim he keeps without a source and why.
+6. Set `reviewed` to today's date if the fact-check covered the whole article.
+7. Update the PR description (`gh pr edit <number> --body-file <file>`) so it matches the article as it now stands: the links to open by hand, the fact-check summary and the review notes.
+8. Commit (`docs: revise <slug> after review`) and push.

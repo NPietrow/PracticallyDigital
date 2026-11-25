@@ -1,0 +1,11 @@
+# Words the British English spell check (cspell) should accept: names, acronyms
+# and product terms. One per line; lines starting with # are comments.
+DIKW
+DSIT
+Forgemasters
+HMRC
+Intoware
+ISKO
+NCSC
+Ofgem
+Visio

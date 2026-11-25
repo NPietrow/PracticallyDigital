@@ -55,6 +55,14 @@ describe('workflow tooling', () => {
     expect(pkg.scripts['check:links']).toBe('node scripts/check-links.ts');
   });
 
+  it('has a British English spell check over the articles', () => {
+    const pkg = JSON.parse(read('package.json'));
+    expect(pkg.scripts['check:spelling']).toContain('src/content/articles');
+    const config = JSON.parse(read('cspell.json'));
+    expect(config.language).toBe('en-GB');
+    expect(existsSync('docs/content/spelling-words.txt')).toBe(true);
+  });
+
   it('has the write-article skill, wired to research, humanizer and the audit trail', () => {
     const path = '.claude/skills/write-article/SKILL.md';
     expect(existsSync(path)).toBe(true);
