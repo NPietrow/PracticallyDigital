@@ -1,7 +1,7 @@
 ---
 title: A Data-First Approach to Digital Transformation
-description: How UK manufacturers can understand their data before buying AI or digital twins, with where to start, who owns what, what it costs and when to stop.
-gist: Data foundations means knowing what data you have, where it comes from, who owns it and whether you can trust it. Poor data is one of the most common reasons AI projects stall, alongside leadership, unclear goals, cost and skills. Understand your data landscape before you buy the tool, and build towards one measurable goal.
+description: How UK industrials can understand their data before buying AI or digital twins, with where to start, who owns what, what it costs and when to stop.
+gist: Data foundations means knowing what data you have, where it comes from, who owns it and whether you can trust it. Poor data is one of the most common reasons digital projects stall, so understanding your data landscape is critical before you buy the tool. Build towards one measurable goal.
 published: 2026-11-24
 topics: [data-foundations]
 problems: [untrusted-data, skills-and-adoption]
@@ -13,143 +13,127 @@ import bothEnds from './images/data-foundations-both-ends.svg';
 import dataMap from './images/data-foundations-data-map.svg';
 import hierarchy from './images/data-foundations-hierarchy.svg';
 
-Every month brings another pitch: an AI tool that predicts failures, a digital twin of the whole plant, a platform that joins everything up. Some deliver, but most UK manufacturers who have tried AI are still experimenting. In [Make UK's 2026 survey](https://www.makeuk.org/docs/ai-skills-and-future-uk-manufacturing-sectorpdf/download?attachment), 2% of members had AI widely embedded and 43% were running limited experiments (the report doesn't give its sample size).
+If you search online for "AI" or "Digital Transformation", the first results that come up are from software or service providers. Most pages you come across bring another sales pitch: an AI tool that predicts failures every time, a real-time 3D digital twin of the whole facility, a magic platform that joins all your data up seamlessly. Some of them can of course deliver on their promises, but statistics show that most UK manufacturers who have tried AI or modern digital tools are still experimenting or failing to scale. In [Make UK's 2026 survey](https://www.makeuk.org/docs/ai-skills-and-future-uk-manufacturing-sectorpdf/download?attachment), only 2% of members had AI widely embedded and 43% were running limited experiments.
 
-The tools that have spread are mostly in the office. In late September and early October 2026 about 20% of UK manufacturers used some form of AI, mostly to create images and text, while 4.0% used machine learning to process data and 2.3% used AI in robotics ([ONS Business Insights survey, wave 165](https://www.ons.gov.uk/file?uri=/economy/economicoutputandproductivity/output/datasets/businessinsightsandimpactontheukeconomy/bicswave165/bicswave1652final.xlsx); the 20% is our sum of the published answers).
+The tools that have been adopted are not in the field or on the shop floor, but are mostly in the offices. In late September and early October 2026 about 20% of UK manufacturers said they used some form of AI, mostly to create images and text (likely supporting internal reports and presentations), while only 4.0% used machine learning models to process data and 2.3% used AI in robotics ([ONS Business Insights survey, wave 165](https://www.ons.gov.uk/file?uri=/economy/economicoutputandproductivity/output/datasets/businessinsightsandimpactontheukeconomy/bicswave165/bicswave1652final.xlsx); the 20% is our sum of the published figures).
 
-This guide is about the step that usually gets skipped: understanding your data landscape before you buy the tool, and building with the end goal in mind. The aim is to know what you have, pick one decision worth improving, and get the data behind that decision into a state you'd bet on.
+So, why read this guide? This insight article will attempt to highlight a key first step that usually gets skipped: understanding your data landscape before you buy the tool or AI model, or invest in new digital capability. It also emphasises the importance of building with the end goal in mind. Your aim should be to know what you have, pick one key decision worth improving, and get the data behind that decision into a state where you trust it.
 
 ## Why the tools disappoint
 
-Bad data is a real reason AI projects fail, but it isn't the only one, and it usually isn't the first. [RAND interviewed 65 experienced data scientists and engineers](https://www.rand.org/content/dam/rand/pubs/research_reports/RRA2600/RRA2680-1/RAND_RRA2680-1.pdf), and 84% of the 50 from industry named leadership failures as a primary cause: the wrong problem, unrealistic expectations, or too little time. RAND notes that most of its interviewees weren't managers, which may tilt the blame towards leaders. Data came second, and 30 of the 50 industry interviewees described persistent data quality problems. RAND also found that data kept for compliance or logging often doesn't suit training AI, because it was never collected with that use in mind.
+Bad data is a real reason digital projects fail, but it isn't the only one. [RAND interviewed 65 experienced data scientists and engineers](https://www.rand.org/content/dam/rand/pubs/research_reports/RRA2600/RRA2680-1/RAND_RRA2680-1.pdf), and 84% of the 50 from industry named leadership failures as a primary cause: the wrong problem, unrealistic expectations, or too little time. However, RAND notes that most of its interviewees weren't managers, which may tilt the blame towards leaders. Data issues came second, and 30 of the 50 industry interviewees described persistent data quality problems. RAND also found that data kept for compliance or logging often doesn't suit training AI, because it was never collected with that use in mind.
 
-Manufacturers say much the same. In a [2024 Make UK survey of 151 manufacturers](https://makeuk.org/docs/future-factories-powered-aipdf/download), run with Autodesk, 35% named data management as a main barrier to AI, behind complexity and system integration (44%), cost (44%) and technical challenges (39%). Among UK businesses that neither use nor plan to use AI, understanding how it could help (62%) and a clear business case (61%) came well ahead of better data (41%), according to the [government's 2026 AI adoption research](https://assets.publishing.service.gov.uk/media/6ae202189bca21f1c5036e99/artificial-intelligence-adoption-research-report-2026.pdf).
+Manufacturers say the same. In a [2024 Make UK survey of 151 manufacturers](https://makeuk.org/docs/future-factories-powered-aipdf/download), 35% named data management as a main barrier to AI, behind complexity and system integration (44%), cost (44%) and technical challenges (39%). Among UK businesses that neither use nor plan to use AI, understanding how it could help (62%) and a clear business case (61%) came well ahead of better data (41%), according to the [government's 2026 AI adoption research](https://assets.publishing.service.gov.uk/media/6ae202189bca21f1c5036e99/artificial-intelligence-adoption-research-report-2026.pdf).
 
-Firms that analyse their data don't always act on it. Across UK businesses that handle digital data, 72% analyse it, yet only 46% agree that the analysis supports their decisions ([DSIT business data use study](https://www.gov.uk/government/publications/business-data-use-and-productivity-study-wave-2/business-data-use-and-productivity-study-wave-2-statistical-report)). A [study of more than 30,000 US manufacturing plants](https://digitaleconomy.stanford.edu/publication/the-power-of-prediction-predictive-analytics-workplace-complements-and-business-performance) found predictive analytics paid off only alongside other investment: in IT, in skilled people, or in a production process suited to it.
+Firms that analyse their data don't always act on it either. Across UK businesses that handle digital data, 72% analyse it, yet only 46% agree that the analysis supports their decisions ([DSIT business data use study](https://www.gov.uk/government/publications/business-data-use-and-productivity-study-wave-2/business-data-use-and-productivity-study-wave-2-statistical-report)). A [study of more than 30,000 US manufacturing plants](https://digitaleconomy.stanford.edu/publication/the-power-of-prediction-predictive-analytics-workplace-complements-and-business-performance) found predictive analytics paid off only alongside other investment: in IT, in skilled people, or in a production process suited to it.
 
-So "fix all the data first" is the wrong conclusion. [Made Smarter's AI toolkit](https://www.madesmarter.uk/media/mkvfwcud/ms-ai-adoption-white-paper.pdf) tells manufacturers not to wait for perfect data. Leaving data until later costs too, though. The [National Audit Office](https://www.nao.org.uk/wp-content/uploads/2021/07/The-challenges-in-implementing-digital-change.pdf) found that government programmes often fail to deal with data at the start and run into concern and delay later. Understand the data first, then improve the part your chosen decision depends on.
+So where should we start? Endlessly optimising and fixing all the data issues first isn't that simple, and may be an endless task. [Made Smarter's AI toolkit](https://www.madesmarter.uk/media/mkvfwcud/ms-ai-adoption-white-paper.pdf) tells manufacturers to get started and not to wait for perfect data. But there is a balance, as leaving data until later costs too. For example, the [National Audit Office](https://www.nao.org.uk/wp-content/uploads/2021/07/The-challenges-in-implementing-digital-change.pdf) found that government programmes often fail to deal with data at the start and run into concern and delay later. Understand the data first, then improve the part your chosen decision depends on. Doing this iteratively will lead to much stronger data foundations over time (more on this later).
 
 ## Why most of it stays low risk
 
-{/* NIKITA: this section tests your hypothesis that data-driven work has stayed in low-risk areas because people don't trust the data. The evidence supports a softer version. Check it matches what you've seen. */}
+In industry, data-driven tools mostly stay in advisory or low-stakes roles, and they rarely scale. In a [2024 survey of 300 manufacturing executives](https://www.microsoft.com/en-us/microsoft-cloud/blog/manufacturing/2024/04/09/industrial-transformation-scaling-ai-across-the-manufacturing-value-chain/) by MIT Technology Review Insights, the AI use cases most likely to have reached production were product design, chatbots and content creation. Only about one in five manufacturers had production assets with data ready for current AI models. But some firms do manage to successfully use AI in operations. [Deloitte's 2026 survey of more than 140 manufacturers](https://www.deloitte.com/ch/en/Industries/industrial-construction/perspectives/ai-in-manufacturing.html), of all sizes, found adoption highest in quality (62%) and production (57%). But only about one in five use cases had been scaled across sites, and 18% of firms used what Deloitte calls physical AI or closed-loop systems.
 
-In industry, data-driven tools mostly stay in advisory or low-stakes roles, and they rarely scale. In a [2024 survey of 300 manufacturing executives](https://www.microsoft.com/en-us/microsoft-cloud/blog/manufacturing/2024/04/09/industrial-transformation-scaling-ai-across-the-manufacturing-value-chain/) by MIT Technology Review Insights, paid for by Microsoft, the AI uses most likely to have reached production were product design, chatbots and content creation. Only about one in five manufacturers had production assets with data ready for current AI models.
+Evidence from safety-regulated sectors points the same way. An [HSE study of 247 AI uses](https://www.icheme.org/media/29576/hazards-35-paper-11-chambers.pdf) across 14 regulated sectors found the largest single category was admin: drafting health and safety documents (25.1%). Predictive maintenance was just 3.6%, and respondents kept a real person in the loop to approve safety-critical outputs. (Note: The authors say their sample isn't statistically representative, so treat these numbers as a rough indicator.)
 
-Some firms do use AI in operations. [Deloitte's 2026 survey of more than 140 manufacturers](https://www.deloitte.com/ch/en/Industries/industrial-construction/perspectives/ai-in-manufacturing.html), of all sizes, found adoption highest in quality (62%) and production (57%). But only about one in five use cases had been scaled across sites, and 18% of firms used what Deloitte calls physical AI or closed-loop systems.
+So adoption seems to be limited to low-risk use cases, and distrust of the data is part of the reason why. Data quality and availability was the challenge HSE's respondents reported most often, and in the MIT Technology Review survey poor data quality (57%) and weak integration (54%) were the top data barriers to scaling. In a [vendor-sponsored survey of 565 data professionals](https://www.lebow.drexel.edu/sites/default/files/2024-09/drexel-lebow-precisel-data-integrity-trends-insights-2025-outlook.pdf) across all sectors (mostly in the US), 67% said they don't completely trust the data their organisation uses for decisions.
 
-Evidence from safety-regulated sectors points the same way. An [HSE study of 247 AI uses](https://www.icheme.org/media/29576/hazards-35-paper-11-chambers.pdf) across 14 regulated sectors found the largest single category was drafting health and safety documents (25.1%), while predictive maintenance was 3.6%. Respondents kept a person approving safety-critical outputs. The authors say their sample isn't statistically representative, so treat the shares as a sketch.
+But it's not only data in isolation, and other adjacent barriers are important to consider. In Deloitte's survey, data came fifth among implementation challenges at 30%, behind cost (43%), lack of expertise (35%), resistance to change (35%) and regulation (34%). Safety decisions carry legal duties too: [HSE says the law requires a risk assessment](https://press.hse.gov.uk/?p=8268) for any AI use that affects workplace health and safety. So it is critical to consider the full lifecycle and landscape around the data we use. Trust in the digital tool matters as well as trust in the data: in a [factory experiment published in Scientific Reports](https://doi.org/10.1038/s41598-024-82501-9), showing workers why the AI had flagged a defect cut their median error rate five-fold compared with an unexplained AI.
 
-Distrust of the data is part of the reason. Data quality and availability was the challenge HSE's respondents reported most often, and in the MIT Technology Review survey poor data quality (57%) and weak integration (54%) were the top data barriers to scaling. In a [vendor-sponsored survey of 565 data professionals](https://www.lebow.drexel.edu/sites/default/files/2024-09/drexel-lebow-precisel-data-integrity-trends-insights-2025-outlook.pdf) across all sectors (mostly in the US, and only 9% in manufacturing), 67% said they don't completely trust the data their organisation uses for decisions.
-
-Other barriers rank as high. In Deloitte's survey, data came fifth among implementation challenges at 30%, behind cost (43%), lack of expertise (35%), resistance to change (35%) and regulation (34%). Safety decisions carry legal duties too: [HSE says the law requires a risk assessment](https://press.hse.gov.uk/?p=8268) for any AI use that affects workplace health and safety. Trust in the tool matters as well as trust in the data: in a [factory experiment published in Scientific Reports](https://doi.org/10.1038/s41598-024-82501-9), showing workers why the AI had flagged a defect cut their median error rate five-fold compared with an unexplained AI.
-
-Taken together, tools stay advisory and unscaled for several reasons, and untrusted data is one of the most common. Understanding your data is what lets you trust a tool enough to give it a bigger job, though it won't remove the other barriers.
-
-## What data foundations are
-
-Data foundations means knowing what data your business has, where each piece comes from, who owns it, whether it can be trusted, and how it reaches the people who decide things. The UK Government's [Data Quality Framework](https://www.gov.uk/government/publications/the-government-data-quality-framework/the-government-data-quality-framework) describes a lifecycle with six stages: plan; collect, acquire and ingest; prepare, store and maintain; use and process; share and publish; and archive or destroy. Foundations means having an answer at each stage for the data that matters.
-
-{/* NIKITA: your hierarchy idea. Noise is credited to Grieves (2024, section 4.1), checked at source. We kept knowledge, which is in the standard model and links to the section on knowledge in people's heads. */}
-
-A useful picture of the job is the hierarchy of data, information, knowledge and wisdom, often associated with Russell Ackoff's 1989 paper, alongside earlier work by Milan Zeleny and Harlan Cleveland ([ISKO Encyclopedia of Knowledge Organization](https://www.isko.org/cyclo/dikw)). In Ackoff's version, data are symbols recorded by observation, information is data processed to answer who, what, where, when and how many, knowledge is the know-how to act on it, and wisdom is judgement about what is worth doing. Michael Grieves, writing about digital twins, adds a point that matters on the shop floor: data always have context, and a string of numbers without it is noise, not data ([Grieves, 2024](https://www.mdpi.com/2673-9585/4/2/7)). We show that noise as a layer beneath the pyramid: readings with no units, time or source, which nobody can use. Data foundations do their work at the bottom of the pyramid. They give raw readings context, an owner and a known quality, so the levels above can be trusted. The model has critics, who argue that knowledge can't simply be built up from data ([Frické, 2009](https://zenodo.org/records/904809)), so treat it as a picture of the job, not a recipe.
-
-<Figure
-  src={hierarchy}
-  alt="A pyramid with five levels. Noise, at the bottom, is a bare number: 41.7. Data adds context: spindle load 41.7%, machine 3, Tuesday 10:42, from the historian. Information: load on machine 3 has risen for six shifts. Knowledge: rising load on this machine usually means the tool is wearing. Wisdom, at the top: change the tool at the next planned stop, before it breaks. A yellow bar marks the bottom three levels as the work of data foundations."
-  caption="From noise to wisdom, with an invented factory example. Data foundations do the work in the lower levels."
-/>
-
-{/* NIKITA: the warning signs below come from your issue notes. Add or cut from your own experience. */}
-
-The warning signs are familiar to anyone who has worked in a plant:
+The warning signs are familiar to almost any organisation:
 
 - Key figures live in large spreadsheets that one person maintains by hand.
 - Nobody can say for certain where a number on the dashboard came from.
 - Data is typed in twice, once on paper and again into a system the next morning.
 - How a machine really behaves is known only to the operators who run it.
 - Some machine data can only be reached through the supplier's own software.
-- Reports describe last week, because filling them in is manual.
+- Reports are out of date by the time they arrive, because filling them in is manual.
 - Nobody can say what "data governance" means on an ordinary working day.
 
-In a [2022 survey commissioned by software vendor Intoware](https://www.themanufacturer.com/articles/74-of-manufacturers-held-back-by-disconnected-data/), 74% of 1,030 respondents at UK industrial businesses said they relied on legacy systems and spreadsheets. Replacing paper can pay off: [Sheffield Forgemasters](https://www.madesmarter.uk/resources/case-study-sheffield-forgemastersmestec/) replaced paper job cards and spreadsheets with a manufacturing execution system and reported office paper and spreadsheet costs down 40% and planning efficiency up 20%.
+In a [2022 survey commissioned by software vendor Intoware](https://www.themanufacturer.com/articles/74-of-manufacturers-held-back-by-disconnected-data/), 74% of 1,030 respondents at UK industrial businesses said they relied on legacy systems and spreadsheets. But replacing paper can pay off. For example, [Sheffield Forgemasters](https://www.madesmarter.uk/resources/case-study-sheffield-forgemastersmestec/) replaced paper job cards and spreadsheets with a manufacturing execution system and reported office paper and spreadsheet costs down 40% and planning efficiency up 20%. 
+
+When taken together, digital tools stay at advisory stages and unscaled for several reasons, and untrusted data is one of the most common. Understanding your underlying data is the first step that will enable you to trust a tool enough to give it a bigger job.
+
+## What data foundations are
+
+Data foundations means knowing what data your business has, where each piece comes from, who owns it, whether it can be trusted, and how it reaches the people who make decisions using this data. We need to think about data as a key business asset, just like any other asset in the business, and that means thinking about its lifecycle too. The UK Government's [Data Quality Framework](https://www.gov.uk/government/publications/the-government-data-quality-framework/the-government-data-quality-framework) describes a data lifecycle with six stages: plan; collect, acquire and ingest; prepare, store and maintain; use and process; share and publish; and archive or destroy. 
+
+Another useful picture is to think about the hierarchy of data, information, knowledge and wisdom ([ISKO Encyclopedia of Knowledge Organization](https://www.isko.org/cyclo/dikw)). Data are simple symbols recorded by observation, information is data processed to answer who, what, where, when and how many, knowledge is the know-how to act on it, and wisdom is judgement about what is worth doing. Thinking about this transformation and how data evolves as it moves through the business is helpful. Michael Grieves, writing about digital twins, adds a point that matters on the shop floor: data always has context, and a string of numbers without it is noise, not data ([Grieves, 2024](https://www.mdpi.com/2673-9585/4/2/7)). Readings with no units, time or source, which nobody can use, do not add any value to the business. Data foundations do their work at the bottom of this hierarchy. They give raw readings context, an owner and a known quality, so the levels above can be trusted.
+
+<Figure
+  src={hierarchy}
+  alt="A data hierarchy with five levels. Noise, at the bottom, is a bare number: 41.7. Data adds context: spindle load 41.7%, machine 3, Tuesday 10:42, from the historian. Information: load on machine 3 has risen for six shifts. Knowledge: rising load on this machine usually means the tool is wearing. Wisdom, at the top: change the tool at the next planned stop, before it breaks. A yellow bar marks the bottom three levels as the work of data foundations."
+  caption="From noise to wisdom, with a mock factory example. Data foundations do the work in the lower levels."
+/>
+
 
 ## Start by mapping what you have
 
-The first job is a map. Don't try to map the whole business. [Government guidance on critical data](https://www.gov.uk/government/publications/identify-and-record-critical-data-assets/identifying-and-recording-critical-data-assets) says to identify the data that matters most first, by looking at what people ask for and what other work depends on, and to give each item a named owner. In a factory, that means one value stream: one product family, one line or one process.
+The first job is a map. But don't fall into the trap of trying to map out the whole business. The UK [government guidance on critical data](https://www.gov.uk/government/publications/identify-and-record-critical-data-assets/identifying-and-recording-critical-data-assets) says to identify the data that matters most first, by looking at what people ask for and what other work depends on, and to give each item a named owner. In a factory, that means one value stream: one product family, one line or one process.
 
-For each data item on that stream, the [government's metadata guidance](https://www.gov.uk/government/publications/record-metadata-to-describe-critical-data-assets/recording-metadata-to-describe-critical-data-assets) covers the basics: its name, what it is, who created it, its format and who may access it. [Government policy](https://www.gov.uk/government/publications/data-asset-management-policy-in-government/data-asset-management-policy-in-government) adds a named owner for every data asset. For a factory map we'd also record:
+For each data item on that stream, the [government's metadata guidance](https://www.gov.uk/government/publications/record-metadata-to-describe-critical-data-assets/recording-metadata-to-describe-critical-data-assets) covers the basics: its name, what it is, who created it, its format and who may access it. [Government policy](https://www.gov.uk/government/publications/data-asset-management-policy-in-government/data-asset-management-policy-in-government) also adds a named owner for every data asset. Asking this question early can help identify rogue data or documents without clear owners. For industrial data it is also useful to record:
 
-- where it's stored, and what it's used for;
+- where it's stored;
+- what it's used for and who uses it;
 - how often it updates;
 - how good it is, and any known problems;
-- who uses it, and how long it's kept;
+- how long it's kept;
 - for machine data, the signal or tag name, the engineering units and the sample rate.
-
-No guidance prescribes that second list, but without it the map won't tell you whether the data can support a decision.
 
 The ICO's [records management toolkit](https://cy.ico.org.uk/for-organisations/advice-and-services/audits/data-protection-audit-framework/toolkits/records-management/data-mapping-and-recording/) describes the same idea for personal data: a data flow map built from an information audit. It's written for personal data, but the method transfers to machine and production data.
 
 <Figure
   src={dataMap}
-  alt="An invented data map. Spindle load flows automatically from a CNC machine to a historian and on to a weekly OEE report. Downtime reasons are written on paper, re-keyed into a spreadsheet with no named owner, then copied into the report. ERP work orders also feed the report. The spreadsheet is highlighted as the point where trust breaks."
-  caption="A one-page data map for one process, as an invented example. The weak point is usually obvious once it's drawn."
+  alt="An invented data map. Each box records format, owner and update rate, plus tag, units, retention, users or known problems where they matter. Spindle load from a CNC machine, an OPC UA tag in percent updated every second, flows automatically to a historian kept for 12 months, then to a weekly OEE report sent as a PDF. Downtime reasons are written on a paper form, re-keyed the next morning into an Excel spreadsheet with no named owner, then copied by hand into the report. ERP work orders, pulled weekly as JSON through an API, also feed the report. The spreadsheet is highlighted as the point where trust breaks."
+  caption="A one-page data map for one process, as an invented example, recording each item's format, owner and update rate. The weak point is usually obvious once it's drawn."
   size="wide"
 />
 
-{/* NIKITA: drafted from your note that a visual data map has helped stakeholders. Replace with your own words, kept general and non-confidential. */}
+A visual approach will work for most stakeholders. So collect the data by speaking to people that run the process, draw the data flow map using [flowcharting tools like draw.io](https://www.drawio.com/) (free) or [Visio](https://www.microsoft.com/en-gb/microsoft-365/visio) (paid), and show it back to the boots on the ground. A picture of where data starts, where it works, where it is lost, where it's copied by hand, or where nobody owns it tends to settle arguments that a spreadsheet of systems never will. It usually shows the first thing to fix as well.
 
-Draw the map, then show it to the people who run the process. A picture of where data starts, where it's copied by hand and where nobody owns it tends to settle arguments that a spreadsheet of systems never will. It usually shows the first thing to fix as well.
+Finally, don't treat this as a one-off tick-box exercise. The data map should be a live document that is updated as the business and data lifecycle evolve. 
 
 ## Work from both ends
 
-There are two ways into the map, and you need both.
+There are also two ways to approach drawing out the data flow map, and you need both.
 
-The first starts from the end goal. Construction and infrastructure have a well-tested method for this in ISO 19650, the international standard for managing information about built assets. Its [UK guidance](https://www.ukbimframework.org/wp-content/uploads/2021/02/Guidance-Part-D_Developing-information-requirements_Edition-2.pdf) turns the usual order round: whoever needs information works out why they need it and says what they need, and only then is it produced. They should ask only for what they need, to avoid waste. The standard sets this out as a hierarchy, in which organisational information requirements feed asset and project requirements, which in turn feed the detailed requirements written into each contract.
+The first starts from the end goal, by asking "what data do we actually need?". Construction and infrastructure have a well-tested method for this in ISO 19650, the international standard for managing information about built assets. Its [UK guidance](https://www.ukbimframework.org/wp-content/uploads/2021/02/Guidance-Part-D_Developing-information-requirements_Edition-2.pdf) advises that whoever needs information works out why they need it and says what they need, and only then is it produced. They should ask only for what they need, to avoid waste. The standard sets this out as a hierarchy, in which organisational information requirements feed asset and project requirements, which in turn feed the detailed requirements written into each contract. While the standard was written for buildings and infrastructure, the idea is very transferable:
 
-The standard was written for buildings and infrastructure, so the translation to a factory below is our own:
-
-| ISO 19650 term | What it might mean in a factory |
+| ISO 19650 term | What it might mean for industry |
 |---|---|
 | Organisational information requirements | What the business needs to know for its goals: delivery performance, scrap cost, energy reporting |
 | Asset information requirements | What you need to run and maintain each machine or line |
 | Project information requirements | What you need at each gate of a capital project, retrofit or new product introduction |
 | Exchange information requirements | The data clauses in a contract with a machine builder or integrator |
 
-The second way in starts from the data you already hold, and asks what it could tell you. Some of the best opportunities turn up this way, because nobody thought to ask the question. [acatech's Industrie 4.0 Maturity Index](https://en.acatech.de/publication/industrie-4-0-maturity-index-update-2020/download-pdf?lang=en) argues firmly for this side, saying companies should stop collecting data only for a specific analysis and keep an up-to-date picture of the whole company.
+This top-down approach can help identify gaps in existing data and reduce unnecessary data capture. 
 
-The two views are easier to reconcile than they look. Let the decisions you care about decide which data gets an owner, quality checks and documentation. Cheap raw capture can carry on where it might be useful later.
+The second way starts from the data you already hold, and asks "what could this data tell us?". Some of the best low-hanging-fruit opportunities turn up this way as they require little change or transformation. And in the ideal scenario, the two views can be reconciled, making the perfect starting point, while gaps can guide future data transformation decisions. 
 
 <Figure
   src={bothEnds}
   alt="Two arrows meeting in the middle. From the top, the end goal: a decision to improve and how it will be measured, asking what information the decision needs. From the bottom, the data the business already holds, asking what it could tell you. They meet at one process to start with."
-  caption="Start from the decision and from the data, and meet at one process."
+  caption="Start from the decision and from the existing data, and meet at one process."
 />
-
-{/* NIKITA: drafted from your note on working from both sides and on ISO 19650. Check the translation table reflects how you'd explain it. */}
-
-[Network Rail's Wales and Western route](https://www.networkrail.co.uk/wp-content/uploads/2026/06/NR-WW-Performance-Improvement-Report.pdf) shows what a focused, decision-led approach can do. It used reliability data to target 306 interventions at 36 sets of points, and delay minutes on those points fell 53% in 2025/26, which it equated to £3.6m of avoided cost. Points delay across the whole route still rose, so the fix helped the points it targeted, not the route as a whole.
 
 ## What data governance means on a Tuesday
 
-"Data governance" sounds like a committee. In practice it's a few named people doing small jobs regularly. The UK Government's [data ownership model](https://www.gov.uk/government/publications/data-ownership-in-government/data-ownership-model) defines three core roles:
+The other challenge is "data governance", which sounds like the name of a formal committee. In practice it's a few named people doing small jobs regularly to ensure the data is trusted. The UK Government's [data ownership model](https://www.gov.uk/government/publications/data-ownership-in-government/data-ownership-model) is a good starting point, and defines three core roles:
 
 - **Data owner:** accountable for the data. Sets what it means, approves changes, and decides who can use it and how long it's kept.
 - **Data steward:** the day-to-day expert. Answers questions, spots and fixes quality problems, and keeps the definitions up to date.
 - **Data custodian:** the technical keeper. Stores and secures the data the way the owner asks.
 
-The model is written for government, but it translates. In a factory, the production manager might own production data, a shift lead or process engineer might steward it, and a controls or IT engineer might be its custodian. In a small firm one person can hold two roles. The model comes with a responsibility matrix and a checklist you can adapt.
+The model is written for government, but it translates. In a factory, the production manager might own production data, a shift lead or process engineer might steward it, and a controls or IT engineer might be its custodian. In a small firm one person can hold multiple roles. The model comes with a responsibility matrix and a checklist you can adapt.
 
-{/* NIKITA: the rhythm below is our suggestion, not published guidance. Adjust it to what has worked for you. */}
+Day to day, a workable rhythm is a short weekly look at open data problems, a monthly review with the owner of what's improving and what isn't, and an annual review of the data map. The [government policy](https://www.gov.uk/government/publications/data-asset-management-policy-in-government/data-asset-management-policy-in-government) requires each data asset to have a named owner, with its description reviewed every year.
 
-A workable rhythm is a short weekly look at open data problems, a monthly review with the owner of what's improving and what isn't, and a yearly review of the map. Only the yearly review has a public precedent: [government policy](https://www.gov.uk/government/publications/data-asset-management-policy-in-government/data-asset-management-policy-in-government) requires each data asset to have a named owner, with its description reviewed every year.
-
-If the data is about people, such as operator logins, location tags or performance by shift, data protection law applies. The ICO's [guidance on monitoring workers](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/employment/monitoring-workers/data-protection-and-monitoring-workers/) says employers need a lawful basis, must tell workers, and should choose the least intrusive option. Data collected for one purpose, such as machine uptime, shouldn't quietly become a performance measure for individuals.
+IMPORTANT: If the data is about people, such as operator logins, location tags or performance by shift, data protection law applies. The ICO's [guidance on monitoring workers](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/employment/monitoring-workers/data-protection-and-monitoring-workers/) says employers need a lawful basis, must tell workers, and should choose the least intrusive option. Data collected for one purpose, such as machine uptime, shouldn't quietly become a performance measure for individuals.
 
 ## Measure quality against the job
 
-Data quality isn't a single score. The government framework defines it as fitness for purpose and uses [six dimensions](https://www.gov.uk/government/publications/the-government-data-quality-framework/the-government-data-quality-framework). In a factory they might look like this:
+Data quality isn't a single score, but a measure of fitness for purpose across [six dimensions](https://www.gov.uk/government/publications/the-government-data-quality-framework/the-government-data-quality-framework). In our factory scenario they might look like this:
 
-| Dimension | What it means | An example plant measure (ours) |
+| Dimension | What it means | An example measure |
 |---|---|---|
 | Completeness | The records you need are there | Share of downtime events with a reason recorded |
 | Uniqueness | Nothing is recorded twice | Number of duplicate part or asset records |
@@ -158,25 +142,13 @@ Data quality isn't a single score. The government framework defines it as fitnes
 | Validity | Values are in the right range and format | Share of sensor readings inside the physically possible range |
 | Accuracy | Data matches reality | Share of sampled stock counts that match a physical count |
 
-Valid data can still be wrong: a value can pass every format check and still describe the real thing incorrectly, as the government's [own explainer](https://www.gov.uk/government/news/meet-the-data-quality-dimensions) points out. The children's hospital in Edinburgh shows how. A [2012 spreadsheet](https://org.nhslothian.scot/keydocuments/wp-content/uploads/sites/28/2023/05/InternalAuditReport_GovernanceInternalControlsRHCYPAug2020.pdf) listed 4 air changes an hour for critical care, although its own guidance tab required 10, and internal audit judged the cause most likely a copying error.
+Valid data can still be wrong: a value can pass every format check and still describe the real thing incorrectly, as the government's [own explainer](https://www.gov.uk/government/news/meet-the-data-quality-dimensions) points out. When you do find a quality problem, fix it where it starts. The framework's guidance is blunt: "Always fix problems in data quality as close to the source as possible." ([Data Quality Framework guidance](https://www.gov.uk/government/publications/the-government-data-quality-framework/the-government-data-quality-framework-guidance)). Correcting numbers downstream, in the report or the spreadsheet, hides the cause and lets the problem come back.
 
-When you find a problem, fix it where it starts. The framework's guidance is blunt: "Always fix problems in data quality as close to the source as possible." ([Data Quality Framework guidance](https://www.gov.uk/government/publications/the-government-data-quality-framework/the-government-data-quality-framework-guidance)). Correcting numbers downstream, in the report or the spreadsheet, hides the cause and lets the problem come back.
-
-Don't chase perfection either. The [framework](https://www.gov.uk/government/publications/the-government-data-quality-framework/the-government-data-quality-framework) says the quality you need depends on the purpose, that effort should go on the most critical data, and that perfect quality may not be achievable. A dashboard for a morning meeting needs less than a figure used to release product.
-
-## Get the knowledge out of people's heads
-
-Some of a plant's most useful data has never been written down. The [Health and Safety Executive](https://www.hse.gov.uk/pubns/chis7.pdf) warns that important knowledge at most sites goes unrecorded and can be lost when the organisation changes.
-
-{/* NIKITA: drafted from your note on "black art" knowledge. A general example from your experience would make this section. */}
-
-One structured way to capture it is the [Critical Decision Method](https://digital.ahrq.gov/health-it-tools-and-resources/evaluation-resources/workflow-assessment-health-it-toolkit/all-workflow-tools/critical-decision-method): an interviewer walks an expert through a real incident that wasn't routine and draws out what they noticed and thought at each point. It needs a trained interviewer.
-
-Capturing knowledge is only half the job, because it also has to be used. A [2012 audit of NASA](https://www.oversight.gov/sites/default/files/oig-reports/IG-12-012.pdf) found only 16 of 28 surveyed project managers used the agency's lessons-learned database. Put what you capture where people already look: in the work instruction, the maintenance system or the alarm text.
+But as we discussed at the beginning, don't chase perfection either. The [framework](https://www.gov.uk/government/publications/the-government-data-quality-framework/the-government-data-quality-framework) says the quality you need depends on the purpose, that effort should go on the most critical data, and that perfect quality may not be achievable. A dashboard for a morning meeting needs less than a figure used to release product to a customer for example.
 
 ## Build only the architecture you need
 
-A data architecture is the chain that takes data from where it starts to the decision. IBM describes a [modern data stack](https://www.ibm.com/think/topics/modern-data-stack) with layers for storage, ingestion, transformation, analytics and monitoring. Factory data needs the same chain, with governance running underneath it.
+Alongside the data flow map, you need to have an understanding of the mechanisms and infrastructure that support the data along its lifecycle. A data architecture is the chain that takes data from where it starts to the decision. For example, IBM describes a [modern data stack](https://www.ibm.com/think/topics/modern-data-stack) with layers for storage, ingestion, transformation, analytics and monitoring. Factory data needs the same chain, with governance running underneath it.
 
 <Figure
   src={layers}
@@ -189,25 +161,21 @@ Factory systems differ from office IT in ways that matter. The US standards body
 
 Connecting old machines is where data projects meet security. The National Cyber Security Centre's [principles for connecting operational technology](https://www.ncsc.gov.uk/files/ncsc-secure-connectivity-for-operational-technology.pdf) say every connection should start with a business case that names the benefit, the risk and a senior person who owns that risk. They warn that obsolete devices shouldn't be connected directly to outside networks. Where data does need to leave the plant, they suggest copying it out through a one-way link, and they favour open standards such as OPC UA and MQTT, run over encrypted connections.
 
-Watch for data you can't get at. Some machines keep their data in the supplier's own software or format. The [EU Data Act](https://ec.europa.eu/newsroom/dae/redirection/document/108144) gives users of connected machines a right to their data, but only users established in the EU, according to the European Commission's own guidance, so it doesn't help a UK factory. The UK's [Data (Use and Access) Act 2025](https://www.legislation.gov.uk/ukpga/2025/18/part/1) gives ministers powers to create such rights, but we found no regulations giving factory users a right to machine data. For now, write data access into the purchase contract: which signals, in what format, by what protocol, at no extra charge.
+Watch for data you can't get at too. Some machines keep their data in the supplier's own software or format, locked behind paywalls. 
 
 Central data platforms and the unified namespace (UNS) are a big subject of their own, and we'll cover them in a later guide. For a first process, a historian, a database and a dashboard are often enough.
 
 ## What it costs, and when not to bother
 
-A first project can cost tens of thousands of pounds. The best UK benchmark comes from the [Made Smarter Adoption programme's statistics](https://www.madesmarter.uk/media/f54h0k1g/made-smarter-adoption-kpi-statistics-fy202223-fy-202425.pdf): from 2022/23 to 2024/25 it supported 559 grant projects with £7.82m of grant and £16.61m of matched spending by the firms. That works out at about £43,700 a project on average (our calculation). The projects cover all digital technologies, so treat this as a rough guide, not a price for data work.
+A first project can cost tens of thousands of pounds. The best UK benchmark comes from the [Made Smarter Adoption programme's statistics](https://www.madesmarter.uk/media/f54h0k1g/made-smarter-adoption-kpi-statistics-fy202223-fy-202425.pdf): from 2022/23 to 2024/25 it supported 559 grant projects with £7.82m of grant and £16.61m of matched spending by the firms. That works out at about £43,700 a project on average (our estimated calculation). The projects cover all digital technologies, so treat this as a rough guide, not a price for data work.
 
 [Made Smarter](https://www.madesmarter.uk/adoption/) is the government programme for SME manufacturers in England. It offers advice and match-funded grants, up to £20,000 in several regions at the time of writing, with terms that vary by region. Firms that have taken part report benefits: in a [University of Cambridge survey](https://assets.publishing.service.gov.uk/media/65e06d14cf7eb1b0e5f57f3e/made-smarter-adoption-report.pdf) of 155 participants, run in 2022 and published in 2023, 97% of those that adopted technology reported benefits, including better production planning (76%), better use of data (74%) and lower costs (69%). Those benefits are self-reported, and the survey had no comparison group.
 
 That's why the end goal needs a number. Before you start, measure the thing you want to improve, such as downtime hours, scrap rate or the time a report takes to fill in. Then measure it again afterwards. A benefit you can quantify is one you can defend at the next budget round, and published case studies, which are mostly successes, can't tell you that for your own plant.
 
-Salaries are the other cost. Advertised salaries for data engineers in the UK have a median of £70,000 ([IT Jobs Watch](https://www.itjobswatch.co.uk/jobs/uk/data%20engineer.do), all sectors), or about £79,750 once 15% employer National Insurance is added ([HMRC rates](https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2026-to-2027)), before pension. Training someone who already knows the plant is often the better route. Data apprenticeships are funded up to £13,000 at [Level 3](https://findapprenticeshiptraining.apprenticeships.education.gov.uk/courses/576) and £15,000 at [Level 4](https://findapprenticeshiptraining.apprenticeships.education.gov.uk/courses/80), and an employer that doesn't pay the levy contributes 5%, or nothing for a learner aged 16 to 24 ([apprenticeship funding guide](https://www.gov.uk/government/publications/apprenticeship-technical-funding-guide/apprenticeship-technical-funding-guide-from-august-2026)). [Knowledge Transfer Partnerships](https://www.ukri.org/councils/innovate-uk/guidance-for-applicants/costs-we-fund/costs-guidance-for-knowledge-transfer-partnerships/grant-rates/) pair a business with a university or other research organisation, and the grant covers up to 67% of the project for SMEs and 50% for large firms.
+Salaries are the other hidden cost. Advertised salaries for data engineers in the UK have a median of £70,000 ([IT Jobs Watch](https://www.itjobswatch.co.uk/jobs/uk/data%20engineer.do), all sectors), or about £79,750 once 15% employer National Insurance is added ([HMRC rates](https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2026-to-2027)), before pension. Training someone who already knows the plant is often the better route. Data apprenticeships are funded up to £13,000 at [Level 3](https://findapprenticeshiptraining.apprenticeships.education.gov.uk/courses/576) and £15,000 at [Level 4](https://findapprenticeshiptraining.apprenticeships.education.gov.uk/courses/80), and an employer that doesn't pay the levy contributes 5%, or nothing for a learner aged 16 to 24 ([apprenticeship funding guide](https://www.gov.uk/government/publications/apprenticeship-technical-funding-guide/apprenticeship-technical-funding-guide-from-august-2026)). [Knowledge Transfer Partnerships](https://www.ukri.org/councils/innovate-uk/guidance-for-applicants/costs-we-fund/costs-guidance-for-knowledge-transfer-partnerships/grant-rates/) pair a business with a university or other research organisation, and the grant covers up to 67% of the project for SMEs and 50% for large firms.
 
-Be wary of cheap connection prices. In a white paper from around 2018, the [AMRC connected a legacy machine](https://www.amrc.co.uk/files/document/239/1542365809_WHITE_PAPER_LEGACY_AW.pdf) with about £400 of hobby-grade hardware, but the setup sampled too slowly to give useful insight into the machine's condition. A hardware price also tells you nothing about installation, integration, security or support.
-
-{/* NIKITA: this checklist is editorial judgement. No published guidance sets these thresholds. Check you're comfortable putting your name to it. */}
-
-Some data work isn't worth doing. Leave it alone if:
+So the costs can be high, and it is important to assess their benefits. Some data work isn't worth doing, and you should consider leaving it alone if for example:
 
 - nobody can name the decision the data would change, who makes it, and what they'd do differently;
 - the process is low volume or short-lived, and the savings won't repay the set-up and upkeep before it ends;
@@ -218,30 +186,25 @@ A spreadsheet is fine while volumes are small, one team owns it, the decision is
 
 ## Your first month
 
-{/* NIKITA: this plan is our suggestion. Adjust the steps and the pace from your experience. */}
-
 A first month on one process could look like this:
 
 1. **Week 1: choose the decision.** Pick one decision that matters and that you can measure, such as which machine gets maintenance first or why a line misses its rate. Name the person who makes it, and measure where it stands today.
 2. **Week 2: map the data.** Walk the process with the people who run it. Draw where each piece of data starts, where it's copied, where it's stored and who uses it. Mark the places where nobody owns it.
 3. **Week 3: name the owners and check quality.** Give each item on the map an owner and a steward. Pick two or three quality measures from the table above and record where they stand now.
-4. **Week 4: fix one cause at source.** Choose the weakest link on the map and fix it where it starts. Agree the weekly and monthly rhythm, and decide what the next step would need.
+4. **Week 4: fix one cause at source.** Choose the weakest link on the map and fix it where it starts. Agree the weekly and monthly cadence, and decide what the next step would need.
 
 At the end of the month you'll know whether the decision can be improved with the data you have, what it would take to trust it, and whether a tool is worth buying, which is a better place to start a vendor conversation than a demo.
 
 ## Tools and resources
 
-Free resources first. Paid options are labelled.
+Here are a few useful links to support your data lifecycle:
 
 - [Data quality action plan and template](https://www.gov.uk/government/publications/implement-a-data-quality-action-plan): a government method and spreadsheet for prioritising and tracking quality problems. Free.
-- [Data ownership model](https://www.gov.uk/government/publications/data-ownership-in-government/data-ownership-model): role descriptions, a responsibility matrix and a checklist to adapt for a factory. Free.
+- [Data ownership model](https://www.gov.uk/government/publications/data-ownership-in-government/data-ownership-model): role descriptions, a responsibility matrix and a checklist to adapt for your use case. Free.
 - [Ofgem Data Best Practice templates](https://www.ofgem.gov.uk/sites/default/files/2021-11/data_best_practice_templates.zip): a field-by-field template that works as a data dictionary. Free.
 - [diagrams.net](https://www.drawio.com/): for drawing your data map, no specialist skills needed. Free and open source.
-- [OpenRefine](https://openrefine.org/): cleans messy spreadsheets without code. Free and open source.
-- [DuckDB](https://duckdb.org/): queries large CSV exports on a laptop, for anyone comfortable with SQL. Free and open source.
 - [Grafana](https://grafana.com/oss/grafana/): dashboards for plant time-series data. Free and open source, with a paid cloud service.
-- [Node-RED](https://nodered.org/) and [Eclipse Mosquitto](https://mosquitto.org/): low-code machine connections and an MQTT broker, for controls engineers. Free and open source.
-- [Shoestring](https://www.digitalshoestring.net/): low-cost monitoring of downtime, power and location for small manufacturers. Free software; you buy the hardware.
+- [Node-RED](https://nodered.org/): low-code machine connections and data flow orchestration. Free and open source.
 - [PAS 1040:2019](https://fcms.bsigroup.com/siteassets/pdf/en/insights-and-media/insights/brochures/pas_1040_2019.pdf): BSI's nine-point digital readiness scale for manufacturers. Free PDF.
 - [Made Smarter digital readiness review](https://www.madesmarter.uk/adoption/plan-for-your-digital-transformation/): an adviser-led review and roadmap for SME manufacturers in England. Funded in some regions; check yours.
 - [NCSC definitive view of OT architecture](https://www.ncsc.gov.uk/collection/operational-technology/definitive-architecture-view): how to keep an accurate record of plant systems and their connections. Free.
