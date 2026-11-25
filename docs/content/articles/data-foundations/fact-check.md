@@ -231,3 +231,145 @@ Each flag above, and what changed in the article. Claude made the fixes. The lin
 - **AI-written passages:** reworded "Data isn't the whole story", "The fair reading", "The answer sits between the two", "The rest can wait", "Spreadsheets carry a lot of weight", "Then there are people", the Network Rail closer, and "Safety-critical work shows the same pattern more sharply". Left for Nikita's edit: the opening list of three vendor pitches, and "settle arguments that a spreadsheet of systems never will", which is in a passage marked for his review.
 
 **Checked separately after this report:** the Grieves sentence on noise (brief claim 65) was added after the checker started. Claude opened it at https://www.mdpi.com/2673-9585/4/2/7, section 4.1 "Data", on 24 November 2026: supported.
+
+## Follow-up check, 25 November 2026 (changes since af87726)
+
+Checker: independent subagent. Scope: `git diff af87726 HEAD` for `src/content/articles/data-foundations.mdx` and `src/content/articles/images/` (only `data-foundations-data-map.svg` changed). Settled rows above were not reopened unless their wording or link changed. The MDPI page blocks WebFetch, so the Grieves text was read in the built-in browser. The Ofgem templates zip was downloaded from ofgem.gov.uk and its contents listed (not extracted).
+
+### Summary
+
+38 claim rows checked: **24 supported, 11 partly supported, 3 not supported, 0 source unreachable.** Most important first:
+
+1. **"The tools that have been adopted are not in the field or on the shop floor" (row 3): not supported.** ONS doesn't classify AI use by location. Its own figures include robotics (2.3%) and machine learning to process data (4.0%), and Make UK's landing page gives 11% of members using AI in production and 6% in quality control. This goes further than the "mostly in the office" line the first check already flagged.
+2. **"(likely supporting internal reports and presentations)" (row 5): not supported.** ONS doesn't ask what the images and text are for. It is a guess inside a factual sentence.
+3. **"locked behind paywalls" (row 35): no source.** The sentence lost its support when the EU Data Act and DUA Act material next to it was cut.
+4. **Opening sentence (row 1): partly supported.** Make UK covers AI only, so "or modern digital tools" isn't evidenced, and "failing to scale" is our gloss on "not widely embedded".
+5. **Labels that were removed:** the ISO 19650 table is no longer marked as our own analogy, which the brief requires (row 29). The weekly and monthly rhythm is no longer marked as our suggestion (row 31). The MIT Technology Review survey no longer says Microsoft commissioned it (row 14).
+6. **£79,750 stat (components):** it is credited to IT Jobs Watch alone, but it is our calculation using HMRC's NI rate. IT Jobs Watch shows £70,000.
+7. **Gist:** "digital projects" stretches evidence that covers AI only, and leadership, which the body ranks first, has been dropped again.
+8. **Smaller points:** "our sum" for the 20% (it's a subtraction); "digital projects fail" where RAND covers AI only; "successfully use AI"; "simple symbols" in the DIKW definitions; "do not add any value"; the hedged causal claim about distrust; the Cambridge landing page dated 2024; the Ofgem "who uses each dataset and why" (the template has no "why"); PAS 1040 now behind a registration form.
+
+Both pull quotes are verbatim. The bar chart figures match Deloitte. The redrawn data map is clearly labelled as invented. There are no American spellings in the article's prose.
+
+### Claims
+
+Verdict key as above (S, P, N, U).
+
+| # | Sentence (short paraphrase) | Source | Verdict | Where / notes |
+|---|---|---|---|---|
+| 1 | Statistics show most UK manufacturers who have tried AI "or modern digital tools" are still experimenting or failing to scale | Make UK 2026 (landing page, PDF linked) | P | The AI part is supported: of the 82% who have adopted, 43% are running limited experiments and 37% have moderate use or small pilots, against 2% widely embedded (PDF p.3, Chart 1 p.7). An AI survey doesn't cover "modern digital tools". "Failing to scale" is a gloss: the source says AI isn't widely embedded, not that it failed |
+| 2 | Only 2% of members had AI widely embedded and 43% were running limited experiments | Same | S | The landing page (8 June 2026) gives the 2%. The 43% is in the linked PDF, Chart 1. The earlier caveat "the report doesn't give its sample size" (brief claim 3) was dropped |
+| 3 | Adopted tools are "not in the field or on the shop floor, but are mostly in the offices" | ONS BICS wave 165 | N | ONS reports technology types, not where they are used. Robotics (2.3%) and ML data processing (4.0%) are plausibly shop-floor uses, and Make UK's landing page gives 11% production and 6% quality-control use. Suggest "mostly generative tools such as image and text creation" |
+| 4 | About 20% of UK manufacturers said they used some form of AI, mostly to create images and text | ONS wave 165 | S | Same figures as before (see Derived figures above). "Said they used" is accurate for a survey |
+| 5 | "(likely supporting internal reports and presentations)" | ONS wave 165 | N | Not in the data: ONS doesn't ask about purpose. Cut it, or say plainly that it is our guess |
+| 6 | Only 4.0% used machine learning models to process data; 2.3% used AI in robotics | ONS wave 165 | S | Categories "Data processing using machine learning" and robotics, as before |
+| 7 | "the 20% is our sum of the published figures" (also the StatRow label "our sum") | ONS wave 165 | P | The figure is 100 − 76.1 (not using) − 3.7 (not sure). Firms can tick several categories, so adding up the usage categories gives more than 20%. Say "our calculation" |
+| 8 | "Bad data is a real reason digital projects fail" | RAND RR-A2680-1 (landing page) | P | RAND studies AI projects only. Read "AI projects" in af87726 |
+| 9 | RAND passage as reworded ("However, RAND notes…", "Data issues came second") | Same | S | The landing page summary gives 65 interviewees, leadership first and data second. The detail is in the PDF, as in rows 4 to 8 above |
+| 10 | 2024 Make UK survey of 151 manufacturers, barrier percentages | Make UK, *Future Factories Powered by AI* (landing page, 25 November 2024) | S | The figures are in the linked PDF (Chart 6), not on the landing page. "Run with Autodesk" was dropped, though the landing page names Autodesk as partner |
+| 11 | Non-adopters: understanding 62%, business case 61%, better data 41% (government's 2026 AI adoption research) | GOV.UK landing page "AI adoption survey 2026" (29 October 2026) | S | Offers the same PDF (`artificial-intelligence-adoption-research-report-2026.pdf`, 116 pp), now titled "AI adoption survey report 2026", plus data tables. Figures as in row 10 above |
+| 12 | Made Smarter's toolkit tells manufacturers "to get started and not to wait for perfect data" | Made Smarter landing page (22 April 2026), PDF | S | PDF p.10 says the opportunity "is not to wait for perfect data, but to start using what they already have". This wording is in the PDF, not on the landing page |
+| 13 | NAO: programmes fail to deal with data at the start | NAO landing page (21 July 2021) | S | Offers the same report PDF and a summary |
+| 14 | 2024 survey of 300 manufacturing executives "by MIT Technology Review Insights" (no sponsor named) | Microsoft blog | P | The figures are supported, as before. The blog says "Microsoft commissioned a research report in collaboration with MIT Technology Review Insights". The earlier "paid for by Microsoft" has gone, though the brief marks this claim as vendor-sponsored. The survey is also global, which the article doesn't say |
+| 15 | "some firms do manage to successfully use AI in operations" | Deloitte, *AI in Manufacturing 2026* | P | Deloitte reports adoption by function (quality 62%, production 57%), not success. The same page says only about one in five use cases has been scaled. Drop "successfully" |
+| 16 | HSE study: largest single category was "admin: drafting health and safety documents (25.1%)" | Chambers et al., Hazards 35 | S | Figure 4 text: document generation "dominates the low-level landscape" at 25.1%. The Discussion links it to "knowledge management and administrative efficiency", so "admin" is fair. (At the high level, "Other" is the largest and H&S management is 25.9%.) |
+| 17 | Predictive maintenance "just 3.6%"; respondents kept a real person in the loop to approve safety-critical outputs | Same | S | 3.6% appears in both Figure 3 and Figure 4. Human approval is listed among respondents' controls ("mandatory human approval for safety-critical outputs") |
+| 18 | Callout: the sample isn't statistically representative, so treat it as a rough indicator | Same | S | Discussion, as row 22 above |
+| 19 | "So adoption seems to be limited to low-risk use cases, and distrust of the data is part of the reason why" | HSE, MIT TR, Drexel (following sentences) | P | The first half is hedged. The second half is stated as fact, but the sources show data quality is a frequent barrier, not that it causes the low-risk pattern (the brief says the same). Suggest "and poor or distrusted data is one of the barriers people name" |
+| 20 | Vendor-sponsored survey of 565 data professionals, all sectors, mostly US, 67% don't completely trust data | Drexel LeBow news page (16 September 2024) | S | Supported by the PDF (row 25 above). The new landing page confirms 565 respondents "across various sectors" and links the PDF, but doesn't give the 67% or mention trust. "Only 9% in manufacturing" was dropped; "across all sectors" still meets the brief |
+| 21 | Deloitte fifth at 30%; HSE risk-assessment statement; Scientific Reports five-fold result (reworded framing only) | As rows 26 to 28 above | S | The claims themselves are worded as before |
+| 22 | DQF "describes a data lifecycle with six stages" | DQF | S | Same list as before |
+| 23 | "Data are simple symbols recorded by observation, information is…, knowledge is the know-how…, wisdom is judgement…" | ISKO | P | The definitions are Ackoff's, quoted in ISKO ("Data are symbols that represent properties of objects…"). "Simple" isn't in the source. With the attribution to Ackoff and the Frické critique cut, the definitions now read as settled fact. Not wrong, but less candid than af87726 |
+| 24 | Grieves: data always has context; a string of numbers without it is noise, not data | Grieves 2024, MDPI §4.1 | S | §4.1 "Data": "Data always have context", then the noise passage (see Components) |
+| 25 | "Readings with no units, time or source, which nobody can use, do not add any value to the business" | Grieves (same paragraph) | P | Grieves says such inputs are noise until put in context, and notes that we may still collect and store them. "No value to the business" is our stronger claim. The commas also make the sentence say that no such reading can be used |
+| 26 | Critical data guidance; metadata guidance; data asset policy owner ("also adds") | GDS pages | S | The claims are as before. The list that follows ("For industrial data it is also useful to record") is advice, but the af87726 signpost "No guidance prescribes that second list" has gone, so a reader could take the list as part of the guidance |
+| 27 | "flowcharting tools like draw.io (free) or Visio (paid)" | drawio.com; microsoft.com/en-gb Visio | S | Visio Plan 1 is £3.80 and Plan 2 £11.50 per user per month (ex VAT). The page also says a basic Visio web app is included with Microsoft 365 commercial plans, so "paid" is broadly right |
+| 28 | ISO 19650 UK guidance: the receiver says why and what it needs first, and asks only for what it needs. "This top-down approach can help identify gaps… and reduce unnecessary data capture" | UK BIM Framework Part D | S | As rows 40 and 41 above. Reducing capture matches §1.2.3.2; identifying gaps is our reasonable reading |
+| 29 | ISO 19650 table "What it might mean for industry", introduced with "the idea is very transferable" | Same | P | The terms are right. The af87726 label saying the translation "is our own" has gone, and the brief (claim 28) says the translation "must be labelled as one". "Might" hedges but doesn't say whose translation it is |
+| 30 | Data ownership model is "a good starting point… defines three core roles"; "one person can hold multiple roles" | GDS data ownership model | S | Roles as row 44 above. "Multiple roles" is our advice, which is fine |
+| 31 | "a workable rhythm is a short weekly look… an annual review of the data map", followed by the policy sentence | GDS data asset management policy | P | The policy supports only an annual review of each asset's description. The weekly and monthly parts are ours, and the af87726 line "Only the yearly review has a public precedent" has gone. With the two sentences side by side, the policy now seems to back the whole rhythm. Say "We suggest…" |
+| 32 | "Data quality isn't a single score, but a measure of fitness for purpose across six dimensions" | DQF | S | Same substance as before |
+| 33 | Don't chase perfection; a morning dashboard against a figure "used to release product to a customer" | DQF | S | Framework statements as row 52 above; the example is ours |
+| 34 | NIST, ISA-95 and NCSC passages (only the links changed) | NIST SP 800-82r3; NCSC | S | Wording as before; see Links for the landing pages |
+| 35 | "Some machines keep their data in the supplier's own software or format, locked behind paywalls" | none | N | No source in the paragraph. The first half was already in af87726 as a warning sign. "Locked behind paywalls" is new and unsupported. Cite something, or present it as experience ("in our experience, some suppliers charge for access") |
+| 36 | Made Smarter KPI: 559 projects, £7.82m grant, £16.61m matched; "(our estimated calculation)" | Made Smarter news page (6 June 2025) | S | The landing page itself shows Table 3 (559), Table 4a (£7.82m) and Table 4b (£16.61m) and links the PDF. No newer edition is mentioned. "Our estimated calculation" is odd: the mean is a straight calculation, not an estimate |
+| 37 | Cambridge survey of 155 participants, "run in 2022 and published in 2023"; 97%, 76%, 74%, 69% | GOV.UK "Made Smarter Adoption research project" | P | The figures are supported (row 68 above; same PDF, `65e06d14…/made-smarter-adoption-report.pdf`). But the landing page says "Published 4 March 2024" by the Department for Business and Trade and doesn't name Cambridge, so a reader who follows the link sees 2024 against our 2023. Suggest "published in 2023 (on GOV.UK in 2024)" |
+| 38 | Data engineer median £70,000 (IT Jobs Watch) | IT Jobs Watch | S | "6 months to 25 Nov 2026": £70,000. Same period in 2025: £70,000 |
+
+### New sentences with no source, or opinion stated as fact
+
+- **"If you search online for 'AI' or 'Digital Transformation', the first results that come up are from software or service providers. Most pages you come across bring another sales pitch"**: no source, and results vary by user and search engine. Soften to "many of the first results".
+- **"Doing this iteratively will lead to much stronger data foundations over time"**: a promise stated as fact.
+- **"The warning signs are familiar to almost any organisation"**: widened from "anyone who has worked in a plant", with no evidence.
+- **"Understanding your underlying data is the first step that will enable you to trust a tool enough to give it a bigger job."**: the first check flagged this as opinion stated as fact, and it is now stronger. The af87726 caveat "though it won't remove the other barriers" was cut, and the brief says data "isn't the only gate".
+- **"A visual approach will work for most stakeholders."**: experience stated as a general fact.
+- **"Some of the best low-hanging-fruit opportunities turn up this way as they require little change or transformation."**: no source.
+- These are clearly judgement and are fine as written: "Endlessly optimising… may be an endless task", "So it is critical to consider the full lifecycle", "in the ideal scenario, the two views can be reconciled", "Asking this question early can help identify rogue data".
+
+**Caveats removed since af87726 (not errors, but each removal should be deliberate):** Make UK's missing sample size; Autodesk as survey partner; Microsoft as commissioner of the MIT TR survey; 9% manufacturing in the Drexel sample; the Frické critique of DIKW; "though it won't remove the other barriers"; "No guidance prescribes that second list"; the ISO translation and the rhythm marked as our own.
+
+### Components
+
+| Component | Content | Verdict | Notes |
+|---|---|---|---|
+| StatRow 1 (ONS, "wave 165, autumn 2026") | 20% (our sum); 4.0% ML to process data; 2.3% AI in robotics | S, one wording fix | Values match the workbook. "Our sum" should be "our calculation" (row 7). "Autumn 2026" matches fieldwork from 21 September to 4 October |
+| Callout (HSE) | Sample not representative | S | Discussion section |
+| BarChart (Deloitte) | Costs 43, expertise 35, resistance 35, regulatory 34, data 30 (highlighted) | S | Values and order match the page. Deloitte's labels are "high implementation costs", "lack of technical expertise", "resistance to change", "regulatory/compliance concerns" and "data availability or quality issues", and the chart's shorter versions are faithful. The title is ours (Deloitte gives the list in text, with no chart), and it is fair because these are the challenges the page lists |
+| PullQuote (Grieves) | "There is no such thing as data without context. This is simply noise." | S, verbatim | MDPI §4.1 "Data", two consecutive sentences, read in the browser on 25 November 2026. The cite drops the subtitle (full title *DIKW as a General and Digital Twin Action Framework: Data, Information, Knowledge, and Wisdom*, Knowledge, 2024), which is acceptable |
+| PullQuote (DQF guidance) | "Always fix problems in data quality as close to the source as possible." | S, verbatim | Guidance page, under "4. Fix as close to source as possible" in the root cause analysis section |
+| StatRow 2: £43,700 | Average Made Smarter project, grant plus match (our calculation) | S | Labelled as ours; the source page carries the inputs |
+| StatRow 2: £20,000 | Maximum Made Smarter grant in several regions | S | "Up to £20K" is listed for EM, London, NW, WM, SE (hardware only) and SW, and "up to £20,000" for Y&H |
+| StatRow 2: £79,750 | Median advertised data engineer salary plus employer NI; source "IT Jobs Watch" | P | IT Jobs Watch gives £70,000. £79,750 is our calculation using HMRC's 15% above £5,000. Add "(our calculation)" and credit HMRC rates too |
+| StatRow 2: £15,000 | Maximum funding for "a Level 4 data apprenticeship"; source "Apprenticeship training" | S, label could be tighter | Course 80 is "Data analyst (level 4)", with "Maximum government funding for apprenticeship training and assessment costs" of £15,000. Say "the Level 4 data analyst apprenticeship", because other Level 4 data-related standards may differ. "Find apprenticeship training" would be a clearer source name |
+| Callout (ICO, warning) | Lawful basis, tell workers, least intrusive option | S | Text as before |
+
+### Links changed to landing pages
+
+| Link (article use) | Resolves? | Offers or describes the named document? | Still supports the claim? | Newer edition? |
+|---|---|---|---|---|
+| Make UK, AI, skills and the future… | Yes | Yes, PDF download; page dated 8 June 2026 | Yes. The page gives the 2%; the 43% is only in the PDF | No |
+| ONS BICS wave 165 | Yes | Yes, `bicswave1652final.xlsx` | Yes. The page shows "Release date: 19 November 2026", which appears to be the dataset's release date; the file is still wave 165 | Later waves exist but have no AI questions (see Derived figures) |
+| RAND RRA2680-1.html | Yes | Yes, with PDF; 13 August 2024 | Yes. The summary gives 65 interviewees, leadership first and data second | No |
+| Make UK, Future Factories Powered by AI | Yes | Yes, PDF; 25 November 2024; Autodesk named | Figures are only in the PDF | No |
+| GOV.UK AI adoption survey 2026 | Yes | Yes: the same PDF (now titled "AI adoption survey report 2026"), an executive summary and ODS tables; 29 October 2026 | Yes (PDF Figure 23) | No |
+| Made Smarter AI adoption toolkit | Yes | Yes, white paper download; 22 April 2026 | Yes (PDF p.10) | No |
+| NAO, challenges in implementing digital change | Yes | Yes, report and summary PDFs; 21 July 2021 | Yes | No |
+| Drexel LeBow news page | Yes | Describes the survey and links the 2025 Outlook PDF; dated 16 September 2024 | Partly. The page gives 565 respondents but not the 67% trust figure, which needs the PDF | None mentioned |
+| NIST SP 800-82r3 (CSRC) | Yes | Yes, Rev. 3 final (September 2023) with PDF | Yes | **An initial public draft of Rev. 4 was posted on 21 September 2026, with comments due by 30 November 2026.** Rev. 3 is still the final version. Recheck the 10 to 15 year and adjacent-levels points once Rev. 4 is final |
+| NCSC secure connectivity principles (collection page, used twice) | Yes | Yes, links the PDF | The page only summarises the principles; all four NCSC claims are in the PDF. It shows "Reviewed 18 March 2024, Version 1.0", which sits oddly with the further-reading date "NCSC, 2026" (taken from the PDF's Crown copyright). That may confuse readers | No |
+| Made Smarter KPI statistics | Yes | Yes, PDF; page dated 6 June 2025 | Yes, and the tables are on the page itself | No FY2025/26 edition mentioned |
+| GOV.UK Made Smarter Adoption research project | Yes | Same PDF; "Published 4 March 2024" by the Department for Business and Trade; Cambridge not named | The figures are; the date visibly differs from "published in 2023" (row 37) | No |
+| Ofgem decision page (tools: templates) | Yes | Offers "Data Best Practice Templates" (zip) and the v1 guidance; dated 15 November 2021 | **Partly.** The zip holds Field Level Information (field reference or column number, title, description, collection and input method, unit, precision, quality), which supports "a data dictionary explaining every column". The Stakeholders template lists each dataset's data users and prospective users, but **has no column for why** they use it. The zip also holds Supporting Information, Open Data Triage and User Research templates | The v1 guidance on this page is superseded by the 2026 RIIO-3 versions. The templates appear only here |
+| Ofgem RIIO-3 guidance page (further reading) | Yes | Lists "Data Best Practice Supporting Information" (PDF, `2026-03/…`); page dated 1 April 2026 | Yes | This is the current edition |
+| BSI Knowledge, PAS 1040:2019 | Yes | Yes, PAS 1040:2019, current, 31 August 2019 | **Partly.** No price is shown. The page offers "a DRM free copy" through a link to a BSI registration form that asks for name, email, job title, company and marketing preferences. "Free to download" is probably still right, but readers now have to register. The nine-point scale isn't on the landing page (the first check confirmed it in the PDF) | No |
+| Made Smarter technical guide (further reading) | Yes | Yes, download; "Published 20/07/2026" | Yes. This confirms the 2026 date the first check couldn't | No |
+| Make UK, Demystifying Digitalisation (further reading) | Yes | Yes, PDF; page dated 16 October 2023; AWS named as partner | Yes | No |
+| draw.io, Visio (new) | Yes | Yes | Yes (row 27) | n/a |
+
+### Diagrams
+
+- **`data-foundations-data-map.svg` (redrawn):** the title says "An illustrative one-page data map", the description starts "An invented example", and the footer says "not a real plant". The tag name (S3_LOAD), owners and retention period are fictional and clearly presented that way. One small inconsistency: the caption and alt text say each box records "format, owner and update rate", but the Historian box has a custodian and no update rate, and the OEE report box has no owner. Suggest "format and, where known, owner and update rate".
+- **Hierarchy figure:** the caption now says "a mock factory example", which is fine, and the SVG text still says "An invented example". The article's alt text now says "data hierarchy", while the SVG's own description still says "A pyramid". Harmless.
+- **Both-ends caption ("from the existing data"):** generic, with no factual claim.
+- No diagram presents a figure as real.
+
+### Front matter
+
+- **Description:** "How UK industrials can understand their data…". "Industrials" as a noun is mainly an investment term for industrial companies' shares, so "industrial firms" or "manufacturers" reads better. The body supports the rest.
+- **Gist:** "Poor data is one of the most common reasons digital projects stall" stretches evidence about AI projects (RAND, Make UK, Deloitte, MIT TR) to digital projects in general. It also drops "alongside leadership, unclear goals, cost and skills", which the first check asked for, even though the body ranks leadership first (RAND 84%) and business-case clarity first among non-adopters (DSIT). As written, it implies data comes first. Suggested wording: "Poor data is one of the most common reasons AI projects stall, alongside leadership, unclear goals, cost and skills, so understand your data landscape before you buy the tool." "Critical before you buy the tool" is fine as the article's recommendation.
+
+### Spelling and grammar
+
+There are no American spellings in the article's prose. "center" appears only in the Drexel URL and "Organization" only in the ISKO title. Slips:
+
+- "Endlessly optimising… may be an endless task" says the same thing twice.
+- Two "But" sentences in a row in the Deloitte passage ("But some firms… But only about one in five…").
+- "When taken together, digital tools stay…" is a dangling modifier. Try "Taken together, the evidence suggests digital tools stay…".
+- "speaking to people that run the process": use "who run".
+- "where data starts, where it works, where it is lost…": "where it works" is unclear.
+- "the two views can be reconciled, making the perfect starting point" is dangling. Try "and that meeting point is the place to start".
+- "release product to a customer for example." needs a comma before "for example".
+- "leaving it alone if for example:" needs commas: "if, for example:".
+- "(our estimated calculation)": use "our calculation" (row 36).
+- "But it's not only data in isolation, and other adjacent barriers are important to consider." is awkward. Try "Data isn't the only barrier, though."
+- Trailing spaces at the ends of lines 83, 128, 143, 145 and 209 (harmless when rendered).
