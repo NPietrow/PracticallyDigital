@@ -47,6 +47,7 @@ npm run preview
 | `npm run test:lighthouse` | Lighthouse scores for a deployed site at `PD_DEPLOYED_URL` |
 | `npm run og` | Redraws the default social preview image, `public/og-default.png` |
 | `npm run check:links -- <file>` | Checks every link in an article: run `npm run build` first. See [docs/content/README.md](docs/content/README.md) |
+| `npm run check:spelling` | British English spell check of every article; reports unknown words, never fails the build |
 
 The first time you run the browser tests on a new machine, install Chromium for Playwright:
 

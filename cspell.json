@@ -1,0 +1,20 @@
+{
+  "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+  "version": "0.2",
+  "language": "en-GB",
+  "dictionaries": ["project-words"],
+  "dictionaryDefinitions": [
+    {
+      "name": "project-words",
+      "path": "./docs/content/spelling-words.txt",
+      "addWords": true
+    }
+  ],
+  "ignorePaths": ["node_modules", "dist", "dist-*"],
+  "ignoreRegExpList": [
+    "/\\]\\([^)]*\\)/g",
+    "/href=\"[^\"]*\"/g",
+    "/src=\\{[^}]*\\}/g",
+    "/^import .*$/gm"
+  ]
+}

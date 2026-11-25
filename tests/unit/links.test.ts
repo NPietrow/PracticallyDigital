@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { checkExternal, classifyStatus, extractLinks, type LinkResult } from '../../src/lib/links';
+import { checkExternal, classifyStatus, describeResult, extractLinks, isFileLink, type LinkResult } from '../../src/lib/links';
 
 const SOURCE = [
   '---', // 1
@@ -108,5 +108,37 @@ describe('checkExternal', () => {
     const s = server({ HEAD: { error: 'ENOTFOUND' }, GET: { status: 200 } });
     expect(await checkExternal('https://example.org', s.request)).toEqual({ error: 'ENOTFOUND' });
     expect(s.asked).toEqual(['HEAD']);
+  });
+});
+
+describe('isFileLink', () => {
+  it('spots links straight to a document file', () => {
+    expect(isFileLink('https://example.org/report.pdf')).toBe(true);
+    expect(isFileLink('https://example.org/data/tables.XLSX')).toBe(true);
+    expect(isFileLink('https://example.org/templates.zip?v=2')).toBe(true);
+    expect(isFileLink('https://example.org/docs/annual-report/download')).toBe(true);
+    expect(isFileLink('https://www.ons.gov.uk/file?uri=/economy/datasets/wave165.xlsx')).toBe(true);
+  });
+
+  it('leaves pages alone', () => {
+    expect(isFileLink('https://www.gov.uk/government/publications/ai-adoption-survey-2026')).toBe(false);
+    expect(isFileLink('https://example.org/reports/pdf-accessibility-guide/')).toBe(false);
+    expect(isFileLink('/insights/data-foundations/')).toBe(false);
+  });
+});
+
+describe('describeResult', () => {
+  it('says in plain words why a link needs checking by hand or is broken', () => {
+    expect(describeResult({ status: 200 })).toBe('200');
+    expect(describeResult({ status: 401 })).toBe('401 sign-in');
+    expect(describeResult({ status: 403 })).toBe('403 blocked');
+    expect(describeResult({ status: 429 })).toBe('429 rate-limited');
+    expect(describeResult({ status: 503 })).toBe('503 server error');
+    expect(describeResult({ status: 404 })).toBe('404 not found');
+    expect(describeResult({ status: 410 })).toBe('410 gone');
+    expect(describeResult({ error: 'timeout' })).toBe('timeout');
+    expect(describeResult({ error: 'ENOTFOUND' })).toBe('no such site');
+    expect(describeResult({ error: 'ECONNREFUSED' })).toBe('refused');
+    expect(describeResult({ error: 'ECONNRESET' })).toBe('ECONNRESET');
   });
 });

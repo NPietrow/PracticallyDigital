@@ -15,7 +15,8 @@
     "og": "node scripts/make-og-image.mjs",
     "test:deployed": "playwright test --config playwright.deployed.config.ts",
     "test:lighthouse": "lhci autorun --config=lighthouserc.cjs",
-    "check:links": "node scripts/check-links.ts"
+    "check:links": "node scripts/check-links.ts",
+    "check:spelling": "cspell --no-progress \"src/content/articles/**/*.{md,mdx}\""
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "^0.4.7",
@@ -33,6 +34,7 @@
     "@axe-core/playwright": "^4.14.0",
     "@lhci/cli": "^0.16.1",
     "@playwright/test": "^1.65.0",
+    "cspell": "^9.8.0",
     "sharp": "^0.35.5",
     "typescript": "^6.0.3",
     "vitest": "^5.1.0",

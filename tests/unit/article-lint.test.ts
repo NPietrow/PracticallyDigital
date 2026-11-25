@@ -298,6 +298,80 @@ describe('lintArticle', () => {
     expect(lint(article(body))).toEqual([]);
   });
 
+  describe('a source line under a table', () => {
+    const table = [
+      '| Measure | Value |',
+      '|---|---|',
+      '| Scrap | 12% |',
+      '| Downtime | 30% |',
+    ].join('\n');
+
+    it('sources every row of the table', () => {
+      const body = `${table}\n\nSource: [Plant survey](https://example.org/survey)`;
+      expect(only(lint(article(body)), 'unsourced-figure')).toEqual([]);
+    });
+
+    it('also works in italics or with "Sources:"', () => {
+      const body = `${table}\n\n*Sources: [A](https://example.org/a) and [B](https://example.org/b)*`;
+      expect(only(lint(article(body)), 'unsourced-figure')).toEqual([]);
+    });
+
+    it('without one, each row with a figure is still reported', () => {
+      expect(only(lint(article(table)), 'unsourced-figure')).toHaveLength(2);
+    });
+
+    it('a linked paragraph that is not a source line does not count', () => {
+      const body = `${table}\n\nSee also [our other guide](/insights/data-foundations/).`;
+      expect(only(lint(article(body)), 'unsourced-figure')).toHaveLength(2);
+    });
+  });
+
+  describe('figures in components need a source', () => {
+    it('a BarChart or PullQuote without href is reported', () => {
+      const body = [
+        '<BarChart',
+        '  title="Barriers"',
+        '  source="Survey"',
+        "  bars={[{ label: 'Cost', value: 43 }]}",
+        '/>',
+        '',
+        '<PullQuote cite="Someone">',
+        'Words.',
+        '</PullQuote>',
+      ].join('\n');
+      const source = article(body);
+      const issues = only(lint(source), 'component-source');
+      expect(issues.map((i) => i.line)).toEqual([lineOf(source, '<BarChart'), lineOf(source, '<PullQuote')]);
+    });
+
+    it('a Stat needs its own href unless its StatRow has one', () => {
+      const body = [
+        '<StatRow>',
+        '  <Stat value="12%" label="sourced" source="A" href="https://example.org/a" />',
+        '  <Stat value="30%" label="not sourced" />',
+        '</StatRow>',
+        '',
+        '<StatRow source="B" href="https://example.org/b">',
+        '  <Stat value="5%" label="sourced by the row" />',
+        '</StatRow>',
+      ].join('\n');
+      const source = article(body);
+      const issues = only(lint(source), 'component-source');
+      expect(issues.map((i) => i.line)).toEqual([lineOf(source, 'not sourced')]);
+    });
+
+    it('components with sources pass, and code examples are ignored', () => {
+      const body = [
+        '<BarChart title="T" source="S" href="https://example.org/s" bars={[{ label: \'A\', value: 1 }]} />',
+        '',
+        '```mdx',
+        '<PullQuote cite="Example">',
+        '```',
+      ].join('\n');
+      expect(only(lint(article(body)), 'component-source')).toEqual([]);
+    });
+  });
+
   it('review comments for Nikita or Claude are leftover markers', () => {
     const body = [
       '{/* NIKITA: check this passage against your experience. */}',

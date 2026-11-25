@@ -19,4 +19,5 @@ Nikita ticks this in the article's pull request before merging. Merging publishe
 - [ ] `reviewed` date set
 - [ ] Preview read at phone width
 - [ ] Linter (`npm test`) and `npm run check:links` clean, with any "check" links opened by hand
+- [ ] `npm run check:spelling` shows no typos
 ```
