@@ -386,6 +386,6 @@ Claude fixed the flags in its own text: "our calculation" labels, the £79,750 s
   - the MIT Technology Review Insights survey without its sponsor;
   - "Data are simple symbols…" without Ackoff;
   - the gist's "digital projects".
-- **Still without a source:** three passages remain unsourced. They are "not in the field or on the shop floor", "(likely supporting internal reports and presentations)" and "usually locked behind paywalls". Nikita kept them as editorial judgement.
+- **Still without a source:** three passages remain unsourced. They are "not in the field or on the shop floor", "(likely supporting internal reports and presentations)" and "usually locked behind paywalls". They rest on Nikita's own industry experience, and he kept them on that basis.
 - **Style changes from the humanizer:** Nikita accepted 16, 17, 18, 21, 22, 24, 25 and 26, and kept his own wording for 15, 19, 20 and 23.
 - **Not changed:** Cambridge "published in 2023" stays, because the report itself is dated February 2023.
