@@ -11,6 +11,7 @@ dist/
 # Local tooling
 .superpowers/
 .claude/settings.local.json
+.claude/launch.json
 
 # OS and editor clutter
 .DS_Store

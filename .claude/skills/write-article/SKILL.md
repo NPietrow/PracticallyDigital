@@ -57,6 +57,9 @@ Copy `docs/content/article-template.md` to `src/content/articles/<slug>.mdx` and
 - The gist (front matter) is two or three sentences: what it is, why it matters to this reader, and a one-line verdict. Nothing the body doesn't support.
 - Draw each diagram as a hand-written SVG in `src/content/articles/images/<slug>-<name>.svg`, using the colours in `src/styles/tokens.css`, with real text (not outlines) and a `<title>`. Show it with the `Figure` component, with alt text that says what the diagram shows.
 - If a `my-writing-style` voice profile exists, use it.
+- Follow "Sources, figures and visuals" in `docs/content/README.md`. In short: link to a document's landing page, not the file.
+- Break up text-heavy sections with the article components (`StatRow`, `PullQuote`, `Callout`, `BarChart`) and diagrams. Propose any new visual element to Nikita as a mockup before adding it.
+- Mark passages drafted from Nikita's notes, or resting on our own judgement, with `{/* NIKITA: … */}` comments for his close review.
 - No `draft: true` on the branch: the PR preview builds with drafts off, so a draft wouldn't appear on its own preview. Merging is publishing.
 
 ## 5. Humanizer
@@ -78,6 +81,7 @@ Dispatch a subagent that didn't write the draft, with the article path and the b
 - Open every cited source. For each claim give a verdict (supported, partly supported, not supported, source unreachable) and where in the source it found it.
 - Flag any factual sentence with no source.
 - Check each Tools and resources entry is what the article says it is, is current, and is labelled paid if it is.
+- Flag links that go straight to a file (PDF, spreadsheet, zip) when the publisher has a landing page for it.
 - Flag the guide if it doesn't cover costs, limitations and when not to bother.
 - Check the gist says nothing the body doesn't support, and that its verdict matches the body's conclusion.
 - Flag passages that still read as AI-written.
@@ -110,8 +114,9 @@ Tell Nikita the PR is ready for his reading and edit. He reads the sources, edit
 
 Run after Nikita's edits (`/write-article <issue-number> revise`), on the article's branch.
 
-1. Re-run the checks in step 6.
-2. Fact-check only the claims added or changed since the last report, with a fresh subagent as in step 7, and append its findings to `fact-check.md` under a dated heading.
-3. Run humanizer over the changed text, Nikita's included. Show him every change it makes to his own words, as before and after, so he can reject any of them. Keep only the ones he accepts.
-4. Set `reviewed` to today's date if the fact-check covered the whole article.
-5. Commit (`docs: revise <slug> after review`) and push.
+1. Read Nikita's changes and any `{/* CLAUDE: … */}` comments he left, and act on them. Fix spelling and grammar in his text, and change his wording only where it overstates a source; list every change for him. Remove the review comments once each is dealt with (the linter fails while any are left).
+2. Re-run the checks in step 6.
+3. Fact-check only the claims added or changed since the last report, with a fresh subagent as in step 7, and append its findings to `fact-check.md` under a dated heading.
+4. Run humanizer over the changed text, Nikita's included. Show him every change it makes to his own words, as before and after, so he can reject any of them. Keep only the ones he accepts.
+5. Set `reviewed` to today's date if the fact-check covered the whole article.
+6. Commit (`docs: revise <slug> after review`) and push.

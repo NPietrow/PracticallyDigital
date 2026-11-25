@@ -210,3 +210,45 @@ test.describe('with JavaScript disabled', () => {
     await expect(page.getByText('Paragraph text for the fifth section.')).toBeVisible();
   });
 });
+
+// The highlight components an article can use: stat row, pull quote, callouts
+// and bar chart. All render at build time, so they need no browser JavaScript.
+test.describe('article highlight components', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto(BETA);
+  });
+
+  test('stat row shows each figure with its label and source', async ({ page }) => {
+    const row = page.locator('[data-prose] .stat-row');
+    await expect(row.locator('.stat__value')).toHaveText(['12%', '£3,400', '7 in 10']);
+    await expect(row.locator('figcaption a')).toHaveAttribute('href', 'https://example.org/stats');
+  });
+
+  test('pull quote credits its source with a link', async ({ page }) => {
+    const quote = page.locator('[data-prose] .pull-quote');
+    await expect(quote.locator('blockquote')).toContainText('Fixture quotation');
+    await expect(quote.locator('figcaption a')).toHaveText('Fixture source');
+  });
+
+  test('callouts are labelled asides', async ({ page }) => {
+    await expect(page.getByRole('complementary', { name: 'Note' })).toContainText('Fixture note');
+    await expect(page.getByRole('complementary', { name: 'Important' })).toContainText('Fixture warning');
+  });
+
+  test('bar chart reads as text and scales bars to the largest value', async ({ page }) => {
+    const chart = page.getByRole('figure', { name: 'Fixture bar chart' });
+    await expect(chart.locator('li')).toHaveText([/First\s*50%/, /Second\s*25%/]);
+    const widths = await chart.locator('.bar-chart__bar').evaluateAll((bars) =>
+      bars.map((b) => (b as HTMLElement).style.width),
+    );
+    expect(widths).toEqual(['100%', '50%']);
+    await expect(chart.locator('li[data-highlight]')).toHaveCount(1);
+  });
+
+  test('the components pass axe and fit the screen', async ({ page }) => {
+    await expectNoA11yViolations(page);
+    const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
+    const viewport = page.viewportSize()!.width;
+    expect(scrollWidth).toBeLessThanOrEqual(viewport);
+  });
+});

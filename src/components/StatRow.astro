@@ -1,0 +1,58 @@
+---
+// A row of two to four headline figures for MDX articles, used with <Stat>:
+//   <StatRow source="ONS Business Insights survey, wave 165" href="https://...">
+//     <Stat value="20%" label="used some form of AI" />
+//   </StatRow>
+// Every figure needs a source: give the row a source and href when all the
+// figures share one, or give each <Stat> its own.
+interface Props {
+  source?: string;
+  href?: string;
+}
+const { source, href } = Astro.props;
+---
+
+<figure class="stat-row">
+  <ul class="stat-row__list" role="list">
+    <slot />
+  </ul>
+  {
+    source && (
+      <figcaption>
+        Source: {href ? <a href={href}>{source}</a> : source}
+      </figcaption>
+    )
+  }
+</figure>
+
+<style>
+  .stat-row__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+    gap: 2px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background: var(--stone-line);
+    border: var(--rule);
+    border-radius: var(--radius-2);
+    overflow: hidden;
+  }
+
+  /* prose.css spaces list items; a stat row is a grid, not a list of text. */
+  .stat-row__list > :global(li + li) {
+    margin-top: 0;
+  }
+
+  /* On a narrow screen the row folds into two columns; an odd last figure
+     takes the full width so no empty cell is left beside it. */
+  .stat-row {
+    container-type: inline-size;
+  }
+
+  @container (max-width: 30rem) {
+    .stat-row__list > :global(li:last-child:nth-child(odd)) {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

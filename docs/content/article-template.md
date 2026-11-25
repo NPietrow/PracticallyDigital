@@ -33,6 +33,11 @@ draft: false # optional; true only to park unfinished work on main (it is then n
   Every factual claim links to its source where it is made. A figure with no
   link must be labelled as an estimate. British English throughout.
 
+  Highlights (src/components/), each with a usage note at the top of its file:
+  StatRow and Stat for two to four headline figures, PullQuote for a sourced
+  quotation (one or two per article), Callout type="note" or "warning" for
+  asides, and BarChart for one ranked series. Every figure keeps a source link.
+
   Diagrams: an SVG in src/content/articles/images/<slug>-<name>.svg, shown with
     import Figure from '../../components/Figure.astro';
     import layers from './images/<slug>-layers.svg';

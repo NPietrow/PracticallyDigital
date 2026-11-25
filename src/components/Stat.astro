@@ -1,0 +1,59 @@
+---
+// One figure inside a <StatRow>. Give `source` and `href` when the figures in
+// the row come from different places.
+interface Props {
+  value: string;
+  label: string;
+  source?: string;
+  href?: string;
+}
+const { value, label, source, href } = Astro.props;
+---
+
+<li class="stat">
+  <span class="stat__value">{value}</span>
+  <span class="stat__label">{label}</span>
+  {
+    source && (
+      <span class="stat__source">
+        {href ? <a href={href}>{source}</a> : source}
+      </span>
+    )
+  }
+</li>
+
+<style>
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-5) var(--space-4) var(--space-4);
+    background: var(--paper);
+    border-top: 3px solid var(--signal);
+    container-type: inline-size;
+  }
+
+  /* Figures never break mid-number; in a narrow card they shrink to fit. */
+  .stat__value {
+    white-space: nowrap;
+    font-size: min(var(--step-4), 21cqi);
+    font-weight: 600;
+    line-height: var(--leading-tight);
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+  }
+
+  .stat__label {
+    font-size: var(--step--1);
+    line-height: var(--leading-snug);
+    color: var(--ink-soft);
+  }
+
+  .stat__source {
+    margin-top: auto;
+    padding-top: var(--space-2);
+    font-size: var(--step--2);
+    color: var(--muted);
+  }
+</style>

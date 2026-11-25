@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-labelledby="t d" font-family="IBM Plex Sans, Segoe UI, Arial, sans-serif">
+  <title id="t">Work from both ends</title>
+  <desc id="d">At the top, the end goal: a decision to improve and how it will be measured. At the bottom, the data the business already holds. Arrows from each meet at one process to start with.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1b1f23"/>
+    </marker>
+  </defs>
+  <rect width="800" height="600" fill="#ecece7"/>
+
+  <rect x="150" y="30" width="500" height="96" fill="#1b1f23"/>
+  <text x="400" y="70" font-size="19" font-weight="600" fill="#ecece7" text-anchor="middle">Start from the end goal</text>
+  <text x="400" y="100" font-size="15" fill="#b4b8ae" text-anchor="middle">A decision you want to improve, and how you'll measure it</text>
+
+  <line x1="300" y1="128" x2="300" y2="244" stroke="#1b1f23" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="316" y="182" font-size="15" fill="#3c413b">What information does this decision need?</text>
+
+  <rect x="200" y="250" width="400" height="100" fill="#f2b705"/>
+  <text x="400" y="292" font-size="19" font-weight="600" fill="#1b1f23" text-anchor="middle">One process to start with</text>
+  <text x="400" y="322" font-size="15" fill="#1b1f23" text-anchor="middle">Map it, give it an owner, measure it</text>
+
+  <line x1="500" y1="472" x2="500" y2="356" stroke="#1b1f23" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="484" y="420" font-size="15" fill="#3c413b" text-anchor="end">What could this data tell us?</text>
+
+  <rect x="150" y="476" width="500" height="96" fill="#ffffff" stroke="#d5d5ce"/>
+  <text x="400" y="516" font-size="19" font-weight="600" fill="#1b1f23" text-anchor="middle">Start from the data you have</text>
+  <text x="400" y="546" font-size="15" fill="#3c413b" text-anchor="middle">Machines, systems, spreadsheets and people's knowledge</text>
+</svg>

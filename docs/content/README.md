@@ -62,6 +62,24 @@ The brief and fact-check report are public, like everything in the repository, s
 - Humanizer runs over everything published, after the last edit.
 - "Would I say this out loud?" is Nikita's test.
 
+## Sources, figures and visuals
+
+Decided on the Data foundations pilot (November 2026).
+
+**Links**
+- Link to the publisher's page for a document (its landing page), not to the PDF, spreadsheet or zip itself, wherever such a page exists. Name the document in the link text. File addresses change when a publisher uploads a new version, and a file link on a phone starts a download. A direct file link is fine when no landing page exists.
+- The brief's claim table keeps the exact file and page number, so anyone auditing a figure can still find it.
+
+**Visuals**
+- Break up text-heavy sections with the article components in `src/components/`: `StatRow` and `Stat` for headline figures, `PullQuote` for one or two verbatim quotations, `Callout` for notes and warnings, `BarChart` for one ranked series, and diagrams as our own SVGs. Every figure in them keeps its source link.
+- One chart shows one survey's answers to one question. Never put different surveys on the same axes. When a chart leaves out some of a survey's answers, it says so.
+- Diagrams built on invented examples say so in their caption.
+- New visual elements are mocked up and shown to Nikita before they go in.
+
+**Editing together**
+- `{/* NIKITA: … */}` comments in a draft mark passages for Nikita's close review; `{/* CLAUDE: … */}` comments are Nikita's requests to Claude. They don't show on the page, and the linter fails the build while any are left.
+- In Nikita's edits, Claude fixes spelling and grammar, and changes his wording only where it overstates a source, listing every change.
+
 ## Tools and resources
 
 The second-to-last section. Tools and resources are things to *use*; Further reading is things to *read*.
@@ -79,7 +97,7 @@ The linter fails `npm test` (and so the `build` check on the pull request) when 
 - doesn't end with Tools and resources then Further reading, or has either twice;
 - has no bullet list under Tools and resources, or fewer than three `https` links under Further reading;
 - has a percentage, money amount or "million"/"billion"/"bn" figure with no link in the same paragraph and no "estimate" label. Sources must be inline links, `[text](https://…)`, and each table row with a figure needs its own link;
-- still has a marker such as TODO, TBC or [citation needed];
+- still has a marker such as TODO, TBC or [citation needed], or a `NIKITA:` or `CLAUDE:` review comment;
 - links to `http://`, localhost or an Azure preview address;
 - uses an American spelling (color, center, optimize and a few others) in its own prose. Names, link text, quotations and the two closing sections are exempt;
 - is a technology guide with no link to the data foundations guide.

@@ -8,6 +8,11 @@ problems: [unplanned-downtime]
 ---
 
 import Figure from '../../../src/components/Figure.astro';
+import StatRow from '../../../src/components/StatRow.astro';
+import Stat from '../../../src/components/Stat.astro';
+import PullQuote from '../../../src/components/PullQuote.astro';
+import Callout from '../../../src/components/Callout.astro';
+import BarChart from '../../../src/components/BarChart.astro';
 import diagram from './images/beta-diagram.png';
 
 export const fixtureLabel = 'MDX expression rendered';
@@ -33,4 +38,37 @@ Paragraph text for the beta fixture.
   alt="Fixture wide diagram stored beside the article"
   caption="Fixture wide figure from a local file."
   size="wide"
+/>
+
+<StatRow source="Fixture statistics" href="https://example.org/stats">
+  <Stat value="12%" label="Fixture share of something measured" />
+  <Stat value="£3,400" label="Fixture average cost of a thing" />
+  <Stat value="7 in 10" label="Fixture firms that said something" />
+</StatRow>
+
+<PullQuote cite="Fixture source" href="https://example.org/quote">
+Fixture quotation set large for the tests.
+</PullQuote>
+
+<Callout>
+
+Fixture note with context for the reader.
+
+</Callout>
+
+<Callout type="warning">
+
+Fixture warning the reader must not miss.
+
+</Callout>
+
+<BarChart
+  title="Fixture bar chart"
+  unit="%"
+  source="Fixture survey"
+  href="https://example.org/survey"
+  bars={[
+    { label: 'First', value: 50 },
+    { label: 'Second', value: 25, highlight: true },
+  ]}
 />

@@ -1,0 +1,132 @@
+---
+// A small horizontal bar chart for MDX articles, drawn in HTML so screen
+// readers get each label and value as text. One series only; mark at most
+// one bar with highlight: true to make the article's point.
+//   <BarChart
+//     title="Top challenges to implementing AI"
+//     unit="%"
+//     source="Deloitte, AI in Manufacturing 2026"
+//     href="https://..."
+//     bars={[{ label: 'Cost', value: 43 }, { label: 'Data', value: 30, highlight: true }]}
+//   />
+import { barRows, type BarInput } from '../lib/bar-chart';
+
+interface Props {
+  title: string;
+  bars: BarInput[];
+  source: string;
+  href: string;
+  unit?: string;
+}
+const { title, bars, source, href, unit } = Astro.props;
+const rows = barRows(bars, { unit });
+const id = `bar-chart-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+---
+
+<figure class="bar-chart" aria-labelledby={id}>
+  <p class="bar-chart__title" id={id}>{title}</p>
+  <ol class="bar-chart__rows" role="list">
+    {
+      rows.map((row) => (
+        <li class="bar-chart__row" data-highlight={row.highlight ? '' : undefined}>
+          <span class="bar-chart__label">{row.label}</span>
+          <span class="bar-chart__track" aria-hidden="true">
+            <span class="bar-chart__bar" style={`width: ${row.width}%`} />
+          </span>
+          <span class="bar-chart__value">{row.text}</span>
+        </li>
+      ))
+    }
+  </ol>
+  <figcaption>
+    Source: <a href={href}>{source}</a>
+  </figcaption>
+</figure>
+
+<style>
+  .bar-chart {
+    padding: var(--space-5);
+    background: var(--paper);
+    border: var(--rule);
+    border-radius: var(--radius-2);
+    container-type: inline-size;
+  }
+
+  /* On a narrow screen each label sits above its bar, so the bars keep their length. */
+  @container (max-width: 30rem) {
+    .bar-chart__row {
+      grid-template-columns: 1fr 3rem;
+      row-gap: var(--space-1);
+    }
+
+    .bar-chart__label {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .bar-chart__title {
+    margin: 0 0 var(--space-4);
+    font-weight: 600;
+    line-height: var(--leading-snug);
+    color: var(--ink);
+  }
+
+  .bar-chart__rows {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .bar-chart__row {
+    display: grid;
+    grid-template-columns: minmax(6.5rem, 11rem) 1fr 3rem;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: var(--step--1);
+    color: var(--ink-soft);
+  }
+
+  .bar-chart__row + .bar-chart__row {
+    margin-top: var(--space-3);
+  }
+
+  .bar-chart__track {
+    display: block;
+    height: 0.875rem;
+  }
+
+  .bar-chart__bar {
+    display: block;
+    height: 100%;
+    background: var(--muted);
+    border-radius: 0 4px 4px 0;
+  }
+
+  .bar-chart__value {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+  }
+
+  /* The highlighted bar: signal yellow with an ink outline, so it holds its
+     edge against white; its label and value go bold. */
+  .bar-chart__row[data-highlight] {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .bar-chart__row[data-highlight] .bar-chart__bar {
+    background: var(--signal);
+    box-shadow: inset 0 0 0 1px var(--ink);
+  }
+
+  @media (forced-colors: active) {
+    .bar-chart__bar {
+      background: CanvasText;
+    }
+
+    .bar-chart__row[data-highlight] .bar-chart__bar {
+      background: Highlight;
+    }
+  }
+</style>
