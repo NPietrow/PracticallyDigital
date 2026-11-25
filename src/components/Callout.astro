@@ -1,0 +1,73 @@
+---
+// A boxed aside for MDX articles. "note" is for context and caveats;
+// "warning" is for something the reader must not miss, such as a legal duty.
+//   <Callout type="warning">
+//
+//   Text in Markdown, with links to sources as usual.
+//
+//   </Callout>
+interface Props {
+  type?: 'note' | 'warning';
+  label?: string;
+}
+const { type = 'note', label = type === 'warning' ? 'Important' : 'Note' } = Astro.props;
+---
+
+<aside class="callout" data-type={type} aria-label={label}>
+  <p class="callout__label">
+    {
+      type === 'warning' && (
+        <svg class="callout__icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+          <path d="M8 1.5 15 14.5H1z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+          <path d="M8 6v4M8 11.75v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+        </svg>
+      )
+    }
+    {label}
+  </p>
+  <div class="callout__body">
+    <slot />
+  </div>
+</aside>
+
+<style>
+  .callout {
+    padding: var(--space-4) var(--space-5);
+    background: var(--paper);
+    border: var(--rule);
+    border-radius: var(--radius-2);
+  }
+
+  .callout[data-type='warning'] {
+    border: 1px solid var(--ink);
+    box-shadow: inset 4px 0 0 var(--signal);
+  }
+
+  .callout__label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .callout[data-type='warning'] .callout__label {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .callout__body {
+    margin-top: var(--space-2);
+    font-size: var(--step--1);
+    line-height: var(--leading-body);
+    color: var(--ink-soft);
+  }
+
+  .callout__body > :global(* + *) {
+    margin-top: var(--space-3);
+  }
+</style>

@@ -12,10 +12,21 @@ import layers from './images/data-foundations-layers.svg';
 import bothEnds from './images/data-foundations-both-ends.svg';
 import dataMap from './images/data-foundations-data-map.svg';
 import hierarchy from './images/data-foundations-hierarchy.svg';
+import StatRow from '../../components/StatRow.astro';
+import Stat from '../../components/Stat.astro';
+import PullQuote from '../../components/PullQuote.astro';
+import Callout from '../../components/Callout.astro';
+import BarChart from '../../components/BarChart.astro';
 
 If you search online for "AI" or "Digital Transformation", the first results that come up are from software or service providers. Most pages you come across bring another sales pitch: an AI tool that predicts failures every time, a real-time 3D digital twin of the whole facility, a magic platform that joins all your data up seamlessly. Some of them can of course deliver on their promises, but statistics show that most UK manufacturers who have tried AI or modern digital tools are still experimenting or failing to scale. In [Make UK's 2026 survey](https://www.makeuk.org/docs/ai-skills-and-future-uk-manufacturing-sectorpdf/download?attachment), only 2% of members had AI widely embedded and 43% were running limited experiments.
 
 The tools that have been adopted are not in the field or on the shop floor, but are mostly in the offices. In late September and early October 2026 about 20% of UK manufacturers said they used some form of AI, mostly to create images and text (likely supporting internal reports and presentations), while only 4.0% used machine learning models to process data and 2.3% used AI in robotics ([ONS Business Insights survey, wave 165](https://www.ons.gov.uk/file?uri=/economy/economicoutputandproductivity/output/datasets/businessinsightsandimpactontheukeconomy/bicswave165/bicswave1652final.xlsx); the 20% is our sum of the published figures).
+
+<StatRow source="ONS Business Insights survey, wave 165, autumn 2026" href="https://www.ons.gov.uk/file?uri=/economy/economicoutputandproductivity/output/datasets/businessinsightsandimpactontheukeconomy/bicswave165/bicswave1652final.xlsx">
+  <Stat value="20%" label="of UK manufacturers used some form of AI (our sum)" />
+  <Stat value="4.0%" label="used machine learning to process data" />
+  <Stat value="2.3%" label="used AI in robotics" />
+</StatRow>
 
 So, why read this guide? This insight article will attempt to highlight a key first step that usually gets skipped: understanding your data landscape before you buy the tool or AI model, or invest in new digital capability. It also emphasises the importance of building with the end goal in mind. Your aim should be to know what you have, pick one key decision worth improving, and get the data behind that decision into a state where you trust it.
 
@@ -33,11 +44,31 @@ So where should we start? Endlessly optimising and fixing all the data issues fi
 
 In industry, data-driven tools mostly stay in advisory or low-stakes roles, and they rarely scale. In a [2024 survey of 300 manufacturing executives](https://www.microsoft.com/en-us/microsoft-cloud/blog/manufacturing/2024/04/09/industrial-transformation-scaling-ai-across-the-manufacturing-value-chain/) by MIT Technology Review Insights, the AI use cases most likely to have reached production were product design, chatbots and content creation. Only about one in five manufacturers had production assets with data ready for current AI models. But some firms do manage to successfully use AI in operations. [Deloitte's 2026 survey of more than 140 manufacturers](https://www.deloitte.com/ch/en/Industries/industrial-construction/perspectives/ai-in-manufacturing.html), of all sizes, found adoption highest in quality (62%) and production (57%). But only about one in five use cases had been scaled across sites, and 18% of firms used what Deloitte calls physical AI or closed-loop systems.
 
-Evidence from safety-regulated sectors points the same way. An [HSE study of 247 AI uses](https://www.icheme.org/media/29576/hazards-35-paper-11-chambers.pdf) across 14 regulated sectors found the largest single category was admin: drafting health and safety documents (25.1%). Predictive maintenance was just 3.6%, and respondents kept a real person in the loop to approve safety-critical outputs. (Note: The authors say their sample isn't statistically representative, so treat these numbers as a rough indicator.)
+Evidence from safety-regulated sectors points the same way. An [HSE study of 247 AI uses](https://www.icheme.org/media/29576/hazards-35-paper-11-chambers.pdf) across 14 regulated sectors found the largest single category was admin: drafting health and safety documents (25.1%). Predictive maintenance was just 3.6%, and respondents kept a real person in the loop to approve safety-critical outputs.
+
+<Callout>
+
+The HSE study's authors say their sample isn't statistically representative, so treat these numbers as a rough indicator.
+
+</Callout>
 
 So adoption seems to be limited to low-risk use cases, and distrust of the data is part of the reason why. Data quality and availability was the challenge HSE's respondents reported most often, and in the MIT Technology Review survey poor data quality (57%) and weak integration (54%) were the top data barriers to scaling. In a [vendor-sponsored survey of 565 data professionals](https://www.lebow.drexel.edu/sites/default/files/2024-09/drexel-lebow-precisel-data-integrity-trends-insights-2025-outlook.pdf) across all sectors (mostly in the US), 67% said they don't completely trust the data their organisation uses for decisions.
 
 But it's not only data in isolation, and other adjacent barriers are important to consider. In Deloitte's survey, data came fifth among implementation challenges at 30%, behind cost (43%), lack of expertise (35%), resistance to change (35%) and regulation (34%). Safety decisions carry legal duties too: [HSE says the law requires a risk assessment](https://press.hse.gov.uk/?p=8268) for any AI use that affects workplace health and safety. So it is critical to consider the full lifecycle and landscape around the data we use. Trust in the digital tool matters as well as trust in the data: in a [factory experiment published in Scientific Reports](https://doi.org/10.1038/s41598-024-82501-9), showing workers why the AI had flagged a defect cut their median error rate five-fold compared with an unexplained AI.
+
+<BarChart
+  title="Top challenges when implementing AI in manufacturing"
+  unit="%"
+  source="Deloitte, AI in Manufacturing 2026 (survey of more than 140 manufacturers)"
+  href="https://www.deloitte.com/ch/en/Industries/industrial-construction/perspectives/ai-in-manufacturing.html"
+  bars={[
+    { label: 'High implementation costs', value: 43 },
+    { label: 'Lack of technical expertise', value: 35 },
+    { label: 'Resistance to change', value: 35 },
+    { label: 'Regulatory or compliance concerns', value: 34 },
+    { label: 'Data availability or quality', value: 30, highlight: true },
+  ]}
+/>
 
 The warning signs are familiar to almost any organisation:
 
@@ -55,7 +86,11 @@ When taken together, digital tools stay at advisory stages and unscaled for seve
 
 ## What data foundations are
 
-Data foundations means knowing what data your business has, where each piece comes from, who owns it, whether it can be trusted, and how it reaches the people who make decisions using this data. We need to think about data as a key business asset, just like any other asset in the business, and that means thinking about its lifecycle too. The UK Government's [Data Quality Framework](https://www.gov.uk/government/publications/the-government-data-quality-framework/the-government-data-quality-framework) describes a data lifecycle with six stages: plan; collect, acquire and ingest; prepare, store and maintain; use and process; share and publish; and archive or destroy. 
+Data foundations means knowing what data your business has, where each piece comes from, who owns it, whether it can be trusted, and how it reaches the people who make decisions using this data. We need to think about data as a key business asset, just like any other asset in the business, and that means thinking about its lifecycle too. The UK Government's [Data Quality Framework](https://www.gov.uk/government/publications/the-government-data-quality-framework/the-government-data-quality-framework) describes a data lifecycle with six stages: plan; collect, acquire and ingest; prepare, store and maintain; use and process; share and publish; and archive or destroy.
+
+<PullQuote cite="Michael Grieves, DIKW as a General and Digital Twin Action Framework, 2024" href="https://www.mdpi.com/2673-9585/4/2/7">
+There is no such thing as data without context. This is simply noise.
+</PullQuote>
 
 Another useful picture is to think about the hierarchy of data, information, knowledge and wisdom ([ISKO Encyclopedia of Knowledge Organization](https://www.isko.org/cyclo/dikw)). Data are simple symbols recorded by observation, information is data processed to answer who, what, where, when and how many, knowledge is the know-how to act on it, and wisdom is judgement about what is worth doing. Thinking about this transformation and how data evolves as it moves through the business is helpful. Michael Grieves, writing about digital twins, adds a point that matters on the shop floor: data always has context, and a string of numbers without it is noise, not data ([Grieves, 2024](https://www.mdpi.com/2673-9585/4/2/7)). Readings with no units, time or source, which nobody can use, do not add any value to the business. Data foundations do their work at the bottom of this hierarchy. They give raw readings context, an owner and a known quality, so the levels above can be trusted.
 
@@ -127,7 +162,11 @@ The model is written for government, but it translates. In a factory, the produc
 
 Day to day, a workable rhythm is a short weekly look at open data problems, a monthly review with the owner of what's improving and what isn't, and an annual review of the data map. The [government policy](https://www.gov.uk/government/publications/data-asset-management-policy-in-government/data-asset-management-policy-in-government) requires each data asset to have a named owner, with its description reviewed every year.
 
-IMPORTANT: If the data is about people, such as operator logins, location tags or performance by shift, data protection law applies. The ICO's [guidance on monitoring workers](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/employment/monitoring-workers/data-protection-and-monitoring-workers/) says employers need a lawful basis, must tell workers, and should choose the least intrusive option. Data collected for one purpose, such as machine uptime, shouldn't quietly become a performance measure for individuals.
+<Callout type="warning">
+
+If the data is about people, such as operator logins, location tags or performance by shift, data protection law applies. The ICO's [guidance on monitoring workers](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/employment/monitoring-workers/data-protection-and-monitoring-workers/) says employers need a lawful basis, must tell workers, and should choose the least intrusive option. Data collected for one purpose, such as machine uptime, shouldn't quietly become a performance measure for individuals.
+
+</Callout>
 
 ## Measure quality against the job
 
@@ -142,7 +181,13 @@ Data quality isn't a single score, but a measure of fitness for purpose across [
 | Validity | Values are in the right range and format | Share of sensor readings inside the physically possible range |
 | Accuracy | Data matches reality | Share of sampled stock counts that match a physical count |
 
-Valid data can still be wrong: a value can pass every format check and still describe the real thing incorrectly, as the government's [own explainer](https://www.gov.uk/government/news/meet-the-data-quality-dimensions) points out. When you do find a quality problem, fix it where it starts. The framework's guidance is blunt: "Always fix problems in data quality as close to the source as possible." ([Data Quality Framework guidance](https://www.gov.uk/government/publications/the-government-data-quality-framework/the-government-data-quality-framework-guidance)). Correcting numbers downstream, in the report or the spreadsheet, hides the cause and lets the problem come back.
+Valid data can still be wrong: a value can pass every format check and still describe the real thing incorrectly, as the government's [own explainer](https://www.gov.uk/government/news/meet-the-data-quality-dimensions) points out. When you do find a quality problem, fix it where it starts. The framework's guidance is blunt:
+
+<PullQuote cite="Government Data Quality Framework guidance" href="https://www.gov.uk/government/publications/the-government-data-quality-framework/the-government-data-quality-framework-guidance">
+Always fix problems in data quality as close to the source as possible.
+</PullQuote>
+
+Correcting numbers downstream, in the report or the spreadsheet, hides the cause and lets the problem come back.
 
 But as we discussed at the beginning, don't chase perfection either. The [framework](https://www.gov.uk/government/publications/the-government-data-quality-framework/the-government-data-quality-framework) says the quality you need depends on the purpose, that effort should go on the most critical data, and that perfect quality may not be achievable. A dashboard for a morning meeting needs less than a figure used to release product to a customer for example.
 
@@ -168,6 +213,13 @@ Central data platforms and the unified namespace (UNS) are a big subject of thei
 ## What it costs, and when not to bother
 
 A first project can cost tens of thousands of pounds. The best UK benchmark comes from the [Made Smarter Adoption programme's statistics](https://www.madesmarter.uk/media/f54h0k1g/made-smarter-adoption-kpi-statistics-fy202223-fy-202425.pdf): from 2022/23 to 2024/25 it supported 559 grant projects with £7.82m of grant and £16.61m of matched spending by the firms. That works out at about £43,700 a project on average (our estimated calculation). The projects cover all digital technologies, so treat this as a rough guide, not a price for data work.
+
+<StatRow>
+  <Stat value="£43,700" label="average Made Smarter project, grant plus match (our calculation)" source="Made Smarter KPI statistics" href="https://www.madesmarter.uk/media/f54h0k1g/made-smarter-adoption-kpi-statistics-fy202223-fy-202425.pdf" />
+  <Stat value="£20,000" label="maximum Made Smarter grant in several regions" source="Made Smarter" href="https://www.madesmarter.uk/adoption/" />
+  <Stat value="£79,750" label="median advertised data engineer salary, plus employer NI" source="IT Jobs Watch" href="https://www.itjobswatch.co.uk/jobs/uk/data%20engineer.do" />
+  <Stat value="£15,000" label="maximum funding for a Level 4 data apprenticeship" source="Apprenticeship training" href="https://findapprenticeshiptraining.apprenticeships.education.gov.uk/courses/80" />
+</StatRow>
 
 [Made Smarter](https://www.madesmarter.uk/adoption/) is the government programme for SME manufacturers in England. It offers advice and match-funded grants, up to £20,000 in several regions at the time of writing, with terms that vary by region. Firms that have taken part report benefits: in a [University of Cambridge survey](https://assets.publishing.service.gov.uk/media/65e06d14cf7eb1b0e5f57f3e/made-smarter-adoption-report.pdf) of 155 participants, run in 2022 and published in 2023, 97% of those that adopted technology reported benefits, including better production planning (76%), better use of data (74%) and lower costs (69%). Those benefits are self-reported, and the survey had no comparison group.
 

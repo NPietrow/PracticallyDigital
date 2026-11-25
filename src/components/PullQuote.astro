@@ -1,0 +1,49 @@
+---
+// A sourced quotation set large, for MDX articles. Use one or two per article,
+// and only for words a source actually wrote:
+//   <PullQuote cite="Government Data Quality Framework guidance" href="https://...">
+//   Always fix problems in data quality as close to the source as possible.
+//   </PullQuote>
+interface Props {
+  cite: string;
+  href: string;
+}
+const { cite, href } = Astro.props;
+---
+
+<figure class="pull-quote">
+  <blockquote>
+    <slot />
+  </blockquote>
+  <figcaption><a href={href}>{cite}</a></figcaption>
+</figure>
+
+<style>
+  .pull-quote {
+    padding-left: calc(var(--space-5) - 4px);
+    border-left: 4px solid var(--signal);
+  }
+
+  /* Overrides the plain blockquote style in prose.css. */
+  :global(.prose) .pull-quote blockquote {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: var(--step-2);
+    font-weight: 500;
+    line-height: var(--leading-snug);
+    color: var(--ink);
+  }
+
+  .pull-quote blockquote :global(p) {
+    margin: 0;
+  }
+
+  .pull-quote blockquote :global(p)::before {
+    content: '“';
+  }
+
+  .pull-quote blockquote :global(p)::after {
+    content: '”';
+  }
+</style>
