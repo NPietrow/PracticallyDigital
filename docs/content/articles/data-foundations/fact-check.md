@@ -373,3 +373,19 @@ There are no American spellings in the article's prose. "center" appears only in
 - "(our estimated calculation)": use "our calculation" (row 36).
 - "But it's not only data in isolation, and other adjacent barriers are important to consider." is awkward. Try "Data isn't the only barrier, though."
 - Trailing spaces at the ends of lines 83, 128, 143, 145 and 209 (harmless when rendered).
+
+### Resolved (25 November 2026)
+
+Claude fixed the flags in its own text: "our calculation" labels, the £79,750 source line, the PAS 1040 access note, and the grammar slips listed above. Nikita decided on each flag in his own wording:
+
+- **Changed (accepted):** RAND covers "AI projects"; "some firms do use AI in operations"; distrust of data "seems to be part of the reason"; Grieves paraphrased as "of little use"; the ISO 19650 table labelled as "the illustrative translation below is our own"; the governance rhythm reworded to "could include"; the Ofgem register "who uses each dataset and what they need from it"; "locked behind paywalls" reworded to "usually locked behind paywalls".
+- **Kept as written (Nikita's decision):**
+  - the opening "AI or modern digital tools … failing to scale";
+  - "not in the field or on the shop floor, but are mostly in the offices";
+  - "(likely supporting internal reports and presentations)";
+  - the MIT Technology Review Insights survey without its sponsor;
+  - "Data are simple symbols…" without Ackoff;
+  - the gist's "digital projects".
+- **Still without a source:** three passages remain unsourced. They are "not in the field or on the shop floor", "(likely supporting internal reports and presentations)" and "usually locked behind paywalls". Nikita kept them as editorial judgement.
+- **Style changes from the humanizer:** Nikita accepted 16, 17, 18, 21, 22, 24, 25 and 26, and kept his own wording for 15, 19, 20 and 23.
+- **Not changed:** Cambridge "published in 2023" stays, because the report itself is dated February 2023.
