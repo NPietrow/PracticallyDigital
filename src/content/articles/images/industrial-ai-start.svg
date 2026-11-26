@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="660" viewBox="0 0 800 660" role="img" aria-labelledby="t d" font-family="IBM Plex Sans, Segoe UI, Arial, sans-serif">
+  <title id="t">Where to start with AI</title>
+  <desc id="d">A two-by-two grid. Across, feasibility: the data exists, the workflow is stable and the risk is manageable. Up, value: time, scrap, quality or cost. Top right, high value and high feasibility, is highlighted as start here, with example tasks: drafting work instructions from existing documents, and forecasting demand from order history. Top left, high value but low feasibility: fix the foundations first, for example predicting failures on machines with no sensor data. Bottom right, low value but easy: quick wins, if cheap. Bottom left: leave alone.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1b1f23"/>
+    </marker>
+  </defs>
+  <rect width="800" height="660" fill="#ecece7"/>
+
+  <!-- Axes -->
+  <line x1="90" y1="580" x2="770" y2="580" stroke="#1b1f23" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="90" y1="580" x2="90" y2="30" stroke="#1b1f23" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="430" y="616" font-size="17" font-weight="600" fill="#1b1f23" text-anchor="middle">Feasibility</text>
+  <text x="430" y="642" font-size="14" fill="#3c413b" text-anchor="middle">The data exists, the workflow is stable, the risk is manageable</text>
+  <text transform="translate(44,305) rotate(-90)" font-size="17" font-weight="600" fill="#1b1f23" text-anchor="middle">Value</text>
+  <text transform="translate(68,305) rotate(-90)" font-size="14" fill="#3c413b" text-anchor="middle">Time, scrap, quality or cost</text>
+
+  <!-- Top left: high value, low feasibility -->
+  <rect x="110" y="44" width="315" height="256" fill="#ffffff" stroke="#d5d5ce"/>
+  <text x="130" y="82" font-size="19" font-weight="600" fill="#1b1f23">Fix the foundations first</text>
+  <text font-size="15" fill="#3c413b"><tspan x="130" y="116">Worth doing, but not yet</tspan><tspan x="130" y="138">possible.</tspan><tspan x="130" y="176">For example: predicting</tspan><tspan x="130" y="198">failures on machines with</tspan><tspan x="130" y="220">no sensor data.</tspan></text>
+
+  <!-- Top right: start here -->
+  <rect x="440" y="44" width="315" height="256" fill="#f2b705"/>
+  <text x="460" y="82" font-size="21" font-weight="600" fill="#1b1f23">Start here</text>
+  <text font-size="15" fill="#1b1f23"><tspan x="460" y="116">High value, and you can trial</tspan><tspan x="460" y="138">it without disruption.</tspan><tspan x="460" y="176">For example: drafting work</tspan><tspan x="460" y="198">instructions from existing</tspan><tspan x="460" y="220">documents, or forecasting</tspan><tspan x="460" y="242">demand from order history.</tspan></text>
+
+  <!-- Bottom left: leave alone -->
+  <rect x="110" y="310" width="315" height="256" fill="#ffffff" stroke="#d5d5ce"/>
+  <text x="130" y="348" font-size="19" font-weight="600" fill="#1b1f23">Leave alone</text>
+  <text font-size="15" fill="#3c413b"><tspan x="130" y="382">Little value and hard to do.</tspan></text>
+
+  <!-- Bottom right: quick wins -->
+  <rect x="440" y="310" width="315" height="256" fill="#ffffff" stroke="#d5d5ce"/>
+  <text x="460" y="348" font-size="19" font-weight="600" fill="#1b1f23">Quick wins, if cheap</text>
+  <text font-size="15" fill="#3c413b"><tspan x="460" y="382">Easy, but small gains.</tspan><tspan x="460" y="404">Worth it only if the cost</tspan><tspan x="460" y="426">and effort stay small.</tspan></text>
+</svg>

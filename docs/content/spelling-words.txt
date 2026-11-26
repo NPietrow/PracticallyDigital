@@ -1,11 +1,28 @@
 # Words the British English spell check (cspell) should accept: names, acronyms
 # and product terms. One per line; lines starting with # are comments.
+Aker
+AMRC
+AUROC
+Brynjolfsson
 DIKW
 DSIT
+ENEOS
+explainability
 Forgemasters
 HMRC
+IAPP
 Intoware
 ISKO
+Kernan
+McElheran
+NANDA
 NCSC
+NESO
+Netskope
+NeurIPS
 Ofgem
+Senoner
+siloed
+UKRI
 Visio
+Yokogawa
