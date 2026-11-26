@@ -3,9 +3,9 @@
 - **Issue:** [#14](https://github.com/NPietrow/PracticallyDigital/issues/14), "Practical AI for Complex Industrial Data"
 - **Article file:** `src/content/articles/industrial-ai.mdx`, published at `/insights/industrial-ai/`
 - **Topics:** `ai-and-analytics`. **Problems:** `untrusted-data`, `skills-and-adoption`, `quality-and-scrap`
-- **Title:** Practical AI for Complex Industrial Data (working title from the issue; see open question 2)
-- **Research date:** 25 November 2026. It builds on the Data foundations research of 18 to 24 November 2026, and links to that article.
-- **Status:** awaiting Nikita's approval.
+- **Title:** Practical AI for Industry: What It Is and Where It Adds Value (Nikita, 26 November 2026)
+- **Research date:** 25 November 2026, with follow-ups on 26 November 2026 (approved against unapproved tools, agentic AI, MTC pages). It builds on the Data foundations research of 18 to 24 November 2026, and links to that article.
+- **Status:** approved by Nikita with changes on 26 November 2026 (see "Decisions" at the end).
 
 ## Angle
 
@@ -45,43 +45,22 @@ What's missing, from a non-exhaustive search, so the article should say "we coul
 
 ## Outline
 
-About 3,000 words. Sections 2, 6 and 9 carry the costs, limitations and "when not to bother".
+About 3,000 words, weighted towards what AI is and where it adds value: sections 1 to 3 take roughly 1,300 of them. The reader's concerns from the issue are grouped into the sections below rather than answered one by one (decision 3). Sections 2, 3, 6 and 7 carry the costs, limitations and "when not to bother".
 
 | # | Proposed H2 | What it covers | Claims |
 |---|---|---|---|
 | | *(Opening, no heading)* | Nikita's five-year view: AI went from edge cases to everyday software. Most firms met the chatbot first. Stat row from ONS. The argument in a paragraph | 29 to 31, 7 |
 | 1 | What "AI" actually means | Is it ChatGPT? The family: machine learning, deep learning and vision, generative AI and LLMs, agents, in the government's wording. Made Smarter's Predict, Sense, Create, Do. The levels diagram | 1 to 8 |
-| 2 | Where each level pays off | Level by level, with the best UK evidence and its typical failure. Level 1: NESO, and the AMRC model that couldn't generalise. Level 2: Network Rail, BAE's 30 images, anomaly detection trained on good parts (quality and scrap). Level 3: the GDS and DBT Copilot trials, and the factory assistant whose users preferred a colleague. Level 4: NCSC's guidance and the MTC test at 65% consistency. **Limitations of each level are here** | 9 to 26 |
-| 3 | Cheaper to build, not cheaper to get right | Nikita's point: GenAI and pre-trained models cut the effort, cost and skills needed to build. The evidence: falling model costs, and one-image anomaly detection. The balance: DSIT finds implementation time is the real cost, and the hard parts are data, testing and ownership. Links to Data foundations | 27, 28, 15 |
-| 4 | How far UK industry has got | ONS by type (bar chart), with use mostly light: 7.2% extensive, 61.1% trained no staff. Office over shop floor (Make UK). Better-managed firms adopt more. Nikita's observation that many firms skipped to GenAI, set beside the ONS mix | 29 to 36 |
-| 5 | "We tried AI and it failed" | A callout on the famous failure figures: RAND didn't measure 80%, Gartner's are forecasts, NANDA is preliminary. What does stall projects: RAND's root causes, DSIT's barriers, time saved isn't productivity, AI needs complements. Links to Data foundations on untrusted data | 37 to 47 |
-| 6 | Where to start, and when not to bother | Too many ideas: Made Smarter's task-first screen of value and feasibility, then Scan, Pilot, Scale. Record a baseline. Value-feasibility diagram. When a rule, a control chart or a process fix beats AI (Google's Rules of ML, AI Playbook). Models need looking after (Sculley). **"When not to bother" is here** | 48 to 53 |
-| 7 | What it really costs | Seat prices against what firms actually spend (stat row). Data and labelling: train on good parts, use the coarsest label. Infrastructure by level, as a table. Skills as three different needs. Funding and training. **Costs are here** | 54 to 65 |
-| 8 | Can you trust the output, and who signs it off? | Calibrated trust: the Siemens factory experiment. Test against known cases before go-live (HVM and NPL). Sign-off roles from the AQuA Book, with a diagram. Human checking in practice. Drift and model health | 66 to 71 |
-| 9 | Governance without a big programme | No UK AI Act: existing law applies (HSE, ICO, EU dates for exporters). The free minimum: an owner, a register, a one-page policy, a risk assessment, the Code of Practice. Shadow AI: the evidence, the guidance (approve a tool, don't rely on a ban) and business against consumer data terms. **The limits of current guidance are here** | 72 to 89 |
-| 10 | People, jobs and keeping up | Exposure is high and measured job loss isn't. Manufacturing headcount mostly unchanged. Consult early (Acas). The parts that don't change when a new model ships | 90 to 93 |
-| 11 | Tools and resources | Things to use | see below |
-| 12 | Further reading | Things to read | see below |
-
-### The reader's concerns from the issue, and where each is answered
-
-| Concern (issue #14) | Section |
-|---|---|
-| We don't trust our data | 3, 5 (and the link to Data foundations) |
-| We don't have the right skills and people | 7 |
-| We don't have the right infrastructure | 7 |
-| AI costs too much | 7 |
-| We don't understand the different use cases | 1, 2 |
-| We tried AI and failed | 5 |
-| Too many ideas, no idea where to start | 6 |
-| We don't trust the model's output | 8 |
-| What does AI mean? Is it ChatGPT? | 1 |
-| No data to train models; annotation is costly | 2, 7 |
-| People fear for their jobs | 10 |
-| Who signs off, and how is it governed? | 8, 9 |
-| The field moves too fast | 10 |
-| Staff bring their own GenAI tools and company data | 9 |
-| We don't know what to do for AI governance | 9 |
+| 2 | Where each kind of AI adds value | Levels 1 to 3, each with its best UK evidence and typical failure. Machine learning: NESO, and the AMRC model that couldn't generalise. Vision: Network Rail, BAE's 30 images, anomaly detection trained on good parts (quality and scrap). Generative AI: the GDS and DBT Copilot trials, and the factory assistant whose users preferred a colleague. **Limitations of each level are here** | 9 to 20 |
+| 3 | Agentic AI: the hype and the evidence | What an agent is and isn't (a workflow, a chatbot, a copilot), and the two meanings of "agent" in industry. How little is deployed: DSIT's 2%, Capgemini's 2% scaled, Gartner's hype cycle and "agent washing". The best examples, mostly international and all self-reported, with the human still acting in most. What goes wrong: benchmarks, Project Vend, the Replit database deletion, red-teaming, the MTC robot test. The Five Eyes advice: start small and low-risk, or use simpler automation. **Limitations and "when not to bother" for agents are here** | 21 to 26, 94 to 112 |
+| 4 | Cheaper to build, not cheaper to get right | Nikita's point that GenAI and pre-trained models cut the effort, cost and skills needed to build, with the evidence. Where UK industry actually is (bar chart): light use, mostly office, mostly free tools. Nikita's observation that many firms skipped to GenAI, beside the ONS mix. Links to Data foundations | 15, 27 to 36 |
+| 5 | Why AI projects stall | A callout on the famous failure figures (RAND's 80%, Gartner's forecasts, NANDA's preliminary 95%). What does stall projects: RAND's root causes, DSIT's barriers, time saved isn't productivity, AI needs complements, and guidance thinnest at the problem-scoping stage (MTC review). Links to Data foundations on untrusted data | 37 to 47, 113 |
+| 6 | Where to start, and when not to bother | Too many ideas: Made Smarter's task-first screen of value and feasibility, then Scan, Pilot, Scale. Record a baseline. Value-feasibility diagram. When a rule, a control chart or a process fix beats AI. Models need looking after. **"When not to bother" is here** | 48 to 53 |
+| 7 | What it costs, and the skills it needs | What a team pays for AI seats (table), against what firms actually spend and DSIT's finding that staff time is the real cost. Data and labelling: train on good parts, use the coarsest label. Infrastructure by level. Skills as three different needs. Funding and training, with no deadlines. **Costs are here** | 54 to 65 |
+| 8 | Trust, governance and shadow AI | Calibrated trust (the Siemens factory experiment). Test against known cases (HVM and NPL). Who signs off (AQuA roles diagram). No UK AI Act: existing law applies. The free minimum, including a named AI governance owner or team (MTC governance paper). **Shadow AI** as a subsection: what it is, how common it is, why an approved tool helps but doesn't solve it, and what to do. **The limits of current guidance are here** | 66 to 87, 114 to 122 |
+| 9 | People and jobs | Exposure is high and measured job loss isn't. Manufacturing headcount mostly unchanged. Consult early (Acas). The parts that don't change when a new model ships | 88 to 93 |
+| 10 | Tools and resources | Things to use | see below |
+| 11 | Further reading | Things to read | see below |
 
 ## Claims
 
@@ -190,8 +169,8 @@ Prices checked on 25 November 2026, and they change often. Recheck on the publis
 | 57 | Among UK AI users who could estimate their spending, 47% reported spending nothing on AI in 2025. The mean was about £7,500, from £3,500 for micro firms to £25,000 for large ones | https://www.gov.uk/government/publications/ai-adoption-survey-2026 | Report PDF p.43. [A] | figure |
 | 58 | Several 2025 to 2026 studies treat synthetic defect images as a supplement to real ones, not a replacement | *(source to find)* | [E]: **no usable source yet. Drop unless the fact-check finds one** | fact |
 | 59 | Made Smarter Adoption offers match-funded grants of up to £20,000 to manufacturing SMEs in several English regions, with terms that vary by region | https://www.madesmarter.uk/adoption/ | Programme page, checked 25 November 2026. [O] [C] | fact |
-| 60 | Knowledge Transfer Partnerships are open (round 4 closes 27 January 2027), with grant rates of 67% for SMEs and 50% for large businesses | https://www.ukri.org/opportunity/knowledge-transfer-partnership-2026-to-2027-round-4/ | With the grant rates page in the Data foundations brief, claim 51. [O] [C]. UKRI's pages disagree on the closing date, so don't state it | fact |
-| 61 | Innovate UK's BridgeAI funds AI deployment projects in which an SME that makes an AI product works with a business that deploys it. The current competition closes on 8 December 2026 | https://iuk-business-connect.org.uk/opportunities/bridgeai-deployment-catalyst-ai-for-operational-systems/ | Competition page. [O]. **See open question 5** | fact |
+| 60 | Knowledge Transfer Partnerships pair a business with a university team and a graduate, with grant rates of 67% for SMEs and 50% for large businesses | https://www.ukri.org/opportunity/knowledge-transfer-partnership-2026-to-2027-round-4/ | With the grant rates page in the Data foundations brief, claim 51. [O] [C]. No dates in the article (decision 5) | fact |
+| 61 | Innovate UK's BridgeAI funds AI deployment projects in which an SME that makes an AI product works with a business that deploys it | https://iuk-business-connect.org.uk/opportunities/bridgeai-deployment-catalyst-ai-for-operational-systems/ | Competition page. [O]. No deadline in the article (decision 5); link to the programme rather than one competition | fact |
 | 62 | The Level 6 machine learning engineer apprenticeship has up to £22,000 of funding, so a non-levy employer's 5% share is £1,100 for an apprentice aged 25 or over, plus wages. Data technician (Level 3, £13,000) and data analyst (Level 4, £15,000) apprenticeships suit process staff | https://findapprenticeshiptraining.apprenticeships.education.gov.uk/courses/795 | Course page, with the Data foundations brief, claim 49. [O] [D] [C] | figure |
 | 63 | The government's AI Skills Hub offers free short foundation courses to every UK adult, with a target of 10 million workers trained by 2030 | https://www.gov.uk/government/news/free-ai-training-for-all-as-government-and-industry-programme-expands-to-provide-10-million-workers-with-key-ai-skills-by-2030 | Press release, 28 January 2026. [O]. Press coverage says some hub listings charge a fee, so check | fact |
 | 64 | DSIT's AI labour market survey found 57% of businesses had a technical AI skills gap, 35% struggled to fill AI roles and 88% relied on on-the-job training | https://www.gov.uk/government/publications/ai-labour-market-survey-2025-report/ai-labour-market-survey-2025-report-executive-summary | Executive summary, 28 January 2026. All sectors. [O] | figure |
@@ -206,7 +185,7 @@ Prices checked on 25 November 2026, and they change often. Recheck on the publis
 | 68 | The AI Playbook asks for a human to validate any high-risk decision influenced by AI, with control built into other stages where real-time review isn't possible | https://www.gov.uk/government/publications/ai-playbook-for-the-uk-government/artificial-intelligence-playbook-for-the-uk-government-html | Principle 4. [O] | fact |
 | 69 | 81% of UK AI users apply at least some human checking to AI outputs, down from 84%, and 5% apply none, up from 2% | https://www.gov.uk/government/publications/ai-adoption-survey-2026 | Report PDF Figure 27, p.72. [A] | figure |
 | 70 | NPL's five principles for AI assurance: explain AI clearly, scale assurance to the use and potential harm, measure real-world outcomes rather than only the model, build in oversight, and keep assuring after adoption | https://www.npl.co.uk/news/getting-the-measure-of-ai | 16 March 2026. Landing page only. [R] | fact |
-| 71 | The MTC's 2024 whitepaper reviews AI standards for manufacturing around security, fairness, transparency, accountability and robustness, and argues that overlapping standards slow adoption | https://www.the-mtc.org/insights/ai-trustworthy-framework | 15 March 2024, landing page. [O]. **See open question 1** | fact |
+| 71 | The MTC's 2024 whitepaper reviews AI standards for manufacturing around security, fairness, transparency, accountability and robustness, and argues that the number of standards makes it hard for manufacturers to find the guidance that applies | https://www.the-mtc.org/insights/ai-trustworthy-framework | 15 March 2024, landing page; document read on 26 November 2026 (claim 113). [O]. Nikita co-authored it; no disclosure line (decision 10) | fact |
 
 ### Governance
 
@@ -223,7 +202,7 @@ Prices checked on 25 November 2026, and they change often. Recheck on the publis
 | 80 | The UK's AI Cyber Security Code of Practice is free and voluntary, with 13 principles across design, development, deployment, maintenance and end of life. Most industrial firms count as system operators or end users under it | https://www.gov.uk/government/publications/ai-cyber-security-code-of-practice | 31 January 2025. [O] | fact |
 | 81 | The NCSC's guidance for boards asks who is accountable for AI, what the worst-case failure of critical machine-learning systems would be, and how incidents and the supply chain are handled | https://www.ncsc.gov.uk/guidance/ai-and-cyber-security-what-you-need-to-know | 13 February 2024, modified 31 July 2026. [O] | fact |
 | 82 | ISO/IEC 42001 is a paid, certifiable standard for AI management systems. BSI awarded its 50th certificate worldwide in October 2026 | https://www.bsigroup.com/en-US/insights-and-media/media-center/press-releases/2026/november/bsi-awards-its-50th-iso-iec-42001-certificate/ | Press release. [O] | fact |
-| 83 | In a Microsoft-commissioned survey of 2,003 UK employees (October 2025), 71% had used unapproved consumer AI tools at work, and 51% did so weekly | https://ukstories.microsoft.com/features/rise-in-shadow-ai-tools-raising-security-concerns-for-uk | Microsoft UK Stories, 13 October 2025. [R]. Vendor-sponsored: Microsoft sells the approved alternative | figure |
+| 83 | In a Microsoft-commissioned survey of 2,003 UK employees (October 2025), 71% had used unapproved consumer AI tools at work, and 51% did so weekly. 28% said their employer offered no approved option | https://ukstories.microsoft.com/features/rise-in-shadow-ai-tools-raising-security-concerns-for-uk | Microsoft UK Stories, 13 October 2025. [R]. Vendor-sponsored: Microsoft sells the approved alternative | figure |
 | 84 | In Deloitte's 2026 UK workforce survey, 31% of generative AI users said they use it without their employer knowing | https://www.deloitte.com/uk/en/issues/generative-ai/genai-workforce-survey-shadow-ai.html | Fieldwork May to June 2026. [R]. Consultancy | figure |
 | 85 | The NCSC treats shadow AI as a form of shadow IT. It advises finding out why staff use unapproved tools, offering secure alternatives and building a culture where concerns get raised | https://www.ncsc.gov.uk/blogs/the-hidden-risks-of-shadow-ai | Blog, 7 September 2026. [O] | fact |
 | 86 | Acas advises clear AI policies, consulting staff before introducing AI, checking outputs, using IT-approved platforms and keeping sensitive business or personal data out of public tools | https://www.acas.org.uk/1-in-4-workers-worry-that-ai-will-lead-to-job-losses | 28 April 2025. [O] | fact |
@@ -240,9 +219,52 @@ Prices checked on 25 November 2026, and they change often. Recheck on the publis
 | 92 | The government's AI Security Institute reports that the length of task frontier AI can complete has been doubling every few months | https://aisi.gov.uk/frontier-ai-trends-report | Frontier AI Trends Report, 18 December 2025. [E]: check the wording and the doubling period | fact |
 | 93 | The UK Government's AI Playbook, the AI Cyber Security Code of Practice and HSE's statement set principles that stay the same when a new model is released | *(editorial)* | Our judgement from claims 52, 73, 74 and 80; label it as ours | fact |
 
-**Count:** 93 rows: 90 with a source (one of them, claim 42, needs your decision), 2 with no source yet (58 and 77, dropped unless one is found) and 1 editorial (93). The draft won't use all of them. Rows the draft doesn't use stay here as the research record.
+### Agentic AI (added 26 November 2026)
 
-**Checks still owed before publishing:** every [E] row; prices (54 and 55) and the BridgeAI and KTP dates on the publish date; whether DSIT's SME guidance, the AI front door or an ICO AI code has appeared; the exact Made Smarter pull-quote wording.
+| # | Claim | Source URL | Where in the source | Type |
+|---|---|---|---|---|
+| 94 | The NCSC describes agentic AI systems as able to access data sources, remember context, make decisions, use tools and take actions towards a goal, without continuous human input. Where a non-agentic tool produces a prediction or content, an agent acts, which makes it more useful and more hazardous | https://www.ncsc.gov.uk/sites/default/files/2026-06/Thinking-carefully-before-adopting-agentic-AI.pdf | NCSC blog, *Thinking carefully before adopting agentic AI*, 15 May 2026. [O]. Find the HTML blog page to link instead of the PDF copy | fact |
+| 95 | Anthropic, an AI vendor, distinguishes workflows, where language models and tools follow predefined code paths, from agents, where the model directs its own steps. It advises starting with the simplest solution, because agents usually cost more and respond more slowly | https://www.anthropic.com/engineering/building-effective-agents | *Building effective agents*, 19 December 2024. [O]. Vendor | fact |
+| 96 | Gartner estimates that only about 130 of the thousands of vendors claiming agentic AI offer the real thing, calling the rest "agent washing": assistants, RPA and chatbots rebranded | https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027 | Press release, 25 June 2025. [E]: 403. Gartner's estimate; method not published | fact |
+| 97 | In process control, "AI agent" can also mean a reinforcement-learning controller, such as Yokogawa's FKDPP: a different technology, with a different risk profile, from a language-model agent | https://www.yokogawa.com/eu/news/press-releases/2025/2025-10-29/ | Press release, 29 October 2025. [E]: page body empty on fetch. Vendor | fact |
+| 98 | A third of UK businesses using agentic AI were still piloting it | https://www.gov.uk/government/publications/ai-adoption-survey-2026 | Report PDF Figure 8, p.31. [A] | figure |
+| 99 | In Capgemini's survey of 1,500 executives at large firms in 14 countries, about a quarter had launched agentic AI pilots, 14% had begun implementing and 2% had scaled. Trust in fully autonomous agents fell from 43% to 27% in a year | https://www.capgemini.com/gb-en/news/press-releases/trust-and-human-ai-collaboration-set-to-define-the-next-era-of-agentic-ai-unlocking-450-billion-opportunity-by-2028/ | Press release, 16 July 2025, fieldwork April 2025. [O]. Consultancy | figure |
+| 100 | In a Gartner survey of 360 IT application leaders, 75% were piloting or using some form of AI agent, but only 15% were considering or using fully autonomous agents, and 13% strongly agreed they had the right governance | https://gcom.pdo.aws.gartner.com/en/newsroom/press-releases/2025-09-30-gartner-survey-finds-just-15-percent-of-it-application-leaders-are-considering-piloting-or-deploying-fully-autonomous-ai-agents | Press release, 30 September 2025, fieldwork May to June 2025. [O]. Analyst. Swap to the gartner.com address if it resolves | figure |
+| 101 | Gartner placed AI agents at the Peak of Inflated Expectations in its 2025 Hype Cycle for AI | https://www.gartner.com/en/newsroom/press-releases/2025-08-05-gartner-hype-cycle-identifies-top-ai-innovations-in-2025 | Press release, 5 August 2025. [E]. Analyst opinion | fact |
+| 102 | A Yokogawa reinforcement-learning controller ran a distillation column at ENEOS Materials in Japan for 35 days in 2022, holding quality steady and cutting steam use by 40%, and is still in routine use | https://yokogawa.com/library/resources/references/successstory-eneos-materials | Customer success story. [E]. Vendor; no independent evaluation | example |
+| 103 | At Aramco's Fadhili gas plant, Yokogawa's controllers now run the acid gas removal process. Initial results, still under evaluation, show amine and steam use down 10% to 15% and power down about 5% | Same as claim 97 | Press release, 29 October 2025. [E]. Vendor; baseline not stated | example |
+| 104 | Aker BP reports that language-model agents from Cognite, which gather information and suggest root-cause analysis steps for engineers, cut engineers' time on root-cause analysis by over 70%. No baseline or method is given | https://akerbp.com/aker-bp-leverages-cognite-atlas-ai-to-pioneer-an-ai-first-future-in-exploration-and-production/ | Operator page, September 2025. [O]. Customer and vendor jointly | example |
+| 105 | GE Appliances runs more than 800 agents on Google's Gemini Enterprise, many built by its own staff. A supplier agent handling order queries cut backorders by 25% (no period or baseline given), and a manager says outputs are reviewed by people because agents can drift and make mistakes | https://www.googlecloudpresscorner.com/2026-04-22-GE-Appliances-Reinvents-Manufacturing-Operations-at-Scale-with-Google-Clouds-Gemini-Enterprise | Google Cloud press release, 22 April 2026, with https://www.engineering.com/inside-ge-appliances-ai-agent-rollout/ (28 May 2026). [O]. Vendor and trade press | example |
+| 106 | Siemens says early pilots of its generative AI maintenance assistant averaged a 25% cut in reactive maintenance time, with no sample or method given | https://press.siemens.com/global/en/pressrelease/siemens-expands-industrial-copilot-new-generative-ai-powered-maintenance-offering | Press release, 24 March 2025. [E]. Vendor | example |
+| 107 | In τ-bench, a test of agents handling simulated customer service with tools and rules, the best 2024 model solved under half the tasks, and fewer than a quarter of retail tasks consistently across eight attempts | https://proceedings.iclr.cc/paper_files/paper/2025/file/1b126cc38b8638e07bef37e7b2bb72bf-Paper-Conference.pdf | ICLR 2025. [E]. Peer-reviewed; later models score higher | figure |
+| 108 | In Anthropic's Project Vend, an AI agent running a small office shop for a month lost money, sold items below cost, was talked into discounts and invented a payment account | https://www.anthropic.com/research/project-vend-1 | 27 June 2025. [O]. Vendor, self-reported | example |
+| 109 | In July 2025 an AI coding agent deleted a company's live production database during a code freeze, against instructions, then wrongly said it couldn't be restored | https://incidentdatabase.ai/cite/1152/ | AI Incident Database #1152, incident of 18 July 2025. [O] | example |
+| 110 | In a red-teaming exercise run with the UK AI Security Institute, more than 250,000 attacks on agents built on 13 frontier models succeeded against every model at least once | https://www.nist.gov/blogs/caisi-research-blog/insights-ai-agent-security-large-scale-red-teaming-competition | NIST CAISI blog, 23 March 2026. [O] | figure |
+| 111 | Joint guidance from the NCSC and its Five Eyes partners says to start small with agents, using them only for well-understood, low-risk tasks; to ask first whether the process could be simplified or automated in a lower-risk way; to give agents the least access for the shortest time; and to name who owns, monitors and can stop an agent before it touches real systems. Pull-quote candidate: "If you cannot understand, monitor or contain an agent's actions, it is not ready for deployment." | Same as claim 94 | NCSC summary of *Careful adoption of agentic AI services*, May 2026. [O] | fact |
+| 112 | A flaw called EchoLeak let a crafted email make Microsoft 365 Copilot leak data with no click from the user, by hiding instructions in content the assistant read. Microsoft fixed it in 2025 | https://arxiv.org/abs/2509.10540 | CVE-2025-32711. [E]. Preprint; illustrates prompt injection (claim 22) | example |
+
+### MTC whitepapers (added 26 November 2026)
+
+| # | Claim | Source URL | Where in the source | Type |
+|---|---|---|---|---|
+| 113 | An MTC review of more than 40 AI standards and frameworks found most guidance covers the middle of the AI lifecycle, with scoping the problem and retiring the system poorly covered. It notes many AI problems start with poor problem scoping, that frameworks say what trustworthy AI is but rarely how or when to achieve it, and that certification bodies for AI models are hard to find | https://www.the-mtc.org/insights/ai-trustworthy-framework | *Trustworthy AI Framework*, April 2024, PDF pp.14 and 17 to 19. [A]. Nikita is a co-author; no disclosure line (decision 10) | fact |
+| 114 | The MTC's AI governance paper recommends, for manufacturers using external AI services such as LLMs: validating the use case, judging the sensitivity of data sent, sending the minimum data, checking IP, keeping a human in the loop to review outputs, analysing risks, declaring AI-generated content, raising awareness, and an AI usage policy. It proposes an AI governance team that reviews each use case at a gate before setup and at intervals while running, and a live risk register in three nested tiers: generic, by category of use and by use case | https://www.the-mtc.org/insights/ai-governance | *Utilising Externally Hosted AI / Generative AI Services in Manufacturing*, 20 November 2023 (research to September 2023), PDF pp.7, 16, 17, 23 and 25. [A] (pages read as images) | fact |
+
+### Shadow AI (added 26 November 2026)
+
+| # | Claim | Source URL | Where in the source | Type |
+|---|---|---|---|---|
+| 115 | In Gartner's Q1 2026 survey of 12,004 employees and managers in 40 countries, 88% of employees with access to an enterprise AI tool also used personal AI tools for business tasks | https://www.gartner.com/en/newsroom/press-releases/2026-05-13-gartner-predicts-by-2027-50-percent-of-enterprises-without-a-people-centric-ai-strategy-will-lose-their-top-ai-talent | Press release, 13 May 2026. [E]: 403, **open by hand**. Gartner says "personal", not "unapproved" or "secret". The closest source to the claim Nikita remembered | figure |
+| 116 | Microsoft's 2024 Work Trend Index found 78% of AI users brought their own AI tools to work, and 52% of people using AI at work were reluctant to admit using it for their most important tasks | https://www.microsoft.com/en-us/worklab/work-trend-index/ai-at-work-is-here-now-comes-the-hard-part | 8 May 2024; 31,000 knowledge workers in 31 markets including the UK. [O]. Vendor (Microsoft sells Copilot). "Bring your own" means not provided by the employer, not necessarily banned | figure |
+| 117 | Security-vendor traffic data shows personal-account use falling as firms buy business licences: Netskope saw the share of generative AI users on personal accounts fall from 78% to 47% in a year, with managed accounts up from 25% to 62% | https://threatlabs.netskope.com/reports/2026/cloud-and-threat-report-2026 | Cloud and Threat Report 2026, data October 2024 to October 2025. [O]. Vendor (sells monitoring); its customers only | figure |
+| 118 | Cyberhaven's customer data put the share of workplace ChatGPT use through personal accounts at 73.8% in 2024 and 32.3% in 2026 | https://www.cyberhaven.com/press-releases/cyberhaven-2026-ai-adoption-risk-report | 2026 press release, with https://prnewswire.com/news-releases/cyberhaven-report-surge-in-shadow-ai-accounts-poses-fresh-risks-to-corporate-data-302151221.html (May 2024). [O]. Vendor; methods differ between years, so use the direction, not the size | figure |
+| 119 | Harmonic Security found 26% of files uploaded to generative AI tools contained sensitive information, but personal and free accounts accounted for only 12% of sensitive exposures: most sensitive data now goes into licensed tools | https://www.harmonic.security/resources/genai-in-the-enterprise-its-getting-personal | Q3 2025, US and UK organisations, browser data. [O]. Vendor (sells AI data protection) | figure |
+| 120 | Netskope's customers average about 223 generative AI data-policy violations a month, mostly source code (42%), regulated data (32%) and intellectual property (16%). A violation means a company's own rule was triggered, not a confirmed breach | Same as claim 117 | Same report. [O]. Vendor | figure |
+| 121 | CIPD reports that 61% of UK employers allow staff to use generative AI for work and 25% don't, that 31% had worked on a generative AI policy in the past year, and that 43% of more advanced adopters had introduced platforms such as Copilot | https://www.cipd.org/uk/views-and-insights/thought-leadership/insight/employers-generative-ai/ | Labour Market Outlook. [E]: 403, **open by hand** for wave and sample | figure |
+
+**Count:** 121 rows: 118 with a source, 2 with no source yet (58 and 77, dropped unless one is found) and 1 editorial (93). Claims 94 to 121 were added on 26 November 2026. The draft won't use all of them. Rows the draft doesn't use stay here as the research record.
+
+**Checks still owed before publishing:** every [E] row, especially 115 and 121; prices (54 and 55) and the BridgeAI and KTP dates on the publish date; whether DSIT's SME guidance, the AI front door or an ICO AI code has appeared; the exact Made Smarter pull-quote wording.
 
 **Not used, and why:**
 - **"80% of AI projects fail" and "95% of GenAI pilots fail":** misreadings (claims 37 and 42).
@@ -266,6 +288,7 @@ Prices checked on 25 November 2026, and they change often. Recheck on the publis
 | [NCSC, The hidden risks of shadow AI](https://www.ncsc.gov.uk/blogs/the-hidden-risks-of-shadow-ai) | Handling unapproved AI tools | Free |
 | [HSE's regulatory approach to AI](https://press.hse.gov.uk/2026/06/12/hses-regulatory-approach-to-artificial-intelligence-ai/) | What health and safety law expects of AI at work | Free |
 | [ICO AI and data protection risk toolkit](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/artificial-intelligence/guidance-on-ai-and-data-protection/ai-and-data-protection-risk-toolkit/) | Risk checks where AI touches personal data (under review) | Free |
+| [NCSC, Thinking carefully before adopting agentic AI](https://www.ncsc.gov.uk/sites/default/files/2026-06/Thinking-carefully-before-adopting-agentic-AI.pdf) | Plain advice on whether and how to try AI agents, from the Five Eyes guidance | Free |
 | [The AQuA Book](https://www.gov.uk/guidance/the-aqua-book) | Roles and proportionate assurance for any model, AI included | Free |
 | [Digital Catapult AI Adoption Toolkit](https://apps.digicatapult.org.uk/ai-adoption-toolkit/) | Digital, data and machine-learning maturity self-assessments for UK SMEs | Free |
 | [OECD SME AI Readiness Tool](https://sme.oecd.ai/) | A short international readiness check that says it stores no data | Free (pilot) |
@@ -286,11 +309,13 @@ Prices checked on 25 November 2026, and they change often. Recheck on the publis
 | [DSIT, AI adoption survey 2026](https://www.gov.uk/government/publications/ai-adoption-survey-2026) | The UK's fullest picture of who uses AI, for what, and what holds firms back |
 | [ONS, Artificial intelligence in UK businesses: 2023 to 2026](https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/articles/artificialintelligenceinukbusinesses/2023to2026) | Official adoption trends, by type of AI |
 | [DBT, Microsoft 365 Copilot pilot evaluation](https://www.gov.uk/government/publications/microsoft-365-copilot-pilot-dbt-evaluation-report) | An honest evaluation that separates time saved from productivity gained |
-| [HVM Catapult and NPL, Trustworthy AI adoption](https://hvm.catapult.org.uk/wp-content/uploads/2026/03/Trustworthy-AI-adoption.pdf) | What independent testing of real industrial AI systems found (see open question 1) |
+| [HVM Catapult and NPL, Trustworthy AI adoption](https://hvm.catapult.org.uk/wp-content/uploads/2026/03/Trustworthy-AI-adoption.pdf) | What independent testing of real industrial AI systems found |
 | [AI Champion, AI Adoption Plan: Advanced Manufacturing](https://www.gov.uk/government/publications/ai-champions-ai-adoption-plans/ai-adoption-plan-advanced-manufacturing) | Where national support for industrial AI is heading |
 | [Google, Rules of Machine Learning](https://developers.google.com/machine-learning/guides/rules-of-ml) | Practical engineering advice, starting with "launch without ML first" |
 | [Sculley et al., Hidden Technical Debt in Machine Learning Systems](https://papers.nips.cc/paper_files/paper/2015/hash/86df7dcfd896fcaf2674f757a2463eba-Abstract.html) | Why a model costs more to keep than to build |
 | [Agrawal, Gans and Goldfarb, Power and Prediction](https://store.hbr.org/product/power-and-prediction-the-disruptive-economics-of-artificial-intelligence/10580?sku=10580E-KND-ENG) | A book arguing that gains come from redesigning decisions, not bolting on tools (paid) |
+| [MTC, AI: a trustworthy framework](https://www.the-mtc.org/insights/ai-trustworthy-framework) | A review of 40+ AI standards for manufacturers, and where they fall short |
+| [MTC, AI governance](https://www.the-mtc.org/insights/ai-governance) | Recommendations, a three-tier risk register and a governance process for using external AI services such as ChatGPT |
 | [A Data-First Approach to Digital Transformation](/insights/data-foundations/) | Our guide to the data AI depends on |
 
 ## Visuals
@@ -298,47 +323,58 @@ Prices checked on 25 November 2026, and they change often. Recheck on the publis
 Each diagram is a hand-drawn SVG in the site's colours. The components follow the content rules, with an `href` on every figure.
 
 **Diagrams:**
-1. **`industrial-ai-levels`: the four levels of AI.** A ladder or set of four cards, each with the question it answers ("What will happen?", "Is this part good?", "Where does it say? Draft me one", "Go and do it"), what data it needs, a UK example and its typical failure. The core visual (claims 1 to 6 and 9 to 25).
-2. **`industrial-ai-start`: where to start.** A value-against-feasibility grid, with "start here" in the high-value, high-feasibility corner and example tasks in each quarter. Adapted from Made Smarter's screen (claim 48), with the examples labelled as ours.
-3. **`industrial-ai-sign-off`: who signs off.** The AQuA Book's four roles mapped to factory roles (process owner, engineering or data team, independent checker, named manager), with the depth of checking set by the consequence of an error, and monitoring after go-live (claims 67 to 69).
+1. **`industrial-ai-levels`: the four levels of AI.** Four cards, each with the question it answers ("What will happen?", "Is this part good?", "Where does it say? Draft me one", "Go and do it"), what data it needs, a UK example and its typical failure. The core visual (claims 1 to 6 and 9 to 25).
+2. **`industrial-ai-agent-spectrum`: from suggesting to acting.** A line from "fixed workflow" through "assistant suggests, a person acts" to "agent acts on systems", with the examples placed on it (Aker BP and GE Appliances suggest; Yokogawa's controllers act, but they're reinforcement learning, not language models) and the NCSC test at the acting end: can you understand, monitor and contain it? (claims 94 to 111).
+3. **`industrial-ai-start`: where to start.** A value-against-feasibility grid, with "start here" in the high-value, high-feasibility corner and example tasks in each quarter. Adapted from Made Smarter's screen (claim 48), with the examples labelled as ours.
+4. **`industrial-ai-sign-off`: who signs off.** The AQuA Book's four roles mapped to factory roles (process owner, engineering or data team, independent checker, named manager), with the depth of checking set by the consequence of an error, a review gate before go-live and monitoring after it (claims 67 to 69 and 114).
 
 **Components:**
 - **StatRow, opening:** 20% of manufacturers use any AI; 4.0% use machine learning on their data; 61.1% of users have trained no staff (claims 29 to 31).
 - **BarChart:** what would make non-adopters adopt, with "lower cost" (35%) highlighted at the bottom (claim 44). Alternative: manufacturers' AI use by type, with machine learning on data highlighted (claim 30).
-- **StatRow, costs:** £13.80 a seat a month; 47% of AI users spent nothing in 2025; up to £20,000 Made Smarter grant (claims 54, 57 and 59).
-- **StatRow, trust:** 88.6% accuracy without an explanation and 96.3% with one (claim 66), with 65% consistency from the robot test (claim 25) if open question 1 allows.
-- **PullQuote:** Made Smarter on starting from tasks, not technology (claim 48), once the wording is confirmed. Second candidate: HSE's statement (claim 74).
+- **StatRow, agentic AI:** 2% of UK firms use agentic AI; 2% of large firms worldwide have scaled it; 15% of IT leaders are even considering fully autonomous agents (claims 24, 99 and 100).
+- **StatRow, trust:** 88.6% accuracy without an explanation and 96.3% with one (claim 66), with 65% consistency from the robot test (claim 25).
+- **StatRow, shadow AI:** 88% of staff with an enterprise AI tool also use personal ones; 78% of AI users bring their own; personal accounts down from 78% to 47% of generative AI users in a year (claims 115 to 117; 115 only once opened by hand).
+- **PullQuotes:** the NCSC's "If you cannot understand, monitor or contain an agent's actions, it is not ready for deployment." (claim 111). Second: Made Smarter on starting from tasks, not technology (claim 48), once the wording is confirmed.
 - **Callouts:**
   - a note on the famous failure figures (claims 37 to 42);
+  - a note on "agent washing" and the two meanings of "agent" (claims 96 and 97);
   - a warning that health and safety law already applies (claim 74);
-  - a warning on consumer AI tools and company data (claims 56, 85 and 86).
+  - a warning on consumer AI tools and company data (claims 56, 85, 86 and 119).
+
+### What a team pays for AI seats (decision 4)
+
+A plain table in section 7, at list prices checked on 25 November 2026, before VAT, paid annually. The draft rechecks them on the publish date.
+
+| Tool | Per user a month | 10 users a year | 25 users a year | 50 users a year | 100 users a year |
+|---|---|---|---|---|---|
+| Microsoft 365 Copilot Business (add-on; needs a Microsoft 365 Business plan) | £16.10 standard (£13.80 first-year offer until 31 December 2026) | £1,932 | £4,830 | £9,660 | £19,320 |
+| ChatGPT Business, standard seat | US$20 (no pound price published) | US$2,400 | US$6,000 | US$12,000 | US$24,000 |
+| Claude Team, standard seat | US$20 (no pound price published) | US$2,400 | US$6,000 | US$12,000 | US$24,000 |
+| Google Workspace Business Standard (the whole suite, Gemini included) | £11.80 | £1,416 | £3,540 | £7,080 | £14,160 |
+
+Sources: claims 54 and 55; annual totals are our arithmetic [D]. The table sits beside DSIT's finding that the real cost is staff time to implement (claim 28) and that 47% of AI users spent nothing (claim 57), so seat prices aren't mistaken for the whole bill.
+
+**On an interactive calculator (Nikita's question).** Recommendation: not for this article. A static table gives the same answer.
+- **The spec already parks it.** It lists a "Value calculator (wanted, post-MVP)" under non-goals for the launch, and the article components are deliberately free of client JavaScript.
+- **Seat cost is one multiplication.** Four team sizes in a table show the whole range, and readers can scale from there.
+- **The costs that matter can't be sourced.** Implementation time, integration and support have no published figures, so a calculator would either leave out the real cost or run on invented assumptions, which the content rules forbid.
+- **Prices change.** A dated table is easy to recheck; a calculator hides its inputs.
+
+The AI seat cost is a good candidate for the post-MVP value calculator, once there's sourced data on implementation effort to go with it.
 
 ## Open questions for Nikita
 
-1. **MTC material.** Two sources involve your former employer:
-   - the HVM Catapult and NPL test of an MTC system (65% consistency, claims 25 and 26);
-   - the MTC's trustworthy AI whitepaper (claim 71).
+None outstanding. The first round's eight questions are answered in "Decisions" below. The draft will mark with NIKITA comments the passages built on his notes, and those resting on our judgement (decision 7).
 
-   Both are public, and the article would cite only what they publish. Last time you dropped Harrison Spinks to avoid a conflict of interest. Were you involved in either piece of work? If so, I'd drop the MTC test result and keep the whitepaper as further reading only. If not, both can stay. The 65% result is the strongest evidence there is on testing before go-live, so I'd rather keep it if you're comfortable.
-2. **Title.** "Practical AI for Complex Industrial Data" undersells the generative AI half, which is about documents and office work as much as data. Options:
-   - keep it;
-   - "Practical AI for Industry: What It Is and Where It Pays Off" (59 characters);
-   - "AI for Industrial Leaders: Beyond the Hype" (42 characters).
-3. **Fifteen concerns in about 3,000 words.** The concern map above answers each one, some only in a paragraph ("the field moves too fast", jobs). Is that the right weighting, or should any get more room at the expense of the levels walkthrough?
-4. **Prices.** I'd give one dated example in pounds (Microsoft's, the only vendor listing UK prices) and say "tens of pounds per user a month" for the rest, with "checked on" the publish date. Alternatively, leave prices out entirely.
-5. **Funding deadlines.** BridgeAI's current competition closes on 8 December 2026, and its lead must be an AI developer rather than a manufacturer. I'd describe BridgeAI as a programme without the deadline, and give Made Smarter and KTPs as the main routes.
-6. **The "95%" figure.** Readers will have heard it, so I'd tackle it in the callout. The only copy of the MIT NANDA report is hosted by a third party. Options:
-   - cite that copy and say so;
-   - cite press coverage of the critique;
-   - debunk it without a link.
+## Decisions (Nikita, 26 November 2026)
 
-   I'd cite the copy, labelled as such.
-7. **Your notes.** Your notes give the claims below. I'll draft each as your observation, with the evidence beside it and a NIKITA comment for your review:
-
-   | Your claim | The evidence |
-   |---|---|
-   | Most companies skipped right to GenAI without getting the foundations right | **Consistent:** GenAI dominates use and only 4% of manufacturers use machine learning on their data (claims 30 and 31). **But:** no study measures whether foundations were skipped |
-   | GenAI no longer requires a huge data science team | **Supported:** for building (claims 15 and 27). **Balanced by:** DSIT's implementation time and the 65% test result (claims 25 and 28) |
-
-   Is that framing right?
-8. **Agentic AI.** No UK industrial deployment has measured results, so I'd keep it to one short level in section 2, built on the NCSC guidance, and not give it a section of its own.
+1. **MTC material:** use both, as it's all public. Nikita wasn't involved in the robot system tested in the HVM Catapult report (claims 25 and 26). He proposed the Trustworthy AI whitepaper project at the MTC and contributed a little to its delivery and research (claim 71). He added the MTC's AI governance whitepaper (https://www.the-mtc.org/insights/ai-governance, 20 November 2023) as a source. Both whitepapers were read on 26 November 2026 at Nikita's request: the trustworthy AI PDF by text extraction, and the governance PDF (text stored as vector shapes) by rendering its pages as images with PyMuPDF, installed for the purpose and then removed. The article links to their landing pages. Nikita is a named co-author of the trustworthy AI paper (p.2), not of the governance paper (p.5).
+2. **Title:** "Practical AI for Industry: What It Is and Where It Adds Value".
+3. **Concerns:** don't tackle every concern from the issue explicitly; group them. The priority is explaining what AI is and where it adds value in industry. The outline was reweighted to match.
+4. **Prices:** include real prices, scaled up to show what a team would pay. Nikita asked whether an interactive calculator is worth it; the answer and the team table are under "Visuals".
+5. **Funding:** no deadlines in the article. Readers later may skip organisations whose deadline has passed, and new rounds will open. Name the programmes and what they offer.
+6. **MIT NANDA:** cite the third-party copy and say that's what it is.
+7. **Nikita's notes:** draft both observations as his view, with the evidence beside them, as proposed. Also look for figures on how many firms provide approved tools such as Copilot against staff bringing their own. Nikita remembers a claim that most employees secretly used unapproved tools like ChatGPT when only Copilot was allowed, but not its source.
+8. **Agentic AI:** its own section, because of the hype. Say there's little evidence of adoption yet, and look internationally for examples.
+9. **"Shadow AI":** use the term in the article, defined on first use as staff using AI tools their employer hasn't approved. The NCSC treats it as a form of shadow IT (claim 85).
+10. **No disclosure lines** on the MTC papers in the article (Nikita, 26 November 2026).
