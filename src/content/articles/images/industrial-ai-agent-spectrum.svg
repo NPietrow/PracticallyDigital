@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="460" viewBox="0 0 1200 460" role="img" aria-labelledby="t d" font-family="IBM Plex Sans, Segoe UI, Arial, sans-serif">
+  <title id="t">From suggesting to acting</title>
+  <desc id="d">A line from left to right. At the left, a fixed workflow: steps coded in advance, predictable. In the middle, an assistant that suggests while a person acts, with Aker BP's root-cause agents and GE Appliances' agents placed there. At the right, an agent that acts on systems itself, with Yokogawa's plant controllers placed there, noted as reinforcement learning rather than a language model. Above the right end, the NCSC's test: can you understand, monitor and contain what it does?</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1b1f23"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="460" fill="#ecece7"/>
+
+  <rect x="800" y="24" width="370" height="78" fill="#f2b705"/>
+  <text x="820" y="54" font-size="15" font-weight="600" fill="#1b1f23">The NCSC's test before an agent acts:</text>
+  <text x="820" y="80" font-size="15" fill="#1b1f23">can you understand, monitor and contain it?</text>
+  <line x1="985" y1="102" x2="985" y2="148" stroke="#1b1f23" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <line x1="60" y1="170" x2="1150" y2="170" stroke="#1b1f23" stroke-width="3" marker-end="url(#arrow)"/>
+  <circle cx="150" cy="170" r="10" fill="#1b1f23"/>
+  <circle cx="580" cy="170" r="10" fill="#1b1f23"/>
+  <circle cx="985" cy="170" r="10" fill="#1b1f23"/>
+  <text x="60" y="210" font-size="14" fill="#62675f">More predictable</text>
+  <text x="1150" y="210" font-size="14" fill="#62675f" text-anchor="end">More autonomy, more risk</text>
+
+  <g transform="translate(40,236)">
+    <rect width="300" height="190" fill="#ffffff" stroke="#d5d5ce"/>
+    <text x="20" y="36" font-size="19" font-weight="600" fill="#1b1f23">Fixed workflow</text>
+    <text font-size="15" fill="#3c413b"><tspan x="20" y="68">Steps coded in advance.</tspan><tspan x="20" y="90">Predictable and easy to test.</tspan><tspan x="20" y="126">The government's advice</tspan><tspan x="20" y="148">where a process is already</tspan><tspan x="20" y="170">well understood</tspan></text>
+  </g>
+
+  <g transform="translate(410,236)">
+    <rect width="340" height="190" fill="#ffffff" stroke="#d5d5ce"/>
+    <text x="20" y="36" font-size="19" font-weight="600" fill="#1b1f23">AI suggests, a person acts</text>
+    <text font-size="15" fill="#3c413b"><tspan x="20" y="68">Aker BP: agents gather</tspan><tspan x="20" y="90">information and suggest</tspan><tspan x="20" y="112">root-cause analysis steps.</tspan><tspan x="20" y="148">GE Appliances: agent outputs</tspan><tspan x="20" y="170">are reviewed by people.</tspan></text>
+  </g>
+
+  <g transform="translate(820,236)">
+    <rect width="340" height="190" fill="#ffffff" stroke="#1b1f23" stroke-width="2"/>
+    <text x="20" y="36" font-size="19" font-weight="600" fill="#1b1f23">AI acts on systems itself</text>
+    <text font-size="15" fill="#3c413b"><tspan x="20" y="68">Yokogawa's controllers run</tspan><tspan x="20" y="90">plant processes directly.</tspan><tspan x="20" y="126">These use reinforcement</tspan><tspan x="20" y="148">learning, not a language</tspan><tspan x="20" y="170">model.</tspan></text>
+  </g>
+</svg>

@@ -1,0 +1,298 @@
+---
+title: "Practical AI for Industry: What It Is and Where It Adds Value"
+description: A plain guide for UK industrial leaders to the kinds of AI, where each adds value, what it costs, how to govern it and when not to bother.
+gist: "AI is a family of tools: machine learning predicts, vision inspects, generative AI finds and drafts, and agents act. Few UK manufacturers use AI yet, and most that do have only met the chatbot, while the UK results with published baselines come from the older kinds. Start from one decision you can measure, pick the simplest AI that improves it, and test it before you trust it."
+published: 2026-11-26
+reviewed: 2026-11-26
+topics: [ai-and-analytics]
+problems: [untrusted-data, skills-and-adoption, quality-and-scrap]
+---
+
+import Figure from '../../components/Figure.astro';
+import levels from './images/industrial-ai-levels.svg';
+import agentSpectrum from './images/industrial-ai-agent-spectrum.svg';
+import whereToStart from './images/industrial-ai-start.svg';
+import signOff from './images/industrial-ai-sign-off.svg';
+import StatRow from '../../components/StatRow.astro';
+import Stat from '../../components/Stat.astro';
+import PullQuote from '../../components/PullQuote.astro';
+import Callout from '../../components/Callout.astro';
+import BarChart from '../../components/BarChart.astro';
+
+Five years ago, AI in a factory usually meant a specialist project: a camera trained to spot defects, or a data science team building a model to predict when a machine would fail. It took engineers to capture and label the data, train the model and keep it running. Now AI is built into the software almost everyone uses, from email to spreadsheets, and in our experience a small subscription buys tools that once needed a dedicated team.
+
+UK manufacturers that use AI have mostly met it through that second door. In autumn 2026 about 20% of them used some form of AI, mostly to create images and text, while only 4.0% used machine learning on their data. Among manufacturers using AI or unsure whether they do, 61.1% had trained no staff in it ([ONS Business Insights survey, wave 165](https://www.ons.gov.uk/economy/economicoutputandproductivity/output/datasets/businessinsightsandimpactontheukeconomy/bicswave165); the 20% is our calculation from the published figures).
+
+<StatRow source="ONS Business Insights survey, wave 165, autumn 2026" href="https://www.ons.gov.uk/economy/economicoutputandproductivity/output/datasets/businessinsightsandimpactontheukeconomy/bicswave165">
+  <Stat value="20%" label="of UK manufacturers used some form of AI (our calculation)" />
+  <Stat value="4.0%" label="used machine learning on their data" />
+  <Stat value="61.1%" label="of manufacturers using AI, or unsure, had trained no staff in it" />
+</StatRow>
+
+This guide explains what AI means at its different levels, and where each kind adds value in industry and where it doesn't. Agentic AI gets a section of its own, because that's where the hype is loudest. Then come why projects stall, where to start, what it costs, and how to trust and govern what you use. Throughout, the advice is to start from a decision you can measure and pick the simplest AI that improves it.
+
+## What "AI" actually means
+
+AI covers far more than ChatGPT. The UK Government's [AI Playbook](https://www.gov.uk/government/publications/ai-playbook-for-the-uk-government/artificial-intelligence-playbook-for-the-uk-government-html) uses the OECD's definition: an AI system is a machine-based system that works out from its inputs how to produce outputs such as predictions, content, recommendations or decisions. ChatGPT is one product built on one kind of AI.
+
+The Playbook describes a family. Machine learning learns patterns from data. Deep learning is a more complex kind of machine learning, and computer vision lets computers interpret images. Generative AI produces text, images or code, and large language models (LLMs) are the generative AI behind chat assistants. Agentic AI means systems that decide and act with little human involvement. The Playbook also says machine learning is still the first choice for simpler tasks, because it needs less data and computing power. For an industrial reader, that gives four levels:
+
+1. Machine learning on your own data answers "what will happen?": a forecast, a failure warning, a better process setting.
+2. Computer vision answers "is this part good?" from images.
+3. Generative AI answers "where does it say?" and "draft me a first version".
+4. Agentic AI is told "go and do it", and plans its own steps through tools that act on other systems ([GDS, AI Insights: Agentic AI](https://www.gov.uk/government/publications/ai-insights/ai-insights-agentic-ai-html)).
+
+<Figure
+  src={levels}
+  alt="Four cards side by side, one for each level of AI. Machine learning answers 'what will happen?', needs historical data from your own processes, has NESO's solar forecasting as its UK example, and fails when conditions move outside its training data. Computer vision answers 'is this part good?', needs images from a fixed camera set-up, has Network Rail's track inspection as its example, and struggles when defects are rare. Generative AI answers 'where does it say?' and drafts, needs your own documents, has the government Copilot trials as its example, and can be confidently wrong. Agentic AI is told 'go and do it', needs tools and permissions, has no measured UK industrial example yet, and can take the wrong action."
+  caption="Four levels of AI, from predicting to acting. The examples and failure modes are covered in the sections below."
+  size="wide"
+/>
+
+[Made Smarter's AI toolkit](https://www.madesmarter.uk/resources/ai-adoption-in-manufacturing/) has a manufacturing version of the same idea: AI that can predict, sense, create or do. It separates office AI, such as copilots in business systems, which is quick to trial and easy to undo, from AI on machines and lines, where trust and validation hold things up. It expects most small firms to start in the office.
+
+Most firms that use AI have started there. In June 2026, 35% of UK businesses with ten or more staff used some AI: 18% used LLMs and 16% visual content tools, against 12% using machine learning on data ([ONS, AI in UK businesses](https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/articles/artificialintelligenceinukbusinesses/2023to2026)). In the government's 2026 survey, 77% of businesses using or planning to use AI used tools built on LLMs ([DSIT, AI adoption survey 2026](https://www.gov.uk/government/publications/ai-adoption-survey-2026)), so it's easy to see why the two words get used as one.
+
+## Where each kind of AI adds value
+
+### Machine learning: predicting from your own data
+
+The clearest UK example with a published baseline comes from the electricity system operator. NESO's solar forecast, built with Open Climate Fix using machine learning, was 2.8 times more accurate than its existing forecast up to two hours ahead, with a mean error of 233 MW against 650 MW. It has been in the control room since December 2022 ([NESO](https://www.neso.energy/news/solar-nowcasting-innovation-project-improves-solar-forecasting)), and the [project](https://www.neso.energy/about/innovation/our-innovation-projects/pv-nowcasting) cost £500,000 of innovation funding.
+
+A model only knows the conditions in its data. An [AMRC model trained on 62 milled blocks](https://www.amrc.co.uk/case-studies/developing-machine-learning-solution-to-predict-errors-in-robotic-milling-processes) predicted robot milling errors to about 0.3 mm inside the range it was trained on, and couldn't generalise outside it. When the material, the tooling or the process changes, a model needs checking and often retraining.
+
+### Computer vision: inspecting at speed
+
+Network Rail's track inspection system photographs the rails every 0.8 mm at up to 125 mph. By February 2019 it had replaced manual inspection on 8,500 miles of track, with experts confirming each flagged defect before local teams see it ([Network Rail](https://www.networkrail.co.uk/stories/how-cutting-edge-track-technology-is-reducing-delays-for-passengers/)).
+
+The usual problem is rare defects, because a good line makes few bad parts to learn from. BAE Systems told Made Smarter that aerospace weld inspection may have as few as 30 X-ray images to train on ([Made Smarter](https://madesmarter.uk/resources/innovation-case-study-bae-systems-machine-intelligence)), while Google's guidance for its image classifier recommends about 1,000 per label ([Google Cloud](https://docs.cloud.google.com/vertex-ai/docs/image-data/classification/prepare-data)). Anomaly detection gets round this by learning what a good part looks like and flagging anything different. The [MVTec AD benchmark](https://www.mvtec.com/company/research/datasets/mvtec-ad) trains this way on images of good parts only, and a recent method, [AnomalyDINO](https://arxiv.org/abs/2405.14529), reports a score of 96.6% on the benchmark's standard measure (AUROC) from a single good image per product. That's a benchmark score, though, and your own lighting, fixtures and cameras still need proving on your own parts.
+
+### Generative AI: finding, drafting and summarising
+
+The best UK evidence on generative AI comes from offices. In the cross-government Microsoft 365 Copilot trial, which issued about 20,000 licences, the 7,115 people who answered the survey self-reported saving 26 minutes a day on average, and the report describes no control group ([GDS](https://www.gov.uk/government/publications/microsoft-365-copilot-experiment-cross-government-findings-report/microsoft-365-copilot-experiment-cross-government-findings-report-html)). The Department for Business and Trade's evaluation of its own pilot found small time savings on written tasks but no evidence that they improved productivity. Some tasks took longer, and users saw hallucinations ([DBT](https://www.gov.uk/government/publications/microsoft-365-copilot-pilot-dbt-evaluation-report)): output that is wrong, misleading or made up, because the model works from patterns in its training data rather than understanding ([ICO](https://ico.org.uk/about-the-ico/what-we-do/our-work-on-artificial-intelligence/response-to-the-consultation-series-on-generative-ai/glossary/)). The [AI Security Institute](https://www.aisi.gov.uk/blog/mapping-the-limitations-of-current-ai-systems) notes that current systems are often confidently wrong.
+
+Factory evidence is thin. In one study of an assistant that answered operators' questions from manuals and issue reports at a detergent factory, the nine users liked the faster access but preferred asking a nearby expert when one was there, and raised safety concerns ([Kernan Freire et al.](https://arxiv.org/abs/2401.05200)). In our view, generative AI is worth it where finding and drafting take real time and a person checks the result before it matters.
+
+## Agentic AI: the hype and the evidence
+
+The NCSC describes agentic systems as able to use data sources, remember context, make decisions, use tools and take actions towards a goal without continuous human input. Because they act, they are both more useful and more hazardous than tools that only produce content ([NCSC](https://www.ncsc.gov.uk/blogs/thinking-carefully-before-adopting-agentic-ai)). Anthropic, which makes AI models, distinguishes workflows, where the model follows steps someone has coded, from agents, where the model chooses its own steps. It advises starting with the simplest option, because agents usually cost more and respond more slowly ([Anthropic](https://www.anthropic.com/engineering/building-effective-agents)).
+
+<Callout>
+
+Be careful with the word "agent". Gartner estimates that only about 130 of the thousands of vendors claiming agentic AI offer the real thing, and calls the rest "agent washing": assistants, robotic process automation and chatbots with a new label ([Gartner](https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027)). In process control, "AI agent" can also mean a reinforcement-learning controller, such as Yokogawa's, which is a different technology from an LLM agent and carries different risks ([Yokogawa](https://www.yokogawa.com/eu/news/press-releases/2025/2025-10-29/)).
+
+</Callout>
+
+Real use is still rare: only 2% of UK businesses used agentic AI in 2026, and a third of those were still piloting it ([DSIT](https://www.gov.uk/government/publications/ai-adoption-survey-2026)). In Capgemini's survey of 1,500 large organisations, 2% had scaled agents, and trust in fully autonomous agents fell from 43% to 27% in a year ([Capgemini](https://www.capgemini.com/gb-en/news/press-releases/trust-and-human-ai-collaboration-set-to-define-the-next-era-of-agentic-ai-unlocking-450-billion-opportunity-by-2028/)). Gartner put AI agents at the "peak of inflated expectations" on its 2025 hype cycle ([Gartner](https://www.gartner.com/en/newsroom/press-releases/2025-08-05-gartner-hype-cycle-identifies-top-ai-innovations-in-2025)).
+
+<StatRow>
+  <Stat value="2%" label="of UK businesses used agentic AI in 2026" source="DSIT" href="https://www.gov.uk/government/publications/ai-adoption-survey-2026" />
+  <Stat value="2%" label="of 1,500 large organisations had scaled AI agents" source="Capgemini" href="https://www.capgemini.com/gb-en/news/press-releases/trust-and-human-ai-collaboration-set-to-define-the-next-era-of-agentic-ai-unlocking-450-billion-opportunity-by-2028/" />
+  <Stat value="15%" label="of IT leaders were considering or using fully autonomous agents" source="Gartner" href="https://www.gartner.com/en/newsroom/press-releases/2025-09-30-gartner-survey-finds-just-15-percent-of-it-application-leaders-are-considering-piloting-or-deploying-fully-autonomous-ai-agents" />
+</StatRow>
+
+The best industrial examples are international, and every one reports its own results without an independent check. In most of them the AI suggests and a person acts. Aker BP, the Norwegian oil producer, says LLM agents that gather information and suggest analysis steps cut engineers' time on root-cause analysis by over 70%, with no baseline given ([Aker BP](https://akerbp.com/aker-bp-leverages-cognite-atlas-ai-to-pioneer-an-ai-first-future-in-exploration-and-production/)). GE Appliances runs more than 800 agents, many built by its own staff, and says a supplier agent cut backorders by 25%, again without a baseline ([Google Cloud](https://www.googlecloudpresscorner.com/2026-04-22-GE-Appliances-Reinvents-Manufacturing-Operations-at-Scale-with-Google-Clouds-Gemini-Enterprise)). People review the outputs there, because the agents can drift and make mistakes ([engineering.com](https://www.engineering.com/inside-ge-appliances-ai-agent-rollout/)). Yokogawa's controllers do act on plant: one ran a distillation column at ENEOS Materials in Japan for 35 days in 2022, and the companies report it cut the steam used by 40% against manual control ([Yokogawa](https://www.yokogawa.com/uk/news/press-releases/2023/2023-03-30/)). They use reinforcement learning, not LLMs.
+
+<Figure
+  src={agentSpectrum}
+  alt="A line running from left to right. At the left, a fixed workflow: the steps are coded and predictable. In the middle, an assistant that suggests while a person acts, with Aker BP's root-cause agents and GE Appliances' agents placed there. At the right, an agent that acts on systems itself, with Yokogawa's reinforcement-learning plant controllers placed there, labelled as not LLM-based. Above the right end, the NCSC's test: can you understand, monitor and contain what it does?"
+  caption="From suggesting to acting. Most industrial 'agents' today suggest, and a person acts."
+  size="wide"
+/>
+
+Failures are better documented. An agent that ran a small office shop for a month lost money, sold items below cost and invented a payment account ([Anthropic, Project Vend](https://www.anthropic.com/research/project-vend-1)). In July 2025 a coding agent deleted a company's live database during a code freeze, against instructions ([AI Incident Database](https://incidentdatabase.ai/cite/1152/)). In a public red-teaming competition analysed by the US and UK AI security institutes, attacks succeeded at least once against agents built on every one of the 13 frontier models tested ([NIST](https://www.nist.gov/blogs/caisi-research-blog/insights-ai-agent-security-large-scale-red-teaming-competition)). Closer to home, independent tests of an LLM-driven robot for safety-critical site inspections found its results were consistent only 65% of the time, and recommended that a person approve every command ([HVM Catapult and NPL](https://hvm.catapult.org.uk/wp-content/uploads/2026/03/Trustworthy-AI-adoption.pdf)). Part of the risk is prompt injection, where instructions hidden in a document or email get obeyed. The NCSC thinks it may never be fully fixed, so an agent that reads untrusted content should be kept away from powerful tools ([NCSC](https://www.ncsc.gov.uk/blog-post/prompt-injection-is-not-sql-injection)).
+
+The NCSC and its international partners advise starting small, with well-understood, low-risk tasks, and asking first whether a simpler automation would do. Give an agent the least access for the shortest time, and name who owns it, who watches it and who can stop it before it touches a real system ([NCSC](https://www.ncsc.gov.uk/blogs/thinking-carefully-before-adopting-agentic-ai)). Where the steps are already well known, the government's advice is to fix their order rather than leave an agent to work them out ([GDS](https://www.gov.uk/government/publications/ai-insights/ai-insights-agentic-ai-html)).
+
+<PullQuote cite="NCSC, Thinking carefully before adopting agentic AI, 2026" href="https://www.ncsc.gov.uk/blogs/thinking-carefully-before-adopting-agentic-ai">
+If you cannot understand, monitor or contain an agent's actions, it is not ready for deployment.
+</PullQuote>
+
+Our view: agents are worth a bounded trial on low-risk office work. They aren't ready to be let loose on plant or safety systems.
+
+## Cheaper to build, not cheaper to get right
+
+In our experience, generative AI and pre-trained models have cut the effort and skills needed to build AI, as well as the cost. The cost of running a model at GPT-3.5's level fell more than 280-fold between November 2022 and October 2024 ([Stanford AI Index 2025](https://hai.stanford.edu/news/ai-index-2025-state-of-ai-in-10-charts)), and on benchmarks, defect detection can now start from a handful of good images ([AnomalyDINO](https://arxiv.org/abs/2405.14529)). With good data and a well-chosen use case, you no longer need a large data science team.
+
+The hard part has moved. The government's survey found the cost of adopting AI is mostly the time and effort to implement it, not the price of the tool, and one firm reckoned a new technology took a quarter to a fifth of its team's time for six months ([DSIT](https://www.gov.uk/government/publications/ai-adoption-survey-2026)). That time goes on clean, findable data, testing against real cases, and someone to own the system afterwards. Our [data foundations guide](/insights/data-foundations/) covers the first.
+
+UK adoption is broad but shallow. Among manufacturers using AI or unsure whether they do, only 7.2% used it extensively, and 60.1% had adopted it through free software ([ONS, wave 165](https://www.ons.gov.uk/economy/economicoutputandproductivity/output/datasets/businessinsightsandimpactontheukeconomy/bicswave165)). Make UK members use it mostly in business support (83%), with production at 11% and quality control at 6% ([Make UK](https://www.makeuk.org/insights/reports/ai-skills-and-future-uk-manufacturing-sector)).
+
+Many firms seem to have gone straight to generative AI, without first getting their data in order or trying the simpler machine learning that often pays off first. The figures fit that picture, though no study has measured it directly.
+
+## Why AI projects stall
+
+<Callout>
+
+Three famous failure figures don't say what they're quoted as saying. RAND did not measure "80% of AI projects fail"; it repeats that as an outside estimate from a 2022 magazine article ([RAND](https://www.rand.org/pubs/research_reports/RRA2680-1.html)). Gartner's figures for abandoned generative AI projects ([2024](https://www.gartner.com/en/newsroom/press-releases/2024-07-29-gartner-predicts-30-percent-of-generative-ai-projects-will-be-abandoned-after-proof-of-concept-by-end-of-2025)) and cancelled agentic projects ([2025](https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027)) are forecasts, the second drawn partly from a poll of webinar attendees. The "95%" comes from a preliminary MIT NANDA study, built on interviews and a conference survey, which its authors call directionally accurate; by its own numbers about a quarter of piloted custom tools reached production ([MIT NANDA, The GenAI Divide, third-party copy (PDF)](https://mlq.ai/media/quarterly_decks/v0.1_State_of_AI_in_Business_2025_Report.pdf); we found no copy hosted by MIT). We could not find a measured failure rate for industrial AI.
+
+</Callout>
+
+RAND's interviews with 65 data scientists and engineers found five root causes: leaders misunderstanding the problem, unsuitable data, chasing the technology instead of the user's problem, too little investment in infrastructure, and applying AI to problems beyond it ([RAND](https://www.rand.org/pubs/research_reports/RRA2680-1.html)). An MTC review of more than 40 AI standards, frameworks and policy papers found guidance thinnest at the start, scoping the problem, which is where many AI problems begin, and at the end, retiring the system ([MTC, Trustworthy AI Framework](https://www.the-mtc.org/insights/ai-trustworthy-framework)).
+
+Among UK businesses using AI, the single biggest barrier was not knowing how AI could help (21%), and only 5% named cost. Firms not using AI put not knowing how it could help joint first, level with the lack of a business case (21% each) ([DSIT](https://www.gov.uk/government/publications/ai-adoption-survey-2026)).
+
+<BarChart
+  title="What would make UK businesses not using AI more likely to adopt it"
+  unit="%"
+  source="DSIT, AI adoption survey 2026 (2,041 non-adopters, unweighted base)"
+  href="https://www.gov.uk/government/publications/ai-adoption-survey-2026"
+  bars={[
+    { label: 'Better understanding of how AI could help', value: 62 },
+    { label: 'Clear business case or proven return in their industry', value: 61 },
+    { label: 'Seeing peers succeed', value: 50 },
+    { label: 'Clearer regulation', value: 50 },
+    { label: 'Greater trust in AI', value: 50 },
+    { label: 'More skills in the workforce', value: 46 },
+    { label: 'Simpler tools', value: 45 },
+    { label: 'Better data', value: 41 },
+    { label: 'Customer demand', value: 40 },
+    { label: 'Lower cost', value: 35, highlight: true },
+  ]}
+/>
+
+Time saved doesn't always show up in the accounts: 71% of UK AI users reported improved productivity, but 64% saw no change in operating costs ([DSIT](https://www.gov.uk/government/publications/ai-adoption-survey-2026)). A [study of more than 30,000 US manufacturing plants](https://digitaleconomy.stanford.edu/publication/the-power-of-prediction-predictive-analytics-workplace-complements-and-business-performance) found predictive analytics raised productivity only alongside IT, skilled people or a suitable production process. Untrusted or siloed data still stalls AI, as it stalls any digital project. Our [guide to data foundations](/insights/data-foundations/) covers how to fix it.
+
+## Where to start, and when not to bother
+
+If you have too many ideas, UK guidance agrees on how to choose. [Made Smarter's toolkit](https://www.madesmarter.uk/resources/ai-adoption-in-manufacturing/) says successful manufacturers start from tasks, problems and outcomes, not from AI as a technology. List the tasks that cost time or money and rank them by value and feasibility, where feasible means the data exists, the workflow is stable, the risk is manageable and you can trial it without disrupting operations. Pilot with clear success measures and human oversight, run shop-floor pilots alongside the existing process, then scale what works. The national plan for advanced manufacturing proposes the same route, "Scan, Pilot, Scale", though its support services are still proposals rather than live offers ([AI Champion's plan](https://www.gov.uk/government/publications/ai-champions-ai-adoption-plans/ai-adoption-plan-advanced-manufacturing)).
+
+<Figure
+  src={whereToStart}
+  alt="A two-by-two grid. The horizontal axis is feasibility: data exists, workflow stable, risk manageable. The vertical axis is value: time, scrap, quality or cost. The top-right corner, high value and high feasibility, is highlighted as 'start here', with example tasks: drafting work instructions from existing documents, and forecasting demand from order history. Top left, high value but low feasibility, says 'fix the foundations first', with an example of predicting failures on machines with no sensor data. Bottom right, low value but easy, says 'quick wins, if cheap'. Bottom left says 'leave alone'."
+  caption="Rank ideas by value and feasibility, adapted from Made Smarter's toolkit. The example tasks are ours."
+/>
+
+Before the pilot starts, record the baseline: how long the task takes now, how much scrap the line makes, how often the forecast is wrong. Without it you can't show the pilot changed anything.
+
+Sometimes the answer is no AI at all. Google's engineering guidance says not to be afraid to launch without machine learning, and to move to it when hand-written rules get too complex to maintain ([Google, Rules of Machine Learning](https://developers.google.com/machine-learning/guides/rules-of-ml)). The [AI Playbook](https://www.gov.uk/government/publications/ai-playbook-for-the-uk-government/artificial-intelligence-playbook-for-the-uk-government-html) agrees, and asks for a plan to maintain, monitor and retire anything you do build. Machine learning systems carry large ongoing maintenance costs, partly because the world they learned from keeps changing ([Sculley et al., 2015](https://papers.nips.cc/paper_files/paper/2015/hash/86df7dcfd896fcaf2674f757a2463eba-Abstract.html)). In our view AI probably isn't worth it when:
+
+- a fixed rule, a control chart or a process fix, such as better lighting or a jig, would solve the problem;
+- the process is low-volume or about to change;
+- nobody will own the model once the project ends;
+- a wrong answer would be safety-critical and nobody would check it;
+- you have no data to tell whether it worked.
+
+## What it costs, and the skills it needs
+
+Business plans for generative AI cost tens of pounds per user a month. This is what a team pays at list prices, before VAT, paid annually.
+
+| Tool | Per user a month | 10 users a year | 25 users a year | 50 users a year | 100 users a year |
+|---|---|---|---|---|---|
+| Microsoft 365 Copilot Business (add-on to a Microsoft 365 Business plan) | £16.10 | £1,932 | £4,830 | £9,660 | £19,320 |
+| ChatGPT Business, standard seat | US$20 (US list price) | US$2,400 | US$6,000 | US$12,000 | US$24,000 |
+| Claude Team, standard seat | US$20 (US list price) | US$2,400 | US$6,000 | US$12,000 | US$24,000 |
+| Google Workspace Standard (the whole suite, Gemini included) | £11.80 | £1,416 | £3,540 | £7,080 | £14,160 |
+
+Sources: [Microsoft](https://www.microsoft.com/en-gb/copilot/pricing/business) (a first-year offer of £13.80 for existing Microsoft 365 Business customers runs to 31 December 2026), [OpenAI](https://help.openai.com/en/articles/8792828-what-is-chatgpt-business), [Anthropic](https://claude.com/pricing) and [Google](https://workspace.google.com/intl/en_uk/pricing.html), checked 25 November 2026. Annual totals are our arithmetic. Prices change, so check before you buy.
+
+All four vendors say prompts on their business plans aren't used to train their models by default ([Microsoft](https://learn.microsoft.com/en-us/copilot/plan/enterprise-data-protection), [OpenAI](https://openai.com/enterprise-privacy/), [Anthropic](https://privacy.claude.com/en/articles/7996868-is-my-data-used-for-model-training), [Google](https://knowledge.workspace.google.com/admin/gemini/generative-ai-in-google-workspace-privacy-hub)), whereas consumer ChatGPT may use chats for training unless the user turns that off ([OpenAI](https://help.openai.com/en/articles/5722486-how-your-data-is-used-to-improve-model-performance)).
+
+The seats are rarely the big cost. Among UK businesses using or planning to use AI that could estimate their spending, 47% spent nothing on AI in 2025, and the average was about £7,500 ([DSIT](https://www.gov.uk/government/publications/ai-adoption-survey-2026)). Most of the cost is people's time to set it up, connect it to your data and build it into how work gets done.
+
+For vision, labelling costs less if you start with anomaly detection trained on good parts. In our experience it also pays to use the simplest label that answers the question: a pass or fail tag is far quicker than marking out every defect by hand.
+
+Skills are the bigger gap. Over half of Make UK's members name skills shortages as the main obstacle to moving AI beyond small trials ([Make UK](https://www.makeuk.org/insights/reports/ai-skills-and-future-uk-manufacturing-sector)), and 88% of organisations in a government-commissioned survey rely on on-the-job training for AI skills rather than structured courses ([DSIT](https://www.gov.uk/government/publications/ai-labour-market-survey-2025-report/ai-labour-market-survey-2025-report-executive-summary)). Everyone needs basic literacy in using AI tools safely, and the government's [AI Skills Hub](https://www.gov.uk/government/news/free-ai-training-for-all-as-government-and-industry-programme-expands-to-provide-10-million-workers-with-key-ai-skills-by-2030) offers free short courses to any UK adult. A few people who know the process and the data can take data technician or data analyst apprenticeships, for which a smaller employer pays 5% of the cost for an apprentice aged 25 or over and nothing for one aged 16 to 24 ([apprenticeship funding guide](https://www.gov.uk/government/publications/apprenticeship-technical-funding-guide/apprenticeship-technical-funding-guide-from-august-2026)). Specialists are scarce: a machine learning engineer apprenticeship has up to £22,000 of funding, so a smaller employer's share is £1,100 for an apprentice aged 25 or over, plus wages ([apprenticeship listing](https://findapprenticeshiptraining.apprenticeships.education.gov.uk/courses/795)), and many firms will do better buying this in or using a [Knowledge Transfer Partnership](https://iuk-ktp.org.uk/), where grants cover 67% of costs for most SME projects ([UKRI](https://www.ukri.org/councils/innovate-uk/guidance-for-applicants/costs-we-fund/costs-guidance-for-knowledge-transfer-partnerships/grant-rates/)).
+
+For funding, [Made Smarter Adoption](https://www.madesmarter.uk/adoption/) offers manufacturing SMEs in England funded advice and, in several regions, match-funded grants of up to £20,000. Innovate UK's [BridgeAI](https://iuk-business-connect.org.uk/programme/bridgeai/) funds projects in which a firm that makes an AI product works with a business that deploys it. Rounds open and close, so check each programme's current calls.
+
+## Trust, governance and shadow AI
+
+### Can you trust the output?
+
+Distrust of AI covers two separate problems: trusting it when it's wrong, and overruling it when it's right. A randomised experiment at a Siemens electronics plant reduced both. Workers checking circuit boards with an AI quality score were more accurate when they could also see a heatmap of why the AI had flagged an area. They caught more of its wrong calls and overruled fewer of its right ones, with no loss of speed ([Senoner et al., Scientific Reports](https://doi.org/10.1038/s41598-024-82501-9)).
+
+<StatRow source="Senoner et al., Scientific Reports, 2024: 48 factory workers, randomised" href="https://doi.org/10.1038/s41598-024-82501-9">
+  <Stat value="88.6%" label="balanced accuracy of workers with the AI's score alone" />
+  <Stat value="96.3%" label="with a heatmap showing why it flagged the part" />
+  <Stat value="96.9%" label="of wrong AI calls caught with the heatmap, against 86.4% without" />
+</StatRow>
+
+Trust also comes from assurance scaled to the possible harm, done before adoption and continued afterwards ([NPL](https://www.npl.co.uk/news/getting-the-measure-of-ai)). After independent tests on six real industrial AI systems, HVM Catapult and NPL concluded that deployment is held back by a lack of confidence rather than ambition ([HVM Catapult and NPL](https://hvm.catapult.org.uk/wp-content/uploads/2026/03/Trustworthy-AI-adoption.pdf)).
+
+### Who signs it off?
+
+The government's [AQuA Book](https://www.gov.uk/guidance/the-aqua-book) already answers this for any analysis, AI included. Someone commissions the work, an analyst builds it, an assurer independent of the analyst checks it, and an approver confirms it has been properly checked. How deep the checks go depends on how critical, new and complex the work is. The AI Playbook adds that a person should validate any high-risk decision AI influences ([AI Playbook](https://www.gov.uk/government/publications/ai-playbook-for-the-uk-government/artificial-intelligence-playbook-for-the-uk-government-html)). In practice, 81% of UK AI users apply at least some human checking to AI outputs, and 5% apply none ([DSIT](https://www.gov.uk/government/publications/ai-adoption-survey-2026)).
+
+<Figure
+  src={signOff}
+  alt="Four roles in a row, each mapped to a factory role. The commissioner is the process owner who wants the decision improved. The analyst is the engineering or data team that builds and tests the AI. The assurer is someone independent who checks the testing. The approver is a named manager who signs it off. Below, a bar shows that the depth of checking grows with the consequence of an error, from an office draft to a safety-related decision. A review gate sits before go-live, and monitoring continues after it."
+  caption="Who signs off an AI system, using the AQuA Book's four roles. The factory roles are our suggestion."
+  size="wide"
+/>
+
+### What the law expects
+
+There is no UK AI Act ([IAPP](https://iapp.org/news/a/king-s-speech-signals-diffuse-uk-digital-policy-agenda-but-no-ai-bill)). Regulators apply five principles: safety, security and robustness; transparency and explainability; fairness; accountability and governance; and a route to contest decisions ([DSIT](https://www.gov.uk/government/consultations/ai-regulation-a-pro-innovation-approach-policy-proposals/outcome/a-pro-innovation-approach-to-ai-regulation-government-response)).
+
+<Callout type="warning">
+
+HSE says health and safety law applies whatever the technology. Where AI affects workplace health and safety, you must assess and control the risks, cyber threats included ([HSE](https://press.hse.gov.uk/2026/06/12/hses-regulatory-approach-to-artificial-intelligence-ai/)). If AI makes significant decisions about people, such as rostering or performance, data protection law applies as well ([ICO](https://ico.org.uk/about-the-ico/what-we-do/legislation-we-cover/data-use-and-access-act-2025/the-data-use-and-access-act-2025-what-does-it-mean-for-organisations)). Machine builders selling into the EU face its AI Act, whose rules for AI in machinery apply from 2 August 2028 ([Regulation (EU) 2026/1744](https://eur-lex.europa.eu/eli/reg/2026/1744/oj)).
+
+</Callout>
+
+### Governance without a big programme
+
+Small firms lost a ready-made tool when the government dropped its AI Management Essentials self-assessment in February 2026, promising simpler guidance with no date ([DSIT](https://www.gov.uk/government/consultations/ai-management-essentials-tool/outcome/guidance-for-using-the-ai-management-essentials-tool-government-response)). The MTC's governance paper for manufacturers using AI services such as ChatGPT sets out a workable core ([MTC, AI Governance](https://www.the-mtc.org/insights/ai-governance)):
+
+- a small AI governance team that reviews each use case before it starts and at intervals while it runs;
+- a validated use case, with the minimum data sent and its sensitivity checked;
+- a person reviewing what the AI produces;
+- a live risk register, from risks to the whole business down to risks for each use case;
+- an AI usage policy that people actually know about.
+
+The NCSC lists the questions a board should ask, starting with who is accountable ([NCSC](https://www.ncsc.gov.uk/guidance/ai-and-cyber-security-what-you-need-to-know)), and the government's free [AI Cyber Security Code of Practice](https://www.gov.uk/government/publications/ai-cyber-security-code-of-practice) covers security. ISO/IEC 42001 is a paid, certifiable standard for an AI management system ([BSI](https://www.bsigroup.com/en-US/insights-and-media/media-center/press-releases/2026/november/bsi-awards-its-50th-iso-iec-42001-certificate/)), in our view mainly worth it when customers ask for it.
+
+### Shadow AI
+
+Shadow AI is staff using AI tools their employer hasn't approved, and the NCSC treats it as a kind of shadow IT ([NCSC](https://www.ncsc.gov.uk/blogs/the-hidden-risks-of-shadow-ai)). 55% of workers in Great Britain say they use AI for work or study, while 35% of businesses with ten or more staff report using it. ONS warns the two measures aren't directly comparable, but the gap fits staff using tools their employer hasn't adopted ([ONS](https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/articles/artificialintelligenceinukbusinesses/2023to2026)).
+
+<StatRow>
+  <Stat value="71%" label="of UK employees had used unapproved consumer AI tools at work" source="Microsoft UK survey, 2025 (vendor)" href="https://ukstories.microsoft.com/features/rise-in-shadow-ai-tools-raising-security-concerns-for-uk" />
+  <Stat value="31%" label="of UK generative AI users use it without their employer knowing" source="Deloitte, 2026" href="https://www.deloitte.com/uk/en/issues/generative-ai/genai-workforce-survey-shadow-ai.html" />
+  <Stat value="88%" label="of staff with an enterprise AI tool also use personal ones" source="Gartner, 2026" href="https://www.gartner.com/en/newsroom/press-releases/2026-05-13-gartner-predicts-by-2027-50-percent-of-enterprises-without-a-people-centric-ai-strategy-will-lose-their-top-ai-talent" />
+</StatRow>
+
+Many of these figures come from firms that sell AI tools or the security software that polices them, so read them as a direction rather than a count. Providing an approved tool helps. One security vendor's monitoring data shows the share of generative AI users on personal accounts falling from 78% to 47% in a year as firms bought business licences ([Netskope](https://threatlabs.netskope.com/reports/2026/cloud-and-threat-report-2026)). Another found that 26% of files uploaded to AI tools contained sensitive information, and only 12% of those exposures went through personal accounts, so most sensitive data now goes into the approved tools ([Harmonic Security](https://www.harmonic.security/resources/genai-in-the-enterprise-its-getting-personal)).
+
+<Callout type="warning">
+
+In our view, a ban tends to push AI use out of sight. The NCSC advises finding out why staff use unapproved tools, offering secure alternatives and encouraging open communication about security concerns ([NCSC](https://www.ncsc.gov.uk/blogs/the-hidden-risks-of-shadow-ai)). Acas advises a clear policy, checking outputs, using IT-approved tools and keeping sensitive business or personal data out of public ones ([Acas](https://www.acas.org.uk/1-in-4-workers-worry-that-ai-will-lead-to-job-losses)). In an industrial firm, sensitive data includes drawings, process settings and customer designs.
+
+</Callout>
+
+## People and jobs
+
+The government, citing IMF estimates, says about 70% of UK workers are in jobs with tasks AI could do or support, but says the evidence doesn't yet show AI causing job losses, and it has nothing specific to manufacturing ([DSIT and AI Security Institute](https://www.gov.uk/government/publications/assessment-of-ai-capabilities-and-the-impact-on-the-uk-labour-market/assessment-of-ai-capabilities-and-the-impact-on-the-uk-labour-market)). Among manufacturers using AI, 71.3% reported no change in headcount ([ONS, wave 165](https://www.ons.gov.uk/economy/economicoutputandproductivity/output/datasets/businessinsightsandimpactontheukeconomy/bicswave165)). Of Make UK members who said AI had already changed how work is organised, 86% had automated some tasks, and none had redesigned roles ([Make UK](https://www.makeuk.org/insights/reports/ai-skills-and-future-uk-manufacturing-sector)).
+
+People still worry. Job losses were the biggest AI concern for 26% of GB employees in an Acas poll, and Acas advises consulting staff before introducing AI ([Acas](https://www.acas.org.uk/1-in-4-workers-worry-that-ai-will-lead-to-job-losses)). In our view, risk assessment, the NCSC's board questions and clear sign-off matter more than keeping up with each new model.
+
+## Tools and resources
+
+- [Made Smarter, AI Adoption in Manufacturing](https://www.madesmarter.uk/resources/ai-adoption-in-manufacturing/): a task-first method for choosing and piloting AI, written for manufacturers. Free.
+- [Made Smarter Adoption](https://www.madesmarter.uk/adoption/): funded advice, roadmaps and match-funded grants for manufacturing SMEs in England. Free advice; grants are match-funded.
+- [NCSC, Thinking carefully before adopting agentic AI](https://www.ncsc.gov.uk/blogs/thinking-carefully-before-adopting-agentic-ai): plain advice on whether and how to try AI agents. Free.
+- [NCSC, The hidden risks of shadow AI](https://www.ncsc.gov.uk/blogs/the-hidden-risks-of-shadow-ai): handling unapproved AI tools. Free.
+- [NCSC, AI and cyber security: what you need to know](https://www.ncsc.gov.uk/guidance/ai-and-cyber-security-what-you-need-to-know): questions a board should ask about AI. Free.
+- [AI Cyber Security Code of Practice](https://www.gov.uk/government/publications/ai-cyber-security-code-of-practice): security principles for organisations that build or run AI systems. Free.
+- [HSE's approach to AI](https://press.hse.gov.uk/2026/06/12/hses-regulatory-approach-to-artificial-intelligence-ai/): what health and safety law expects of AI at work. Free.
+- [The AQuA Book](https://www.gov.uk/guidance/the-aqua-book): roles and proportionate checks for any model, AI included. Free.
+- [ICO AI and data protection risk toolkit](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/artificial-intelligence/guidance-on-ai-and-data-protection/ai-and-data-protection-risk-toolkit/): risk checks where AI touches personal data. Free; under review.
+- [Digital Catapult AI Adoption Toolkit](https://apps.digicatapult.org.uk/ai-adoption-toolkit/): digital, data and machine learning maturity self-assessments for UK organisations.
+- [OECD SME AI Readiness Tool](https://sme.oecd.ai/): a short international readiness check. Pilot; free.
+- [AI Skills Hub](https://aiskillshub.org.uk/), [Elements of AI](https://www.elementsofai.com/) and [OpenLearn, An introduction to artificial intelligence](https://www.open.edu/openlearn/education-development/ai-matters): introductions for non-specialists. Free foundation courses; many other Skills Hub listings are paid.
+- [Knowledge Transfer Partnerships](https://iuk-ktp.org.uk/): a graduate and a university team working on your project. Grant-funded.
+- [ISO/IEC 42001](https://www.iso.org/standard/42001): a certifiable AI management system standard, mainly for customer assurance. Paid.
+
+## Further reading
+
+- [The Root Causes of Failure for AI Projects](https://www.rand.org/pubs/research_reports/RRA2680-1.html), RAND, 2024. Why AI projects fail, from the people who build them.
+- [AI adoption survey 2026](https://www.gov.uk/government/publications/ai-adoption-survey-2026), DSIT, 2026. The UK's fullest picture of who uses AI, for what, and what holds firms back.
+- [Microsoft 365 Copilot pilot evaluation](https://www.gov.uk/government/publications/microsoft-365-copilot-pilot-dbt-evaluation-report), Department for Business and Trade, 2025. An honest evaluation that separates time saved from productivity gained.
+- [Explainable AI improves task performance in human–AI collaboration](https://doi.org/10.1038/s41598-024-82501-9), Senoner et al., Scientific Reports, 2024. A factory experiment on trusting AI, readable in an evening.
+- [The Power of Prediction](https://digitaleconomy.stanford.edu/publication/the-power-of-prediction-predictive-analytics-workplace-complements-and-business-performance), Brynjolfsson, Jin and McElheran. Evidence from US plants that analytics pays only with the right people and processes around it.
+- [Trustworthy AI adoption (PDF)](https://hvm.catapult.org.uk/wp-content/uploads/2026/03/Trustworthy-AI-adoption.pdf), HVM Catapult and NPL, 2026. What independent testing of real industrial AI systems found.
+- [AI: a trustworthy framework](https://www.the-mtc.org/insights/ai-trustworthy-framework), MTC, 2024. A review of more than 40 AI standards and frameworks for manufacturers, and where they fall short.
+- [AI Governance](https://www.the-mtc.org/insights/ai-governance), MTC, 2023. Recommendations, a risk register and a governance process for using AI services such as ChatGPT.
+- [Rules of Machine Learning](https://developers.google.com/machine-learning/guides/rules-of-ml), Google. Practical advice that starts with launching without machine learning.
+- [Hidden Technical Debt in Machine Learning Systems](https://papers.nips.cc/paper_files/paper/2015/hash/86df7dcfd896fcaf2674f757a2463eba-Abstract.html), Sculley et al., NeurIPS, 2015. Why machine learning systems are costly to maintain.

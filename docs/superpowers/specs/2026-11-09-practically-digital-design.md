@@ -117,7 +117,7 @@ Metadata: title, description, author (Nikita), published and last-reviewed dates
 
 Responsive homepage; Insights listing (filter by topic and problem); article pages; topic pages; Digital Lab placeholder; About page with author bio and a low-key "ask a question" route; Pagefind search; SEO metadata, sitemap, Open Graph/social previews; GitHub-based deployment with PR previews; basic accessibility and performance validation; architecture and deployment documentation; the article-writing skill and issue template.
 
-**Launch content (Nikita's decision):** two finished articles, **Data foundations** and **Digital twins**, both through the full workflow including Nikita's edit. The site can be built and deployed to the temporary URL before they're done; public launch waits for both. Build and test against these real drafts as they progress, with fixture content only in tests, never shipped.
+**Launch content (Nikita's decision):** two finished articles, **Data foundations** and **AI and analytics** (*amended 25 November 2026, Nikita: the AI article replaces Digital twins as the second launch article; Digital twins follows later, alongside his own white paper*), both through the full workflow including Nikita's edit. The site can be built and deployed to the temporary URL before they're done; public launch waits for both. Build and test against these real drafts as they progress, with fixture content only in tests, never shipped.
 
 **Taxonomy (approved by Nikita):** the topic and problem lists below are fixed for the MVP. New entries can be added later; existing ones shouldn't be renamed.
 

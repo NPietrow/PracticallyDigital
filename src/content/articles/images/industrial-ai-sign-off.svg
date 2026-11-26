@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-labelledby="t d" font-family="IBM Plex Sans, Segoe UI, Arial, sans-serif">
+  <title id="t">Who signs off an AI system</title>
+  <desc id="d">Four roles in a row, from the AQuA Book. The commissioner is the process owner who wants a decision improved. The analyst is the engineering or data team that builds and tests the AI. The assurer is someone independent who checks the testing. The approver is a named manager who signs it off. Below, a bar shows the depth of checking growing with the consequence of an error, from an office draft to a safety-related decision. A review gate sits before go-live, and monitoring continues after it.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1b1f23"/>
+    </marker>
+    <linearGradient id="depth" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#1b1f23"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="520" fill="#ecece7"/>
+
+  <!-- Roles -->
+  <g font-size="15">
+    <rect x="30" y="30" width="250" height="170" fill="#ffffff" stroke="#d5d5ce"/>
+    <text x="50" y="66" font-size="19" font-weight="600" fill="#1b1f23">Commissioner</text>
+    <text fill="#3c413b"><tspan x="50" y="100">The process owner who</tspan><tspan x="50" y="122">wants a decision improved</tspan><tspan x="50" y="144">and says how success is</tspan><tspan x="50" y="166">measured</tspan></text>
+
+    <rect x="330" y="30" width="250" height="170" fill="#ffffff" stroke="#d5d5ce"/>
+    <text x="350" y="66" font-size="19" font-weight="600" fill="#1b1f23">Analyst</text>
+    <text fill="#3c413b"><tspan x="350" y="100">The engineering or data</tspan><tspan x="350" y="122">team that builds the AI</tspan><tspan x="350" y="144">and tests it against</tspan><tspan x="350" y="166">known cases</tspan></text>
+
+    <rect x="630" y="30" width="250" height="170" fill="#ffffff" stroke="#d5d5ce"/>
+    <text x="650" y="66" font-size="19" font-weight="600" fill="#1b1f23">Assurer</text>
+    <text fill="#3c413b"><tspan x="650" y="100">Someone independent of</tspan><tspan x="650" y="122">the builders who checks</tspan><tspan x="650" y="144">the testing was done</tspan><tspan x="650" y="166">properly</tspan></text>
+
+    <rect x="930" y="30" width="240" height="170" fill="#1b1f23"/>
+    <text x="950" y="66" font-size="19" font-weight="600" fill="#ecece7">Approver</text>
+    <text fill="#ecece7"><tspan x="950" y="100">A named manager who</tspan><tspan x="950" y="122">signs it off and owns</tspan><tspan x="950" y="144">the decision to use it</tspan></text>
+  </g>
+  <line x1="282" y1="115" x2="326" y2="115" stroke="#1b1f23" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="582" y1="115" x2="626" y2="115" stroke="#1b1f23" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="882" y1="115" x2="926" y2="115" stroke="#1b1f23" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Depth of checking -->
+  <text x="30" y="262" font-size="17" font-weight="600" fill="#1b1f23">How deep the checks go depends on what an error would cost</text>
+  <rect x="30" y="280" width="1140" height="30" fill="url(#depth)" stroke="#d5d5ce"/>
+  <text x="30" y="336" font-size="15" fill="#3c413b">An office draft: a quick read by the user</text>
+  <text x="1170" y="336" font-size="15" fill="#3c413b" text-anchor="end">A safety-related decision: independent, thorough checks</text>
+
+  <!-- Go-live -->
+  <rect x="30" y="380" width="520" height="100" fill="#ffffff" stroke="#d5d5ce"/>
+  <text x="50" y="418" font-size="17" font-weight="600" fill="#1b1f23">Before go-live: a review gate</text>
+  <text x="50" y="448" font-size="15" fill="#3c413b">Use case, data, risks and test results reviewed</text>
+  <line x1="552" y1="430" x2="646" y2="430" stroke="#1b1f23" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="650" y="380" width="520" height="100" fill="#f2b705"/>
+  <text x="670" y="418" font-size="17" font-weight="600" fill="#1b1f23">After go-live: keep watching</text>
+  <text x="670" y="448" font-size="15" fill="#1b1f23">Monitor results, review at intervals, retire when done</text>
+</svg>

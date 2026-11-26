@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="500" viewBox="0 0 1200 500" role="img" aria-labelledby="t d" font-family="IBM Plex Sans, Segoe UI, Arial, sans-serif">
+  <title id="t">Four levels of AI</title>
+  <desc id="d">Four cards. Machine learning answers what will happen, needs historical data from your own processes, has NESO's solar forecasting as its UK example, and fails when conditions move outside its training data. Computer vision answers whether a part is good, needs images from a fixed camera set-up, has Network Rail's track inspection as its example, and struggles when defects are too rare to learn from. Generative AI finds and drafts, needs your own documents, has the government Copilot trials as its example, and can be confidently wrong. Agentic AI is told to go and do it, needs tools, permissions and limits, has no measured UK industrial example yet, and can take the wrong action.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#62675f"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="500" fill="#ecece7"/>
+
+  <line x1="40" y1="34" x2="1150" y2="34" stroke="#62675f" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="40" y="24" font-size="14" fill="#62675f">From predicting</text>
+  <text x="1160" y="24" font-size="14" fill="#62675f" text-anchor="end">to acting</text>
+
+  <!-- Card 1 -->
+  <g transform="translate(30,56)">
+    <rect width="270" height="414" fill="#ffffff" stroke="#d5d5ce"/>
+    <rect width="270" height="64" fill="#1b1f23"/>
+    <text x="18" y="27" font-size="13" fill="#b4b8ae">LEVEL 1</text>
+    <text x="18" y="50" font-size="19" font-weight="600" fill="#ecece7">Machine learning</text>
+    <text x="18" y="104" font-size="21" font-weight="600" fill="#1b1f23">"What will happen?"</text>
+    <text x="18" y="150" font-size="13" font-weight="600" fill="#62675f">NEEDS</text>
+    <text font-size="15" fill="#1b1f23"><tspan x="18" y="174">Historical data from your</tspan><tspan x="18" y="194">own processes</tspan></text>
+    <text x="18" y="244" font-size="13" font-weight="600" fill="#62675f">UK EXAMPLE</text>
+    <text font-size="15" fill="#1b1f23"><tspan x="18" y="268">NESO's solar forecasting,</tspan><tspan x="18" y="288">2.8 times more accurate</tspan><tspan x="18" y="308">up to two hours ahead</tspan></text>
+    <text x="18" y="358" font-size="13" font-weight="600" fill="#62675f">TYPICAL FAILURE</text>
+    <text font-size="15" fill="#3c413b"><tspan x="18" y="382">Conditions move outside</tspan><tspan x="18" y="402">what it was trained on</tspan></text>
+  </g>
+
+  <!-- Card 2 -->
+  <g transform="translate(320,56)">
+    <rect width="270" height="414" fill="#ffffff" stroke="#d5d5ce"/>
+    <rect width="270" height="64" fill="#1b1f23"/>
+    <text x="18" y="27" font-size="13" fill="#b4b8ae">LEVEL 2</text>
+    <text x="18" y="50" font-size="19" font-weight="600" fill="#ecece7">Computer vision</text>
+    <text x="18" y="104" font-size="21" font-weight="600" fill="#1b1f23">"Is this part good?"</text>
+    <text x="18" y="150" font-size="13" font-weight="600" fill="#62675f">NEEDS</text>
+    <text font-size="15" fill="#1b1f23"><tspan x="18" y="174">Images from a fixed camera</tspan><tspan x="18" y="194">set-up, and some real defects</tspan><tspan x="18" y="214">to test against</tspan></text>
+    <text x="18" y="244" font-size="13" font-weight="600" fill="#62675f">UK EXAMPLE</text>
+    <text font-size="15" fill="#1b1f23"><tspan x="18" y="268">Network Rail's track</tspan><tspan x="18" y="288">inspection, with experts</tspan><tspan x="18" y="308">confirming each defect</tspan></text>
+    <text x="18" y="358" font-size="13" font-weight="600" fill="#62675f">TYPICAL FAILURE</text>
+    <text font-size="15" fill="#3c413b"><tspan x="18" y="382">Defects too rare to learn</tspan><tspan x="18" y="402">from</tspan></text>
+  </g>
+
+  <!-- Card 3 -->
+  <g transform="translate(610,56)">
+    <rect width="270" height="414" fill="#ffffff" stroke="#d5d5ce"/>
+    <rect width="270" height="64" fill="#1b1f23"/>
+    <text x="18" y="27" font-size="13" fill="#b4b8ae">LEVEL 3</text>
+    <text x="18" y="50" font-size="19" font-weight="600" fill="#ecece7">Generative AI</text>
+    <text font-size="21" font-weight="600" fill="#1b1f23"><tspan x="18" y="104">"Where does it say?</tspan><tspan x="18" y="130">Draft me one."</tspan></text>
+    <text x="18" y="164" font-size="13" font-weight="600" fill="#62675f">NEEDS</text>
+    <text font-size="15" fill="#1b1f23"><tspan x="18" y="188">Your own documents, clean</tspan><tspan x="18" y="208">and findable</tspan></text>
+    <text x="18" y="244" font-size="13" font-weight="600" fill="#62675f">UK EXAMPLE</text>
+    <text font-size="15" fill="#1b1f23"><tspan x="18" y="268">Government Copilot trials:</tspan><tspan x="18" y="288">time saved, no measured</tspan><tspan x="18" y="308">productivity gain</tspan></text>
+    <text x="18" y="358" font-size="13" font-weight="600" fill="#62675f">TYPICAL FAILURE</text>
+    <text font-size="15" fill="#3c413b"><tspan x="18" y="382">Confidently wrong answers</tspan></text>
+  </g>
+
+  <!-- Card 4 -->
+  <g transform="translate(900,56)">
+    <rect width="270" height="414" fill="#ffffff" stroke="#d5d5ce"/>
+    <rect width="270" height="64" fill="#f2b705"/>
+    <text x="18" y="27" font-size="13" fill="#1b1f23">LEVEL 4</text>
+    <text x="18" y="50" font-size="19" font-weight="600" fill="#1b1f23">Agentic AI</text>
+    <text x="18" y="104" font-size="21" font-weight="600" fill="#1b1f23">"Go and do it."</text>
+    <text x="18" y="150" font-size="13" font-weight="600" fill="#62675f">NEEDS</text>
+    <text font-size="15" fill="#1b1f23"><tspan x="18" y="174">Tools, permissions, limits,</tspan><tspan x="18" y="194">logs and a way to stop it</tspan></text>
+    <text x="18" y="244" font-size="13" font-weight="600" fill="#62675f">UK EXAMPLE</text>
+    <text font-size="15" fill="#1b1f23"><tspan x="18" y="268">None measured in UK</tspan><tspan x="18" y="288">industry yet</tspan></text>
+    <text x="18" y="358" font-size="13" font-weight="600" fill="#62675f">TYPICAL FAILURE</text>
+    <text font-size="15" fill="#3c413b"><tspan x="18" y="382">Takes the wrong action,</tspan><tspan x="18" y="402">or is tricked into it</tspan></text>
+  </g>
+</svg>
